@@ -1,0 +1,469 @@
+// Mixins PJUD
+@mixin icono-variant($tamano,$url) {
+  $urlFinal:"/assets/img/icons/unificados/"+$url+".png";
+  width: #{$tamano}px;
+  height: #{$tamano}px;
+  background-size: #{$tamano}px #{$tamano}px;
+  //width: 100px;
+  //height: 100px;
+  background-image: url($urlFinal);
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  display: inline-block;
+}
+@mixin icono($url) {
+  $urlFinal:"/assets/img/icons/unificados/"+$url+".png";
+  width: 20px;
+  height: 20px;
+  background-size: 20px 20px;
+  background-image: url($urlFinal);
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  display: inline-block;
+}
+.btn-icono {
+  cursor: pointer;
+  border: none;
+}
+
+$iconosCompetencias: (
+    civil:"civ-100x100",
+    cobranza:"cob-100x100",
+    laboral:"lab-100x100",
+    apelaciones:"ca-100x100",
+    suprema:"cs-100x100",
+    familia:"fam-100x100",
+    garantia:"gar-100x100"
+);
+
+@each $key,$val in $iconosCompetencias {
+  .icono-#{$key}-5 {
+    @include icono-variant(5,$val);
+  }
+  .icono-#{$key}-5-blanco {
+    @include icono-variant(5,$val+"-02");
+  }
+  .icono-#{$key}-10 {
+    @include icono-variant(10,$val);
+  }
+  .icono-#{$key}-10-blanco {
+    @include icono-variant(10,$val+"-02");
+  }
+  .icono-#{$key}-15 {
+    @include icono-variant(15,$val);
+  }
+  .icono-#{$key}-15-blanco {
+    @include icono-variant(15,$val+"-02");
+  }
+  .icono-#{$key}-20 {
+    @include icono-variant(20,$val);
+  }
+  .icono-#{$key}-20-blanco {
+    @include icono-variant(20,$val+"-02");
+  }
+  .icono-#{$key}-20-gris {
+    @include icono-variant(20,$val+"-03");
+  }
+  .icono-#{$key}-25 {
+    @include icono-variant(25,$val);
+  }
+  .icono-#{$key}-25-blanco {
+    @include icono-variant(25,$val+"-02");
+  }
+  .icono-#{$key}-25-gris {
+    @include icono-variant(25,$val+"-03");
+  }
+  .icono-#{$key}-30 {
+    @include icono-variant(30,$val);
+  }
+  .icono-#{$key}-30-blanco {
+    @include icono-variant(30,$val+"-02");
+  }
+  .icono-#{$key}-30-gris {
+    @include icono-variant(30,$val+"-03");
+  }
+  .icono-#{$key}-35 {
+    @include icono-variant(35,$val);
+  }
+  .icono-#{$key}-35-blanco {
+    @include icono-variant(35,$val+"-02");
+  }
+  .icono-#{$key}-35-gris {
+    @include icono-variant(35,$val+"-03");
+  }
+  .icono-#{$key}-40 {
+    @include icono-variant(40,$val);
+  }
+  .icono-#{$key}-40-blanco {
+    @include icono-variant(40,$val+"-02");
+  }
+  .icono-#{$key}-40-gris {
+    @include icono-variant(40,$val+"-03");
+  }
+  .icono-#{$key}-100 {
+    @include icono-variant(100,$val);
+  }
+  .icono-#{$key}-100-blanco {
+    @include icono-variant(100,$val+"-02");
+  }
+  .icono-#{$key}-100-gris {
+    @include icono-variant(100,$val+"-03");
+  }
+}
+
+//Icons unificados
+
+$iconosGenerales:(
+    actuacion:  "actuacion-100x100",
+    actuacion-blanco: "actuacion-100x100-02",
+    adjuntar-blanco: "adjuntar-100x100-02",
+    adjuntar: "adjuntar-100x100",
+    agregar-documento: "agregar-documento-100x100",
+    agregar-documento-blanco: "agregar-documento-100x100-02",
+    alerta-modal-blanco: "alerta-modal-100x100-02",
+    alerta-modal: "alerta-modal-100x100",
+    anexos: "anexos-100x100",
+    audiencia-blanco: "audiencia-100x100-02",
+    audiencia: "audiencia-100x100",
+    audiencia-programada-blanco: "audiencia-programada-100x100-02",
+    audiencia-programada: "audiencia-programada-100x100",
+    audiencia-reprogramada-blanco: "audiencia-reprogramada-100x100-02",
+    audiencia-reprogramada: "audiencia-reprogramada-100x100",
+    audiencia-suspendida-blanco: "audiencia-suspendida-100x100-02",
+    audiencia-suspendida: "audiencia-suspendida-100x100",
+    audiencias: "audiencias-100x100",
+    audio-blanco: "audio-100x100-02",
+    audio: "audio-100x100",
+    subir-blanco: "subir-100x100-02",
+    subir: "subir-100x100",
+    bajar-blanco: "bajar-100x100-02",
+    bajar: "bajar-100x100",
+    basurero-blanco: "basurero-100x100-02",
+    basurero: "basurero-100x100",
+    ca-blanco: "ca-100x100-02",
+    ca: "ca-100x100",
+    chat-ayuda: "chat-ayuda-100x100",
+    chat-bot: "chat-bot-100x100",
+    chat-interno: "chat-interno-100x100",
+    chat-otro-tribunal: "chat-otro-tribunal-100x100",
+    check-blanco: "check-100x100-02",
+    check: "check-100x100",
+    check-tablas: "check-tablas-100x100",
+    civ-blanco: "civ-100x100-02",
+    civ: "civ-100x100",
+    cob-blanco: "cob-100x100-02",
+    cob: "cob-100x100",
+    confidencial: "confidencial-100x100",
+    cs-blanco: "cs-100x100-02",
+    cs: "cs-100x100",
+    cta-cte-blanco: "cta-cte-100x100-02",
+    cta-cte: "cta-cte-100x100",
+    custodia-blanco: "custodia-100x100-02",
+    custodia: "custodia-100x100",
+    delitos-blanco: "delitos-100x100-02",
+    delitos: "delitos-100x100",
+    denunciado: "denunciado-100x100",
+    denunciado-blanco: "denunciado-100x100-02",
+    documento-blanco: "documento-100x100-02",
+    documento: "documento-100x100",
+    documento-2: "documento-2-100x100",
+    documento-ebook-blanco: "documento-ebook-100x100-02",
+    documento-ebook: "documento-ebook-100x100",
+    documento-tabla-blanco: "documento-tabla-100x100-02",
+    documento-tabla: "documento-tabla-100x100",
+    documentos: "documentos-100x100",
+    documentos-anexos-blanco: "documentos-anexos-100x100-02",
+    documentos-anexos: "documentos-anexos-100x100",
+    documentos-ojv-blanco: "documentos-ojv-100x100-02",
+    documentos-ojv: "documentos-ojv-100x100",
+    eliminar-blanco: "eliminar-100x100-02",
+    eliminar: "eliminar-100x100",
+    empty: "empty-100x100",
+    enviar-firma-blanco: "enviar-firma-100x100-02",
+    enviar-firma: "enviar-firma-100x100",
+    enviar-jueces-blanco: "enviar-jueces-100x100-02",
+    enviar-jueces: "enviar-jueces-100x100",
+    enviar-secretario-blanco: "enviar-secretario-100x100-02",
+    enviar-secretario: "enviar-secretario-100x100",
+    escrito-blanco:"escritos-100x100-02",
+    escrito:"escritos-100x100",
+    escrito-2: "escritos-2-100x100",
+    excel-mesa-de-trabajo: "excel-mesa-de-trabajo-100x100",
+    excel-blanco: "excel-100x100-02",
+    excel: "excel-100x100",
+    fam-blanco: "fam-100x100-02",
+    fam: "fam-100x100",
+    familia-blanco: "fam-100x100-02",
+    familia: "fam-100x100",
+    filtro: "filtro-100x100",
+    firmar-blanco: "firmar-100x100-02",
+    firmar: "firmar-100x100",
+    gar-blanco: "gar-100x100-02",
+    gar: "gar-100x100",
+    guardar-blanco: "guardar-100x100-02",
+    guardar: "guardar-100x100",
+    icono-09: "icono-09-100x100",
+    icono-10: "icono-10-100x100",
+    icono-10-blanco: "icono-10-100x100-02",
+    icono-12: "icono-12-100x100",
+    icono-13: "icono-13-100x100",
+    icono-14: "icono-14-100x100",
+    icono-19: "icono-19-100x100",
+    info-participante-blanco: "info-participante-100x100-02",
+    info-participante: "info-participante-100x100",
+    invalidar-blanco: "invalidar-100x100-02",
+    invalidar: "invalidar-100x100",
+    lab-blanco: "lab-100x100-02",
+    lab: "lab-100x100",
+    linea-de-tiempo-blanco: "linea-de-tiempo-100x100-02",
+    linea-de-tiempo: "linea-de-tiempo-100x100",
+    liquidaciones-blanco: "liquidaciones-100x100-02",
+    liquidaciones: "liquidaciones-100x100",
+    litigantes-blanco: "litigantes-100x100-02",
+    litigantes: "litigantes-100x100",
+    materias-delitos-blanco: "materias-delitos-100x100-02",
+    materias-delitos: "materias-delitos-100x100",
+    menu-agenda: 'menu-agenda-100x100',
+    menu-atencion-publico: "menu-atencion-publico-100x100",
+    menu-bandeja-tareas: "menu-bandeja-tareas-100x100",
+    menu-configuracion-agenda: "menu-configuracion-agenda-100x100",
+    menu-control-plazo: "menu-control-plazo-100x100",
+    menu-custodia: "menu-custodia-100x100",
+    menu-distribucion: "menu-distribucion-100x100",
+    menu-funcionarios: "menu-funcionarios-100x100",
+    menu-informes-indicadores: "menu-informes-indicadores-100x100",
+    menu-ingresos: "menu-ingresos-100x100",
+    menu-inhabilidades: "menu-inhabilidades-100x100",
+    menu-inicio: "menu-inicio-100x100",
+    menu-modificacion-datos: "menu-modificacion-datos-100x100",
+    menu-notificaciones: "menu-notificaciones-100x100",
+    menu-reserva: "menu-reserva-100x100",
+    menu-tareas: "menu-tareas-100x100",
+    menu-tramitar-causas: "menu-tramitar-causas-100x100",
+    modal-blanco: "modal-100x100-02",
+    modal: "modal-100x100",
+    multa-blanco: "multa-100x100-02",
+    multa: "multa-100x100",
+    navbar-chat: "navbar-chat-100x100",
+    navbar-chat-gris: "navbar-chat-100x100-03",
+    navbar-notificaciones: "navbar-notificaciones-100x100",
+    navbar-notificaciones-gris: "navbar-notificaciones-100x100-03",
+    navbar-pantalla-completa: "navbar-pantalla-completa-100x100",
+    navbar-pantalla-completa-gris: "navbar-pantalla-completa-100x100-03",
+    navbar-pantalla-comprimida: "navbar-pantalla-comprimida-100x100",
+    navbar-pantalla-comprimida-gris: "navbar-pantalla-comprimida-100x100-03",
+    navbar-requerimiento-mesa-ayuda: "navbar-requerimiento-mesa-ayuda-100x100",
+    navbar-requerimiento-mesa-ayuda-gris: "navbar-requerimiento-mesa-ayuda-100x100-03",
+    navbar-user: "navbar-user-100x100",
+    nomenclatura: "nomenclatura-100x100",
+    nomenclatura-blanco: "nomenclatura-100x100-02",
+    nomenclatura-efecto:"nomenclatura-efecto-100x100",
+    nomenclatura-efecto-blanco:"nomenclatura-efecto-100x100-02",
+    nomenclatura-sin-efecto:"nomenclatura-sin-efecto-100x100",
+    nomenclatura-sin-efecto-blanco:"nomenclatura-sin-efecto-100x100-02",
+    notas: "notas-100x100",
+    notificaciones-blanco: "notificaciones-100x100-02",
+    notificaciones: "notificaciones-100x100",
+    oficios-blanco: "oficios-100x100-02",
+    oficios: "oficios-100x100",
+    ok-modal-blanco: "ok-modal-100x100-02",
+    ok-modal: "ok-modal-100x100",
+    pdf-blanco: "pdf-100x100-02",
+    pdf: "pdf-100x100",
+    pdf-firmado-blanco: "pdf-firmado-100x100-02",
+    pdf-firmado: "pdf-firmado-100x100",
+    plazos-blanco: "plazos-100x100-02",
+    plazos: "plazos-100x100",
+    querellado: "querellado-100x100",
+    querellado-blanco: "querellado-100x100-02",
+    relaciones-blanco: "relaciones-100x100-02",
+    relaciones: "relaciones-100x100",
+    remision-1-blanco: "remision-1-100x100-02",
+    remision-1: "remision-1-100x100",
+    remision-2-blanco: "remision-2-100x100-02",
+    remision-2: "remision-2-100x100",
+    resolucion: "resolucion-100x100",
+    resolucion-2: "resolucion-2-100x100",
+    resolucion-blanco: "resolucion-100x100-02",
+    seleccionar-juez-firma-blanco: "seleccionar-juez-firma-100x100-02",
+    seleccionar-juez-firma: "seleccionar-juez-firma-100x100",
+    semaforo-amarillo: "semaforo-amarillo-100x100",
+    semaforo-rojo: "semaforo-rojo-100x100",
+    semaforo-verde: "semaforo-verde-100x100",
+    sentencia: "sentencia-100x100",
+    sentencia-blanco: "sentencia-100x100-02",
+    sobre-blanco: "sobre-100x100-02",
+    sobre: "sobre-100x100",
+    tipo-facebook-blanco: "tipo-facebook-100x100-02",
+    tipo-facebook: "tipo-facebook-100x100",
+    todos: 'todos',
+    todos-gris: 'todos-gris',
+    top-blanco: "top-100x100-02",
+    top: "top-100x100",
+    tramitacion-arbol-blanco: "tramitacion-arbol-100x100-02",
+    tramitacion-audiencia: "tramitacion-audiencia-100x100",
+    tramitacion-etapa-blanco: "tramitacion-etapa-100x100-02",
+    tramitacion-fecha-blanco: "tramitacion-fecha-100x100-02",
+    tramitacion-folio-blanco: "tramitacion-folio-100x100-02",
+    tramitacion-resolucion: "tramitacion-resolucion-100x100",
+    tramitacion-tramite-blanco: "tramitacion-tramite-100x100-02",
+    tramite-firmado-blanco:"tramite-firmado-100x100-02",
+    tramite-firmado:"tramite-firmado-100x100",
+    tramite-pendiente-blanco:"tramite-pendiente-100x100-02",
+    tramite-pendiente:"tramite-pendiente-100x100",
+    vista-abogado: "vista-abogado-100x100",
+    vista-abogado-blanco: "vista-abogado-100x100-02",
+    vista-litigante: "vista-litigante-100x100",
+    vista-litigante-blanco: "vista-litigante-100x100-02",
+    
+);
+
+@each $key,$val in $iconosGenerales {
+  .icono-#{$key}-5 {
+    @include icono-variant(5,$val);
+  }
+  .icono-#{$key}-5-blanco {
+    @include icono-variant(5,$val+"-02");
+  }
+  .icono-#{$key}-10 {
+    @include icono-variant(10,$val);
+  }
+  .icono-#{$key}-10-blanco {
+    @include icono-variant(10,$val+"-02");
+  }
+  .icono-#{$key}-10-gris {
+    @include icono-variant(10,$val+"-03");
+  }
+  .icono-#{$key}-15 {
+    @include icono-variant(15,$val);
+  }
+  .icono-#{$key}-15-blanco {
+    @include icono-variant(15,$val+"-02");
+  }
+  .icono-#{$key}-20 {
+    @include icono-variant(20,$val);
+  }
+  .icono-#{$key}-20-blanco {
+    @include icono-variant(20,$val+"-02");
+  }
+  .icono-#{$key}-20-gris {
+    @include icono-variant(20,$val+"-03");
+  }
+  .icono-#{$key}-25 {
+    @include icono-variant(25,$val);
+  }
+  .icono-#{$key}-25-blanco {
+    @include icono-variant(25,$val+"-02");
+  }
+  .icono-#{$key}-25-gris {
+    @include icono-variant(25,$val+"-03");
+  }
+  .icono-#{$key}-30 {
+    @include icono-variant(30,$val);
+  }
+  .icono-#{$key}-30-blanco {
+    @include icono-variant(30,$val+"-02");
+  }
+  .icono-#{$key}-30-gris {
+    @include icono-variant(30,$val+"-03");
+  }
+  .icono-#{$key}-35 {
+    @include icono-variant(35,$val);
+  }
+  .icono-#{$key}-35-blanco {
+    @include icono-variant(35,$val+"-02");
+  }
+  .icono-#{$key}-35-gris {
+    @include icono-variant(25,$val+"-03");
+  }
+  .icono-#{$key}-40 {
+    @include icono-variant(40,$val);
+  }
+  .icono-#{$key}-40-blanco {
+    @include icono-variant(40,$val+"-02");
+  }
+  .icono-#{$key}-40-gris {
+    @include icono-variant(40,$val+"-03");
+  }
+  .icono-#{$key}-45 {
+    @include icono-variant(40,$val);
+  }
+  .icono-#{$key}-45-blanco {
+    @include icono-variant(40,$val+"-02");
+  }
+  .icono-#{$key}-45-gris {
+    @include icono-variant(45,$val+"-03");
+  }
+  .icono-#{$key}-50 {
+    @include icono-variant(50,$val);
+  }
+  .icono-#{$key}-50-blanco {
+    @include icono-variant(50,$val+"-02");
+  }
+  .icono-#{$key}-50-gris {
+    @include icono-variant(50,$val+"-03");
+  }
+  .icono-#{$key}-55 {
+    @include icono-variant(55,$val);
+  }
+  .icono-#{$key}-55-blanco {
+    @include icono-variant(55,$val+"-02");
+  }
+  .icono-#{$key}-55-gris {
+    @include icono-variant(55,$val+"-03");
+  }
+  .icono-#{$key}-60 {
+    @include icono-variant(60,$val+"-02");
+  }
+  .icono-#{$key}-60-blanco {
+    @include icono-variant(60,$val+"-02");
+  }
+  .icono-#{$key}-60-gris {
+    @include icono-variant(60,$val+"-03");
+  }
+  .icono-#{$key}-65 {
+    @include icono-variant(65,$val);
+  }
+  .icono-#{$key}-65-blanco {
+    @include icono-variant(65,$val+"-02");
+  }
+  .icono-#{$key}-65-gris{
+    @include icono-variant(65,$val+"-02");
+  }
+  .icono-#{$key}-70 {
+    @include icono-variant(70,$val);
+  }
+  .icono-#{$key}-70-blanco {
+    @include icono-variant(70,$val+"-02");
+  }
+  .icono-#{$key}-70-gris {
+    @include icono-variant(70,$val+"-02");
+  }
+  .icono-#{$key}-75 {
+    @include icono-variant(75,$val);
+  }
+  .icono-#{$key}-75-blanco {
+    @include icono-variant(75,$val+"-02");
+  }
+  .icono-#{$key}-75-gris {
+    @include icono-variant(75,$val+"-02");
+  }
+  .icono-#{$key}-80 {
+    @include icono-variant(80,$val);
+  }
+  .icono-#{$key}-80-blanco {
+    @include icono-variant(80,$val+"-02");
+  }
+  .icono-#{$key}-80-gris {
+    @include icono-variant(80,$val+"-02");
+  }
+  .icono-#{$key}-100 {
+    @include icono-variant(100,$val);
+  }
+  .icono-#{$key}-100-blanco {
+    @include icono-variant(100,$val+"-02");
+  }
+  .icono-#{$key}-100-gris {
+    @include icono-variant(100,$val+"-02");
+  }
+}

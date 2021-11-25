@@ -1,0 +1,65 @@
+<section>
+    <div class="col-12 text-right">
+        <div class="cont-unificado">
+            <div class="col-md-12 p-0" *ngIf="flagCargando">
+                <ngb-progressbar [value]="100" [striped]="true" [animated]="true"></ngb-progressbar>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12-lg">
+            <div class="card p-3">
+                <h4 class="text-left" style="color: black;">Buscador en catálogo</h4>
+                <div class="row pb-2 ml-4">
+                    <div class="col-lg-3 col-md-3 col-sm-12 text-left">
+                        <label for="flg_programado" class="texto-color">Especie</label>
+                        <ng-select style="color: #857c85 !important;" placeholder="--Seleccione una opción--" class="form-control form-control-sm"
+                            notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="especie">
+                            <ng-option></ng-option>
+                        </ng-select>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12 text-left">
+                        <label for="flg_programado" class="texto-color">Tipo</label>
+                        <ng-select style="color: #857c85 !important;" placeholder="--Seleccione una opción--" class="form-control form-control-sm"
+                            notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="tipo">
+                            <ng-option></ng-option>
+                        </ng-select>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12 text-left">
+                        <label for="gls_agrupacion" class="texto-color">Variedad</label>
+                        <ng-select style="color: #857c85 !important;" placeholder="--Seleccione una opción--" class="form-control form-control-sm"
+                            notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="variedad">
+                            <ng-option></ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="card p-3">
+                <div class="row pb-2">
+                    <div class="row-tabla">
+                        <div class="row p-0">
+                            <!-- <div class="col-12"> -->
+                                <div class="col-md-12 p-0" *ngIf="flagCargando">
+                                    <ngb-progressbar [value]="100" [striped]="true" [animated]="true"></ngb-progressbar>
+                                </div>
+                                <!-- La propiedad footerHeight oculta el pie de la tabla [footerHeight]="50" -->
+                                <ngx-datatable #tabCatalogo class="bootstrap componente-tabla material fullscreen"
+                                    [rows]="dataSourceCatalogo" [columnMode]="'force'" style="font-size: 14.5px !important;"
+                                    [rowHeight]="'auto'" [scrollbarH]="false" [reorderable]="true"
+                                    [messages]="{emptyMessage:'No hay datos en la tabla.'}">
+                                    <ngx-datatable-column name="Especie" prop="especie" [width]="100"></ngx-datatable-column>
+                                    <ngx-datatable-column name="Tipo" prop="tipo" [width]="100"></ngx-datatable-column>
+                                    <ngx-datatable-column name="Variedad" prop="variedad" [width]="100"></ngx-datatable-column>
+                                    <ngx-datatable-column name="Envase" prop="envase" [width]="100"></ngx-datatable-column>
+                                    <ngx-datatable-column name="Precio" prop="precio" [width]="100"></ngx-datatable-column>
+                                    <ngx-datatable-column name="Cantidad" prop="cantidad" [width]="100"></ngx-datatable-column>
+                                    <ngx-datatable-column name="Agregar" prop="Agregar" [width]="100"></ngx-datatable-column>
+                                </ngx-datatable>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

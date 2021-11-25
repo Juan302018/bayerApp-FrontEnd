@@ -1,0 +1,34 @@
+// Theme Colors
+$theme-colors: (primary: #5461a9,
+success: #5461a9,
+info: #fecc50,
+warning: #fecc50,
+danger: #ca243a,
+secondary: #6f83bf,
+light: #f8f9fa,
+dark: #343a40,
+pjud: #5461a9);
+
+// Spacing
+
+$spacer: 1.5rem;
+
+$spacers: (0: 0,
+1: ($spacer * .25),
+2: ($spacer * .50),
+3: $spacer,
+4: ($spacer * 1.5),
+5: ($spacer * 3)) !default;
+
+// Body
+$body-bg: #f5f7fa;
+
+// Fonts
+$font-family-sans-serif: 'Poppins', 'Arial', 'sans-serif' !important;
+$font-family-content: 'Poppins', 'Arial', 'sans-serif' !important;
+$font-family-base: 'Poppins', 'Arial', 'sans-serif' !important;
+
+$card-spacer-y : 1.5rem;
+$card-spacer-x : 1.5rem;
+
+$font-size-root: 13px;

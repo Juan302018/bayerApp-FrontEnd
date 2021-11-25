@@ -1,0 +1,431 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* ng-select */
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+/* @import '~highlight.js/styles/dracula.css'; */
+/* @import "~angular-archwizard/archwizard.css"; */
+
+aw-wizard-navigation-bar.horizontal.large-filled-symbols ul.steps-indicator li.navigable.done a:hover .step-indicator {
+  background-color: #353574 !important;
+  color: white !important;
+}
+
+aw-wizard-navigation-bar.horizontal.large-filled-symbols ul.steps-indicator li.editing .step-indicator {
+  background-color: grey !important;
+  color: white !important;
+}
+
+aw-wizard-navigation-bar.horizontal.large-filled-symbols ul.steps-indicator li.current .step-indicator {
+  background-color: #5461a9 !important;
+  color: white !important;
+}
+
+aw-wizard-navigation-bar.horizontal.large-filled-symbols ul.steps-indicator li.done .step-indicator {
+  background-color: #5461a9 !important;
+  color: white !important;
+}
+
+aw-wizard-navigation-bar.horizontal.large-filled-symbols ul.steps-indicator li .step-indicator {
+  background-color: lightgrey !important;
+  color: white !important;
+}
+
+/*Clases para ajustar ng-select*/
+ng-select.form-control > .ng-select-container.ng-has-value,
+ng-select.form-control > .ng-select-container {
+  height: 90%;
+  min-height: 20px;
+  border: none;
+  color: #75787d;
+  top: 10%
+}
+
+.ng-select.ng-select-single .ng-select-container {
+  height: 90%;
+  min-height: 20px;
+  top: 10%;
+}
+
+.ng-select input[type=text]:focus {
+  border: none!important;
+}
+
+/*Colores de los ng select 1-option 2-selection*/
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+  background-color: #dde8ea;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected,
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked {
+  background-color: #a9bde2;
+}
+
+.ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input {
+  top: 10%;
+  height: 90%;
+}
+
+ng-select.form-control {
+  padding: 0px 0px 0px 0px;
+  border: 1px solid #A6A9AE;
+}
+
+.modal {
+  z-index: 1000 !important;
+}
+
+.modal-backdrop {
+  z-index: 999 !important;
+}
+
+/*Clase para que modal tenga tamaño 'xl' ya que bootstrap4 no lo posee */
+.modal-xl-DPG {
+  width: 1080px;
+  position: absolute;
+  margin-left: -25%;
+}
+
+/* Animación de ventana modal */
+/*
+https://stackblitz.com/edit/angular-66n3nl
+*/
+
+.modal-in {
+  animation-name: modalIN;
+  animation-duration: 0.3s;
+}
+
+.modal-lg, .modal-xl {
+  max-width: 70%!important;
+}
+
+.modal-sm {
+  max-width: 50%!important;
+}
+
+.modal-fondo {
+  background-size: cover !important;
+  border: 1px solid #6f83bf;
+}
+
+.modal-fondo .modal-header {
+  padding-bottom: 5px;
+  padding-top: 10px;
+  /*background: no-repeat url("assets/img/fondos_pantalla/fondo_color.png"); */
+  background: #7084bc !important;
+  box-shadow: 0 6px 0 0 rgba(0,0,0,.01), 0 15px 32px 0 rgba(0,0,0,.06);
+  background-size: cover;
+}
+
+.modal-fondo .modal-header .modal-title {
+  color: white;
+  margin: auto;
+}
+
+@keyframes modalIN {
+  0%   {transform: scale(0.5)}
+  100% {transform: scale(1)}
+}
+
+/* Tamaño Modal */
+.hiper-class .modal-dialog {
+  max-width: 95%;
+  width: 95%;
+  height: 500px;
+  min-height: 500px;
+}
+
+/* Títulos */
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Helvetica-Neue', 'Roboto', 'Arial','Helvetica', 'Sans-Serif', 'Open Sans';
+}
+
+h1,h2,h3 {
+  line-height:1.15em;
+  font-weight:700;
+  font-size: 16px;
+  color: #8e8e8e;
+}
+
+h4 {
+  line-height:1.15em;
+  font-weight:700;
+  font-size: 16px;
+  color: #8e8e8e;
+}
+
+h5 {
+  font-weight:500;
+  line-height:1.15em;
+  font-size: 14px;
+  color: #8e8e8e;
+}
+
+h6 {
+  font-weight:500;
+  line-height:1.15em;
+  font-size: 12px;
+  color: #8e8e8e;
+}
+
+/*.body {
+  font-family: 'Helvetica-Neue', 'Roboto', 'Arial','Helvetica', 'Sans-Serif', 'Open Sans';
+  font-weight:400;
+  line-height: 1.5em;
+  color:#666666;
+  min-height: 100vh;
+  background-color: #f3f3f3;
+}*/
+
+/*!* Títulos *!
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Helvetica-Neue', 'Roboto', 'Arial','Helvetica', 'Sans-Serif', 'Open Sans';
+}*/
+
+/* Tarjetas */
+.card {
+  font-weight: normal;
+ /* margin: 5px;  MODIFICA EL ESPACIO DEL API ACCORDION*/ 
+  color: #9dacc6;
+  background-color: transparent;
+  /*
+  font-weight: bold;
+  */
+  text-align: center;
+}
+
+.card h4.card-title {
+  font-weight:500;
+  letter-spacing:0.05rem;
+  /*
+  font-size: 1.25rem;
+  */
+  margin-bottom:0.25rem;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+}
+
+.mat-form-field {
+  width: 100%
+}
+
+table {
+  width: 100%
+}
+
+.table-container {
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+}
+
+.router-link-active {
+  background: #c1c1c1;
+  color: white;
+  transition: 1s;
+}
+
+.mat-tab-label {
+  color: black;
+}
+
+.mat-toolbar {
+  background: #00000008;
+  color: gray;
+  font-weight: 200;
+}
+
+
+.contenedor-centrado {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.container {
+  padding: 25px
+}
+
+p {
+  color: whitesmoke;
+}
+
+.card-unificado {
+  border: 1px solid #6f83bf;
+  color: #8e8e8e;
+}
+
+.card-unificado .card-bar {
+  background-color: #6f83bf;
+  color: white;
+  border-bottom: rgba(0, 0, 0, 0.13) 1px solid;
+  display: flex;
+}
+
+.card-unificado .card-header {
+  color: #8e8e8e;
+  background-color: rgba(#a9bce2, 0.1);
+}
+
+.card-unificado .card-content {
+  color: #8e8e8e;
+  padding-top: 10px;
+}
+
+.card-unificado .card-background-light {
+  /*background-image: url("assets/img/fondos_pantalla/card-background-light.png") !important; */
+}
+
+.card-unificado .card-background {
+  /*background-image: url("assets/img/fondos_pantalla/card-background.png") !important;*/
+}
+
+.card-unificado .title {
+  text-align: center;
+  flex:1 0 auto;
+  color: white;
+  font-size: 16px;
+  margin-right: -43px;
+  text-transform: none !important;
+  letter-spacing: 0.05rem;
+  font-weight: 500;
+  padding: 10px;
+}
+
+.card-unificado .form-section {
+  text-transform: none !important;
+}
+
+.card-unificado .card-actions {
+  background-color: #6f83bf;
+  color: white;
+  padding-top: 2px;
+}
+
+.card-unificado .card-actions .icon-action {
+  padding: 0 5px;
+  cursor: pointer;
+}
+
+.card-unificado .card-fullscreen {
+  display: block;
+  z-index: 9999;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: -138px;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  overflow: auto;
+}
+
+.cont-unificado-radius {
+  padding: 20px;
+  border-radius: 15px;
+  /*background: #ffd7401c;*/
+  background:#eae7d1 !important;
+  margin-top: 10px;
+}
+
+.cont-origen-radius {
+  padding: 20px;
+  border-radius: 15px;
+  background: #673bb717 !important;
+  margin-top: 10px;
+}
+
+.cont-unificado {
+  /*background: #ffd7401c;*/
+  background:#eae7d1 !important;
+}
+
+.cont-origen {
+  background: #673bb717 !important;
+}
+
+.cont-transparent {
+  background: transparent !important;
+}
+
+.card-bar-unificado {
+  /*background-color: #ffd7401c;*/
+  background:#eae7d1 !important;
+  color: #000000;
+  border-bottom: rgba(0, 0, 0, 0.13) 1px solid;
+  display: flex;
+}
+
+.card-bar-origen {
+  background-color: #673bb717 !important;
+  color: #000000;
+  border-bottom: rgba(0, 0, 0, 0.13) 1px solid;
+  display: flex;
+}
+
+.title-head {
+  text-align: center;
+  flex:1 0 auto;
+  color: #000000;
+  font-size: 16px;
+  margin-right: -43px;
+  text-transform: none !important;
+  letter-spacing: 0.05rem;
+  font-weight: 500;
+  padding: 10px;
+}
+
+.imagen-fondo {
+  /*background-image: url("assets/img/fondos_pantalla/fondo_800x507.png") !important; */
+  background-size: cover;
+  padding: 25px;
+}
+
+.imagen-excel {
+  margin-left: 3rem !important;
+  /*background-image: url("assets/img/icons/excel-100x100-02.png") !important; */
+  background-repeat: no-repeat !important;
+  background-position: left !important;
+  background-size: 23px !important;
+}
+
+.progress-bar {
+  background-color: #4e6cb2 !important;
+}
+
+.swal2-container {
+  z-index: 2000 !important;
+}
+
+td.hljs-ln-numbers {
+  user-select: none;
+  text-align: center;
+  border-right: 1px solid gray;
+  vertical-align: top;
+  padding-right: 8px !important;
+  padding-left: 8px !important;
+}
+
+/* for block of code */
+td.hljs-ln-code {
+  padding-left: 8px !important;
+}
+
+.texto-color {
+  color:#6f83bf
+}
+.texto-rojo {
+  color:red;
+}
+
+.ngx-pagination {
+  padding: 0 !important;
+  margin: 0 !important;
+}
