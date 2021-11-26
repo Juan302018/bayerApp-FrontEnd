@@ -33,8 +33,16 @@
                         </ng-select>
                     </div>
                 </div>
+                <br>
+                <div class="row pb-2 ml-5 col-lg-12">
+                    <div class="col-lg-9 col-md-9 col-sm-9 text-left"></div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 text-left">
+                        <button class="btn btn-danger mr-4 mt-2 pr-5 pl-5" type="button"
+                        triggers="mouseenter:mouseleave"><b>Buscar</b></button>
+                    </div>
+                </div>
             </div>
-            <br>
+            <br><br>
             <div class="card p-3">
                 <div class="row pb-2">
                     <div class="row-tabla">
@@ -44,8 +52,9 @@
                                     <ngb-progressbar [value]="100" [striped]="true" [animated]="true"></ngb-progressbar>
                                 </div>
                                 <!-- La propiedad footerHeight oculta el pie de la tabla [footerHeight]="50" -->
-                                <ngx-datatable #tabCatalogo class="bootstrap componente-tabla material fullscreen"
-                                    [rows]="dataSourceCatalogo" [columnMode]="'force'" style="font-size: 14.5px !important;"
+                                <ngx-datatable style="font-size: 14.5px !important;"
+                                    #tabCatalogo class="bootstrap componente-tabla material fullscreen"
+                                    [rows]="dataSourceCatalogo" [columnMode]="'force'"
                                     [rowHeight]="'auto'" [scrollbarH]="false" [reorderable]="true"
                                     [messages]="{emptyMessage:'No hay datos en la tabla.'}">
                                     <ngx-datatable-column name="Especie" prop="especie" [width]="100"></ngx-datatable-column>

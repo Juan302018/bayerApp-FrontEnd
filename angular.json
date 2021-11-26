@@ -30,7 +30,6 @@
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css",
-              "src/assets/sass/app.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/@swimlane/ngx-datatable/index.css",
@@ -39,7 +38,7 @@
               "node_modules/animate.css/animate.css"
             ],
             "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.js"
+              "node_modules/jquery/dist/jquery.slim.min.js"
             ]
           },
           "configurations": {
@@ -117,7 +116,7 @@
               "e2e/tsconfig.json"
             ],
             "exclude": [
-              "**/node_modules/**"
+              "*/node_modules/*"
             ]
           }
         },
