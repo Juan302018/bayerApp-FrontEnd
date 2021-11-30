@@ -12,24 +12,24 @@
                 <h4 class="text-left" style="color: black;">Buscador en catálogo</h4>
                 <div class="row pb-2 ml-4">
                     <div class="col-lg-3 col-md-3 col-sm-12 text-left">
-                        <label for="flg_programado" class="texto-color">Especie</label>
+                        <label for="especie" class="texto-color">Especie</label>
                         <ng-select style="color: #857c85 !important;" placeholder="--Seleccione una opción--" class="form-control form-control-sm"
-                            notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="especie">
-                            <ng-option></ng-option>
+                            notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="especie" (change)="onChangeEspecies($event);">
+                            <ng-option *ngFor="let e of arrayEspecies" [value]="e.id">{{e.nombreEspecie}}</ng-option>
                         </ng-select>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12 text-left">
-                        <label for="flg_programado" class="texto-color">Tipo</label>
+                        <label for="tipo" class="texto-color">Tipo</label>
                         <ng-select style="color: #857c85 !important;" placeholder="--Seleccione una opción--" class="form-control form-control-sm"
-                            notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="tipo">
-                            <ng-option></ng-option>
+                            notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="tipo" (change)="onChangeTipos($event);">
+                            <ng-option *ngFor="let t of arrayTipos" [value]="t.id">{{t.nombreTipo}}</ng-option>
                         </ng-select>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12 text-left">
-                        <label for="gls_agrupacion" class="texto-color">Variedad</label>
+                        <label for="variedad" class="texto-color">Variedad</label>
                         <ng-select style="color: #857c85 !important;" placeholder="--Seleccione una opción--" class="form-control form-control-sm"
-                            notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="variedad">
-                            <ng-option></ng-option>
+                            notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="variedad" (change)="onChangeVariedades($event);">
+                            <ng-option *ngFor="let v of arrayVariedades" [value]="v.id">{{v.nombreVariedad}}</ng-option>
                         </ng-select>
                     </div>
                 </div>
