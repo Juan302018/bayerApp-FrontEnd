@@ -1,0 +1,105 @@
+// Mixins PJUD
+@mixin icono-menu($url) {
+  //Original: 13px;
+  $tamano:18;
+  width: #{$tamano}px;
+  height: #{$tamano}px;
+  background-size: #{$tamano}px #{$tamano}px;
+  background-image: url($url);
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+// Barra morada de navegación - Tramitar Causa General
+.icono-menu-audiencia {
+  @include icono-menu("/assets/img/icons/menu/audiencias.png");
+}
+.icono-menu-litigantes {
+  @include icono-menu("/assets/img/icons/menu/litigantes.png");
+}
+.icono-menu-delitos {
+  @include icono-menu("/assets/img/icons/menu/delitos.png");
+}
+.icono-menu-relaciones {
+  @include icono-menu("/assets/img/icons/menu/relaciones.png");
+}
+.icono-menu-plazos {
+  @include icono-menu("/assets/img/icons/menu/plazos.png");
+}
+.icono-menu-oficios {
+  @include icono-menu("/assets/img/icons/menu/oficios.png");
+}
+.icono-menu-liquidaciones {
+  @include icono-menu("/assets/img/icons/menu/liquidaciones.png");
+}
+.icono-menu-custodia {
+  @include icono-menu("/assets/img/icons/menu/custodia.png");
+}
+.icono-menu-multa {
+  @include icono-menu("/assets/img/icons/menu/multa.png");
+}
+.icono-menu-audio {
+  @include icono-menu("/assets/img/icons/menu/audios.png");
+}
+.icono-menu-cuenta-corriente {
+  @include icono-menu("/assets/img/icons/menu/cuenta_corriente.png");
+}
+.icono-menu-info-participante {
+  @include icono-menu("/assets/img/icons/menu/info_participante.png");
+}
+.icono-menu-info-primera {
+  @include icono-menu("/assets/img/icons/menu/info-primera.png");
+}
+.icono-menu-info-top {
+  @include icono-menu("/assets/img/icons/menu/info-top.png");
+}
+.icono-menu-info-segunda {
+  @include icono-menu("/assets/img/icons/menu/info-civ.png");
+}
+.icono-menu-info-tercera {
+  @include icono-menu("/assets/img/icons/menu/info-cs.png");
+}
+// Barra morada de navegación - Tramitar Dentro de Audiencia
+// Barra morada de navegación - Tramitar Resolución
+// Barra morada de navegación - Tramitar Actuación
+.icono-menu-agregar-documento {
+  @include icono-menu("/assets/img/icons/menu/agregar_documento.png");
+}
+.icono-menu-seleccionar-juez {
+  @include icono-menu("/assets/img/icons/menu/seleccionar_juez_firma.png");
+}
+.icono-menu-grabar-tramite {
+  @include icono-menu("/assets/img/icons/menu/grabar_tramite.png");
+}
+.icono-menu-enviar-firma {
+  @include icono-menu("/assets/img/icons/menu/enviar_firma.png");
+}
+.icono-menu-invalidar {
+  @include icono-menu("/assets/img/icons/menu/invalidar.png");
+}
+.icono-menu-firmar {
+  @include icono-menu("/assets/img/icons/menu/firmar.png");
+}
+.icono-menu-enviar-secretario {
+  @include icono-menu("/assets/img/icons/menu/enviar_secretario.png");
+}
+.icono-menu-adjuntar-documento {
+  @include icono-menu("/assets/img/icons/menu/adjuntar_documento.png");
+}
+// Barra morada de documentos
+.icono-menu-demanda {
+  @include icono-menu("/assets/img/icons/menu/documentos_demanda.png");
+}
+.icono-menu-anexos {
+  @include icono-menu("/assets/img/icons/menu/documentos_anexos.png");
+}
+.icono-menu-ebook {
+  @include icono-menu("/assets/img/icons/menu/documentos_ebook.png");
+}
+.icono-menu-ojv {
+  @include icono-menu("/assets/img/icons/menu/documentos_ojv.png");
+}
+.icono-menu-notas {
+  @include icono-menu("/assets/img/icons/menu/notas.png");
+}

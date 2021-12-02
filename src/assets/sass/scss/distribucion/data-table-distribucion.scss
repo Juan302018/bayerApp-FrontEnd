@@ -1,0 +1,441 @@
+//faltan borrar algunas clases inncesarias :D
+
+a:hover {
+  font-size:13px;
+  color: blue;
+}
+
+.imagen {
+  width:25px;
+  height:25px;
+  position:relative;
+}
+
+
+.circulo-rojo {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: flex;
+  background: #FF0000;
+  margin-top: 8px;
+  margin-left: 27px;
+}
+
+.circulo-verde {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #008000;
+  margin-top: 8px;
+  margin-left: 27px;
+}
+
+.circulo-amarillo {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #ADFF2F;
+  margin-top: 8px;
+  margin-left: 27px;
+}
+
+.stylevisto{
+  font-style: italic;
+  font-weight: bolder;
+}
+
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  font-size: 15px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 60px;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+.container:hover input ~ .checkmark {
+  left: 60px;
+  background-color: #eee;
+
+}
+
+.container input:checked ~ .checkmark {
+  left: 60px;
+  background-color: #2196F3;
+}
+
+.checkmark:after {
+  left: 60px;
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container .checkmark:after {
+  left: 8px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: 0 solid white;
+  border-right-width: 3px;
+  border-bottom-width: 3px;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.container2 {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  top: 15px;
+
+}
+
+.container2 input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+  top: 15px;
+
+
+}
+
+/* Create a custom checkbox */
+.checkmark2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+.container2:hover input ~ .checkmark2 {
+  background-color: #eee;
+
+}
+
+.container2 input:checked ~ .checkmark2 {
+  background-color: #2196F3;
+}
+
+.checkmark2:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container2 input:checked ~ .checkmark2:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container2 .checkmark2:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: 0 solid white;
+  border-right-width: 3px;
+  border-bottom-width: 3px;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.tasks {
+  margin: 40px auto;
+  width: 240px;
+  background: white;
+  border: 1px solid #cdd3d7;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.tasks-header {
+  position: relative;
+  line-height: 24px;
+  padding: 7px 15px;
+  color: #5d6b6c;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.7);
+  background: #f0f1f2;
+  border-bottom: 1px solid #d1d1d1;
+  border-radius: 3px 3px 0 0;
+  background-image: -webkit-linear-gradient(top, #f5f7fd, #e6eaec);
+  background-image: -moz-linear-gradient(top, #f5f7fd, #e6eaec);
+  background-image: -o-linear-gradient(top, #f5f7fd, #e6eaec);
+  background-image: linear-gradient(to
+  bottom, #f5f7fd, #e6eaec);
+  -webkit-box-shadow: inset 0 1px
+  rgba(255, 255, 255, 0.5), 0 1px rgba(0, 0,
+          0, 0.03); box-shadow: inset 0 1px
+rgba(255, 255, 255, 0.5), 0 1px rgba(0, 0,
+        0, 0.03);
+}
+.check-card{
+  cursor: pointer;
+}
+.tasks-list-cb:checked ~
+
+.check-card-selected{
+  background-color: #dbe5f399 !important;
+  color: #000000 !important;
+}
+.loading{
+  width: 60px;
+  height: 60px;
+}
+.datatable-header-cell {
+  vertical-align: bottom;
+  border-bottom: 2px solid #ddd;
+  padding: 8px;
+  line-height: 1.42857143;
+  //font-weight: bold;
+  color: #d32f2f;
+}
+
+.datatable-header-cell-label{
+  font-size: 15pt
+}
+.fondo{
+  background: white;
+  box-shadow: 0 6px 0 0 rgba(0,0,0,.01), 0 15px 32px 0 rgba(0,0,0,.06);
+  //border-radius: 4px;
+  border-radius: 0.25rem!important;
+
+}
+
+
+.Media {
+  border-left: 3px solid #ff0000c7 !important;
+}
+
+.vertical-border-orange {
+  border-left: 3px solid #ffa000d4 !important;
+}
+
+.vertical-border-green {
+  border-left: 3px solid #008000a6 !important;
+}
+
+.vertical-border-gray {
+  border-left: 3px solid rgba(111, 128, 116, 0.65) !important;
+}
+
+::ng-deep .modal-custom-xl .modal-dialog {
+  min-width: 90% !important;
+  max-width: 90% !important;
+}
+
+::ng-deep .border-prioridad-rojo {
+  border-left: 3px solid red !important;
+}
+.tarea-letra-Grande {
+  font-size: 1.5rem;
+  a{
+    font-size: 1.5rem;
+  }
+}
+.tarea-letra-Media {
+  font-size: 1.4rem;
+  a{
+    font-size: 1.4rem;
+  }
+}
+.tarea-letra-pequena {
+  a{
+    font-size: 14px;
+  }
+  font-size: 14px;
+}
+.tarea-letra-Grande-general {
+  font-size: 1.5rem;
+  a{
+    font-size: 1.5rem;
+  }
+}
+.tarea-letra-Media-general{
+  font-size: 1.4rem;
+  a{
+    font-size: 1.4rem;
+  }
+}
+.tarea-letra-pequena-general {
+  a{
+    font-size: 14px;
+  }
+  font-size: 14px;
+}
+
+.tabla {
+  box-shadow: -8px 8px 14px 0 rgba(25, 42, 70, 0.11);
+  border: 0 solid rgba(0, 0, 0, 0.125);
+  border-radius: .35rem;
+}
+
+.help-icon{
+  background-color: #fecc5066 !important;
+  color: #FF9800 !important;
+  border-color: #e0fbda;
+  padding-bottom: .6rem;
+  padding-top: .6rem;
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  box-shadow: 0 6px 0 0 rgba(0, 0, 0, 0.01), 0 15px 32px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  padding-right: .65em;
+  padding-left: .6em;
+  border-radius: 10rem;
+}
+.doc-icon{
+  background-color: #6f83bf38 !important;
+  color: #6f83bfe0 !important;
+  border-color: #e0fbda;
+  padding-bottom: .6rem;
+  padding-top: .6rem;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  box-shadow: 0 6px 0 0 rgba(0, 0, 0, 0.01), 0 15px 32px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+}
+.ebook-icon{
+  background-color: #54a85733 !important;
+  color: #45ad49 !important;
+  border-color: #e0fbda;
+  padding-bottom: .6rem;
+  padding-top: .6rem;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  box-shadow: 0 6px 0 0 rgba(0, 0, 0, 0.01), 0 15px 32px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+}
+
+::ng-deep .ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {
+  padding: 0 !important;
+}
+
+::ng-deep datatable-header-cell{
+  max-height: 30px !important;
+}
+
+::ng-deep datatable-body-cell{
+  padding-top: 4px !important;
+  padding-bottom: 0 !important;
+}
+::ng-deep.ngx-datatable.scroll-horz .datatable-body {
+  overflow-x: auto;
+}
+
+.bandeja-link{
+  cursor: pointer;
+  text-decoration: underline;
+  color: #5461a9;
+}
+
+.table {
+  box-shadow: -8px 8px 14px 0 rgba(25, 42, 70, 0.11);
+  border: 0 solid rgba(0, 0, 0, 0.125);
+  border-radius: .35rem;
+  thead{
+    th{
+      background-color: #6f82bf;
+      color: white;
+      font-weight: 500;
+      font-size: 16px;
+      padding-top: 3px;
+      padding-bottom: 3px;
+    }
+  }
+  color: #495057;
+  tbody{
+    th{
+      font-weight: normal!important;
+    }
+  }
+}
+
+
+.table.dataTable.no-footer {
+  border-bottom: 0px solid #111111;
+}
+
+/*.table.dataTable tbody th, table.dataTable tbody td {
+  padding: 2px;
+}*/
+.table.dataTable thead th, table.dataTable thead td {
+  //padding: 10px 18px;
+  border-bottom: 0px solid #111111;
+}
+
+::ng-deep.dataTables_wrapper .dataTables_filter {
+  label {
+    input {
+      outline-offset: -2px;
+      -webkit-appearance: none;
+      border: 1px solid rgb(111, 131, 191);
+      border-radius: .35rem !important;
+      color: #495057;
+    }
+  }
+}
+.table-hover tbody tr:hover {
+  color: #212529;
+  background-color: rgba(169, 188, 226, 0.3);
+}
+.table.dataTable{
+  border-collapse: collapse;
+}
+
+.fondoRojo{
+  background-color: rgba(243, 32, 11, 0.48);
+}
+
+.fondoVerde{
+  background-color: rgba(100, 176, 77, 0.41);
+}

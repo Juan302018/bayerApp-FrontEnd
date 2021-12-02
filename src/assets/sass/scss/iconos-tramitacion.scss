@@ -1,0 +1,123 @@
+@use "sass:list";
+@use "sass:map";
+
+// Mixins PJUD
+@mixin icono-variant($tamano,$url) {
+  $urlFinal:"/assets/img/icons/tramitacion/"+$url+".png";
+  width: #{$tamano}px;
+  height: #{$tamano}px;
+  background-size: #{$tamano}px #{$tamano}px;
+  //width: 100px;
+  //height: 100px;
+  background-image: url($urlFinal);
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  display: inline-block;
+}
+@mixin icono($url) {
+  $urlFinal:"/assets/img/icons/tramitacion/"+$url+".png";
+  width: 20px;
+  height: 20px;
+  background-size: 20px 20px;
+  background-image: url($urlFinal);
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  display: inline-block;
+}
+.btn-icono {
+  cursor: pointer;
+  border: none;
+}
+
+//Opcion1: Generar el listado de tamaños en base a while
+$iconosTamano:(
+  10: "10x10",
+);
+
+$i: 10;
+@while $i < 100 {
+  $i: $i + 5;
+  //@debug $i;
+  $llave: $i;  
+  $valor: #{$llave}x#{$llave};
+  $item: ("#{$llave}":$valor);
+  //@debug $item;
+  $iconosTamano: map-merge($iconosTamano,$item);  
+  //@debug $iconosTamano;
+}
+
+//Opción 2: Generar el listdo de tamaño de íconos a mano, pero guárdándolos en este map
+/*
+$iconosTamano:(
+  10: "10x10",
+  15: "15x15",
+  20: "20x20",
+  25: "25x25",
+  30: "30x30",
+  35: "35x35",
+  40: "40x40",
+  45: "45x45",
+  50: "50x50",
+  55: "55x55",
+  60: "60x60",
+  65: "65x65",
+  70: "70x70",
+  75: "75x75",
+  80: "80x80",
+  85:  "85x85",
+  90:  "90x90",
+  95:  "95x95",
+  100:  "100x100"
+);
+*/
+
+$iconosTramitacion:(
+  actuacion-receptor:  "actuacion-100x100",
+  actuacion-receptor-blanco:  "actuacion-100x100-02",
+  civil: "civil-100x100",
+  civil-blanco: "civil-100x100-02",
+  cs: "cs-100x100",
+  cs-blanco: "cs-100x100-02",
+  cuenta-corriente: "cuenta-corriente-100x100",
+  cuenta-corriente-blanco: "cuenta-corriente-100x100-02",
+  firma: "firma-100x100",
+  firma-blanco: "firma-100x100-02",
+  info-instancia: "info-instancia-100x100",
+  info-instancia-blanco: "info-instancia-100x100-02",
+  info-litigante: "info-litigante-100x100",
+  info-litigante-blanco: "info-litigante-100x100-02",
+  mesa-de-trabajo-blanco: "mesa-de-trabajo-100x100-02",
+  multas: "multas-100x100",
+  multas-blanco: "multas-100x100-02",
+  relaciones: "relaciones-100x100",
+  relaciones-blanco: "relaciones-100x100-02"
+);
+
+// Implementación de mejora
+// Crear los íconos en base al listdo de ícono y al nuevo listado de tamaños
+// Con esto buscamos evitar un listado enorme, difícil de manantener, en la generación de clases
+@each $key,$val in $iconosTramitacion {
+  //@debug $key + " -> " + $val;
+
+  //Antes acá estaban todos los tamaños en duro
+  //Ahora se busca recorrer el listado
+  @each $key2,$val2 in $iconosTamano {
+    //@debug $key2+" -> "+$val2;
+    $nombreClase:".icono-tramitar";
+    //@debug #{$nombreClase}-#{$key}-#{$key2};
+    //@debug #{$nombreClase}-#{$key}-#{$key2};
+    
+    #{$nombreClase}-#{$key}-#{$key2} {
+      @include icono-variant($key2,$val);      
+    }
+
+    /*
+    .icono-#{$key}-#{$key2} {
+      @include icono-variant(10,$val2);
+    }
+    .icono-#{$key}-#{$key2}-blanco {
+      @include icono-variant(10,$val2+"-02");
+    }
+    */
+  }
+}

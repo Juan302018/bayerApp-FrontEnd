@@ -1,0 +1,43 @@
+.card {
+  border: 1px solid color-function("morado-2", "base");
+  color: color-function("gris", "base");
+}
+
+.card-bar {
+  background-color: color-function("morado-2", "base");
+  color: white;
+  border-bottom: rgba(0, 0, 0, 0.13) 1px solid;
+  display: flex;
+  height: 30px;
+  padding-top: 2px;
+}
+
+.card-header {
+  color: color-function("gris", "base");
+  background-color: rgba(color-function("morado-4", "base"), 0.1);
+
+  p {
+    font-size: 14px;
+  }
+}
+
+.card-content {
+  color: color-function("gris", "base");
+  padding-top: 10px;
+}
+
+.card-background-light {
+  background-image: url("/src/assets/img/card-background-light.png") !important;
+}
+
+.card-background {
+  background-image: url("/src/assets/img/card-background.png") !important;
+}
+
+.card-title {
+  text-align: center;
+  flex: 1 0 auto;
+  color: white;
+  font-size: 16px;
+  text-transform: none !important;
+}
