@@ -42,6 +42,14 @@ export class BayerService {
     );
   }
 
+  public filtraListaProducto(idEspacie: number, idTipo: number, idVariedad): Observable<any>{
+    return this.http.post<any>(this.url + 'filtro/lista-filtro/' + idEspacie +'/'+ idTipo +'/'+ idVariedad, this.httpOptions).pipe(
+      tap(() => {}),
+      catchError(this.handleError<any>())      
+    );
+  }
+
+
     /**
 * Handle Http operation that failed.
 * Let the app continue.
