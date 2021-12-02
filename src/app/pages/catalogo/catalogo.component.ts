@@ -51,9 +51,10 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     this.cargarEspeciesSemillas();
     this.cargarTiposSemillas();
     this.cargarVariedadesSemillas();
-    this.cargarTodoProductos();
+    //this.cargarTodoProductos();
   }
 
+  /*
   cargarTodoProductos() {
     this.listaTodoProductsSubscription = this.bayerService.listarTodoProducto().subscribe((productos) => {
       if (productos !== null || productos !== undefined) {
@@ -78,6 +79,17 @@ export class CatalogoComponent implements OnInit, OnDestroy {
       }
     });
   }
+  */
+
+  ejecutarListaProducto(idEspacie, idTipo, idVariedad) {
+    this.listaTodoProductsSubscription = this.bayerService.filtraListaProducto(idEspacie, idTipo, idVariedad).subscribe(productList => {
+      if (productList !== null || productList !== undefined) {
+        console.log('productList: ', productList);
+        this.arrayProductos = productList;
+        console.log('arrayProductos: ', this.arrayProductos);
+      }
+    });
+  }
 
   cargarEspeciesSemillas() {
     this.listaEspeciesSubscription = this.bayerService
@@ -86,7 +98,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
       .subscribe((especies) => {
         if (especies !== null || especies !== undefined) {
           this.arrayEspecies = especies;
-          console.log('arrayEspecies: ',this.arrayEspecies);
+          console.log('arrayEspecies: ', this.arrayEspecies);
         } else {
           console.error('No hay data!');
         }
@@ -95,48 +107,53 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   cargarTiposSemillas() {
     this.listaTiposSubscription = this.bayerService
-    .listarTipos()
-    .pipe(take(1))
-    .subscribe((tipos) => {
-      if (tipos !== null || tipos !== undefined) {
-        this.arrayTipos = tipos;
-        console.log('arrayTipos: ',this.arrayTipos);
-      } else {
-        console.error('No hay data!');
-      }
-    });
+      .listarTipos()
+      .pipe(take(1))
+      .subscribe((tipos) => {
+        if (tipos !== null || tipos !== undefined) {
+          this.arrayTipos = tipos;
+          console.log('arrayTipos: ', this.arrayTipos);
+        } else {
+          console.error('No hay data!');
+        }
+      });
   }
 
   cargarVariedadesSemillas() {
     this.listaVariedadesSubscription = this.bayerService
-    .listarVariedades()
-    .pipe(take(1))
-    .subscribe((variedades) => {
-      if (variedades !== null || variedades !== undefined) {
-        this.arrayVariedades = variedades;
-        console.log('arrayVariedades: ',this.arrayVariedades);
-      } else {
-        console.error('No hay data!');
-      }
-    });
+      .listarVariedades()
+      .pipe(take(1))
+      .subscribe((variedades) => {
+        if (variedades !== null || variedades !== undefined) {
+          this.arrayVariedades = variedades;
+          console.log('arrayVariedades: ', this.arrayVariedades);
+        } else {
+          console.error('No hay data!');
+        }
+      });
   }
 
   onChangeEspecies(event) {
     let especieSel: any = this.arrayEspecies.find(e => e.id === event).id;
     this.especie = especieSel;
-    console.log('especie: ',this.especie);
+    console.log('especie: ', this.especie);
   }
 
   onChangeTipos(event) {
     let tipoSel: any = this.arrayTipos.find(t => t.id === event).id;
     this.tipo = tipoSel;
-    console.log('tipo: ',this.tipo);
+    console.log('tipo: ', this.tipo);
   }
 
   onChangeVariedades(event) {
     let variedadSel = this.arrayVariedades.find(v => v.id === event).id;
     this.variedad = variedadSel;
-    console.log('variedad: ',this.variedad);
+    console.log('variedad: ', this.variedad);
+  }
+
+  buscarProductos() {
+    console.log('paramsProduct',this.especie, this.tipo, this.variedad);
+    this.ejecutarListaProducto(this.especie, this.tipo, this.variedad);
   }
 
   ngOnDestroy(): void {
