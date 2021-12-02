@@ -16,13 +16,16 @@ import { BayerService } from 'src/app/services/bayer.service';
   templateUrl: './catalogo.component.html',
   styleUrls: ['./catalogo.component.scss'],
 })
+
 export class CatalogoComponent implements OnInit, OnDestroy {
+  private listaTodoProductsSubscription: Subscription;
   private listaEspeciesSubscription: Subscription;
   private listaTiposSubscription: Subscription;
   private listaVariedadesSubscription: Subscription;
 
   public flagCargando: boolean = false;
   public dataSourceCatalogo = new Array();
+  public arrayProductos = new Array();
   public arrayEspecies = new Array();
   public arrayTipos = new Array();
   public arrayVariedades = new Array();
@@ -41,10 +44,39 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.flagCargando = true;
     this.flagCargando = false;
+    this.cargarComponente();
+  }
+
+  cargarComponente() {
     this.cargarEspeciesSemillas();
     this.cargarTiposSemillas();
     this.cargarVariedadesSemillas();
+    this.cargarTodoProductos();
+  }
 
+  cargarTodoProductos() {
+    this.listaTodoProductsSubscription = this.bayerService.listarTodoProducto().subscribe((productos) => {
+      if (productos !== null || productos !== undefined) {
+        console.log('productos: ',productos);
+        this.arrayProductos = this.arrayProductos.concat(productos.envases);
+        this.arrayProductos = this.arrayProductos.concat(productos.especies);
+        this.arrayProductos = this.arrayProductos.concat(productos.materiales);
+        this.arrayProductos = this.arrayProductos.concat(productos.preciosPorMateriales);
+        this.arrayProductos = this.arrayProductos.concat(productos.tipos);
+        this.arrayProductos = this.arrayProductos.concat(productos.unidades);
+        this.arrayProductos = this.arrayProductos.concat(productos.variadades);
+        console.log('arrayProductos: ',this.arrayProductos);
+        this.arrayProductos.forEach(p => {
+          let datos = new Object();
+          this.dataSourceCatalogo = this.dataSourceCatalogo.concat(p.nombreEspecie);
+          this.dataSourceCatalogo = this.dataSourceCatalogo.concat(p.nombreTipo);
+          this.dataSourceCatalogo = this.dataSourceCatalogo.concat(p.nombreVariedad);
+          this.dataSourceCatalogo = this.dataSourceCatalogo.concat(p.tipoEnvase);
+          //this.dataSourceCatalogo = this.dataSourceCatalogo.concat(datos);
+          console.log('dataSourceCatalogo: ',this.dataSourceCatalogo);
+        });
+      }
+    });
   }
 
   cargarEspeciesSemillas() {
@@ -116,6 +148,9 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     }
     if (this.listaVariedadesSubscription) {
       this.listaVariedadesSubscription.unsubscribe();
+    }
+    if (this.listaTodoProductsSubscription) {
+      this.listaTodoProductsSubscription.unsubscribe();
     }
   }
 }

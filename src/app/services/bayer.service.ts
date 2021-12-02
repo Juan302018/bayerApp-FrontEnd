@@ -35,6 +35,13 @@ export class BayerService {
     );
   }
 
+  public listarTodoProducto(): Observable<any> {
+    return this.http.get<any>(this.url + 'filtro/todos', this.httpOptions).pipe(
+      tap(() => { }),
+      catchError(this.handleError<any>())
+    );
+  }
+
     /**
 * Handle Http operation that failed.
 * Let the app continue.
