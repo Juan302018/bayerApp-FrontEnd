@@ -45,47 +45,55 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     this.flagCargando = true;
     this.flagCargando = false;
     this.cargarComponente();
+   
   }
 
   cargarComponente() {
     this.cargarEspeciesSemillas();
     this.cargarTiposSemillas();
     this.cargarVariedadesSemillas();
-    //this.cargarTodoProductos();
+    this.cargarTodoProductos();
   }
 
-  /*
+  
   cargarTodoProductos() {
-    this.listaTodoProductsSubscription = this.bayerService.listarTodoProducto().subscribe((productos) => {
-      if (productos !== null || productos !== undefined) {
-        console.log('productos: ',productos);
-        this.arrayProductos = this.arrayProductos.concat(productos.envases);
-        this.arrayProductos = this.arrayProductos.concat(productos.especies);
-        this.arrayProductos = this.arrayProductos.concat(productos.materiales);
-        this.arrayProductos = this.arrayProductos.concat(productos.preciosPorMateriales);
-        this.arrayProductos = this.arrayProductos.concat(productos.tipos);
-        this.arrayProductos = this.arrayProductos.concat(productos.unidades);
-        this.arrayProductos = this.arrayProductos.concat(productos.variadades);
-        console.log('arrayProductos: ',this.arrayProductos);
-        this.arrayProductos.forEach(p => {
-          let datos = new Object();
-          this.dataSourceCatalogo = this.dataSourceCatalogo.concat(p.nombreEspecie);
-          this.dataSourceCatalogo = this.dataSourceCatalogo.concat(p.nombreTipo);
-          this.dataSourceCatalogo = this.dataSourceCatalogo.concat(p.nombreVariedad);
-          this.dataSourceCatalogo = this.dataSourceCatalogo.concat(p.tipoEnvase);
-          //this.dataSourceCatalogo = this.dataSourceCatalogo.concat(datos);
-          console.log('dataSourceCatalogo: ',this.dataSourceCatalogo);
-        });
+    let i ;
+    this.listaTodoProductsSubscription = this.bayerService.listarTodoProducto().subscribe((productList) => {
+      console.log('todos los productos: ', productList);
+      for(i=0; i<productList.materiales.length;i++){
+        productList.materiales[i].tipoEnvase = productList.envases[i].tipoEnvase
+        productList.materiales[i].nombreEspecie = productList.especies[i].nombreEspecie
+        productList.materiales[i].nombreTipo = productList.tipos[i].nombreTipo
+        productList.materiales[i].nombreVariedad = productList.variadades[i].nombreVariedad
+        productList.materiales[i].cantidadMedida = productList.unidades[i].cantidad
+        productList.materiales[i].unidadMedida = productList.unidades[i].unidadMedida
+        productList.materiales[i].precioporUnidad = productList.preciosPorMateriales[i].valorUnidad
       }
+        
+      this.arrayProductos = productList.materiales;
+      console.log('arrayProductos: ', this.arrayProductos);
     });
   }
-  */
 
   ejecutarListaProducto(idEspacie, idTipo, idVariedad) {
+    let i ;
     this.listaTodoProductsSubscription = this.bayerService.filtraListaProducto(idEspacie, idTipo, idVariedad).subscribe(productList => {
       if (productList !== null || productList !== undefined) {
         console.log('productList: ', productList);
-        this.arrayProductos = productList;
+        
+        
+        for(i=0; i<productList.materiales.length;i++){
+          productList.materiales[i].tipoEnvase = productList.envases[i].tipoEnvase
+          productList.materiales[i].nombreEspecie = productList.especies[i].nombreEspecie
+          productList.materiales[i].nombreTipo = productList.tipos[i].nombreTipo
+          productList.materiales[i].nombreVariedad = productList.variadades[i].nombreVariedad
+          productList.materiales[i].cantidadMedida = productList.unidades[i].cantidad
+          productList.materiales[i].unidadMedida = productList.unidades[i].unidadMedida
+          productList.materiales[i].precioporUnidad = productList.preciosPorMateriales[i].valorUnidad
+        }
+
+        this.arrayProductos = productList.materiales;
+
         console.log('arrayProductos: ', this.arrayProductos);
       }
     });
