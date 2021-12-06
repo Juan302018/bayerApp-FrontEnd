@@ -54,15 +54,16 @@
                                 <!-- La propiedad footerHeight oculta el pie de la tabla [footerHeight]="50" -->
                                 <ngx-datatable style="font-size: 14.5px !important;"
                                     #tabCatalogo class="bootstrap componente-tabla material fullscreen"
-                                    [rows]="dataSourceCatalogo" [columnMode]="'force'"
+                                    [rows]="arrayProductos" [columnMode]="'force'"
                                     [rowHeight]="'auto'" [scrollbarH]="false" [reorderable]="true"
                                     [messages]="{emptyMessage:'No hay datos en la tabla.'}">
                                     <ngx-datatable-column name="Especie" prop="nombreEspecie" [width]="100"></ngx-datatable-column>
-                                    <ngx-datatable-column name="Tipo" prop="tipo" [width]="100"></ngx-datatable-column>
-                                    <ngx-datatable-column name="Variedad" prop="variedad" [width]="100"></ngx-datatable-column>
+                                    <ngx-datatable-column name="Tipo" prop="nombreTipo" [width]="100"></ngx-datatable-column>
+                                    <ngx-datatable-column name="Variedad" prop="nombreVariedad" [width]="100"></ngx-datatable-column>
                                     <ngx-datatable-column name="Envase" prop="tipoEnvase" [width]="100"></ngx-datatable-column>
-                                    <ngx-datatable-column name="Precio" prop="precio" [width]="100"></ngx-datatable-column>
-                                    <ngx-datatable-column name="Cantidad" prop="cantidad" [width]="100"></ngx-datatable-column>
+                                    <ngx-datatable-column name="Unidad Medida" prop="unidadMedida" [width]="100"></ngx-datatable-column>
+                                    <ngx-datatable-column name="Precio" prop="precioporUnidad" [width]="100"></ngx-datatable-column>
+                                    <ngx-datatable-column name="Cantidad" prop="cantidadMedida" [width]="100"></ngx-datatable-column>
                                     <ngx-datatable-column name="Agregar" prop="Agregar" [width]="100"></ngx-datatable-column>
                                 </ngx-datatable>
                         </div>
