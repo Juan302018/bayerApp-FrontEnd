@@ -72,17 +72,17 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     this.listaTodoProductsSubscription = this.bayerService.listarTodoProducto().subscribe((productList) => {
       console.log('todos los productos: ', productList);
       if (productList !== null || productList !== undefined) {
-        for (let i = 0; i < productList.materiales.length; i++) {
-          productList.materiales[i].tipoEnvase = productList.envases[i].tipoEnvase;
-          productList.materiales[i].nombreEspecie = productList.especies[i].nombreEspecie;
-          productList.materiales[i].nombreTipo = productList.tipos[i].nombreTipo;
-          productList.materiales[i].nombreVariedad = productList.variadades[i].nombreVariedad;
-          productList.materiales[i].cantidadMedida = productList.unidades[i].cantidad;
-          productList.materiales[i].unidadMedida = productList.unidades[i].unidadMedida;
-          productList.materiales[i].precioporUnidad = productList.preciosPorMateriales[i].valorUnidad;
+        for (let i = 0; i < productList.length; i++) {
+          productList[i].tipoEnvase = productList[i].envase.tipoEnvase;
+          productList[i].nombreEspecie = productList[i].especieSemilla.nombreEspecie;
+          productList[i].nombreTipo = productList[i].tipoSemilla.nombreTipo;
+          productList[i].nombreVariedad = productList[i].variedadSemilla.nombreVariedad;
+          productList[i].cantidadMedida = productList[i].unidad.cantidad;
+          productList[i].unidadMedida = productList[i].unidad.unidadMedida;
+          productList[i].precioporUnidad = productList[i].preciosPorMaterial.valorUnidad;
         }
         swal.close();
-        this.arrayProductos = productList.materiales;
+        this.arrayProductos = productList;
         console.log('arrayProductos: ', this.arrayProductos);
       }
     });
@@ -106,17 +106,17 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     this.listaTodoProductsSubscription = this.bayerService.filtraListaProducto(idEspacie, idTipo, idVariedad).subscribe(productList => {
       if (productList !== null || productList !== undefined) {
         console.log('productList: ', productList);
-        for (let i = 0; i < productList.materiales.length; i++) {
-          productList.materiales[i].tipoEnvase = productList.envases[i].tipoEnvase
-          productList.materiales[i].nombreEspecie = productList.especies[i].nombreEspecie
-          productList.materiales[i].nombreTipo = productList.tipos[i].nombreTipo
-          productList.materiales[i].nombreVariedad = productList.variadades[i].nombreVariedad
-          productList.materiales[i].cantidadMedida = productList.unidades[i].cantidad
-          productList.materiales[i].unidadMedida = productList.unidades[i].unidadMedida
-          productList.materiales[i].precioporUnidad = productList.preciosPorMateriales[i].valorUnidad
+        for (let i = 0; i < productList.length; i++) {
+          productList[i].tipoEnvase = productList[i].envase.tipoEnvase;
+          productList[i].nombreEspecie = productList[i].especieSemilla.nombreEspecie;
+          productList[i].nombreTipo = productList[i].tipoSemilla.nombreTipo;
+          productList[i].nombreVariedad = productList[i].variedadSemilla.nombreVariedad;
+          productList[i].cantidadMedida = productList[i].unidad.cantidad;
+          productList[i].unidadMedida = productList[i].unidad.unidadMedida;
+          productList[i].precioporUnidad = productList[i].preciosPorMaterial.valorUnidad;
         }
         swal.close();
-        this.arrayProductos = productList.materiales;
+        this.arrayProductos = productList;
         console.log('arrayProductos: ', this.arrayProductos);
       }
     });
@@ -184,6 +184,15 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   buscarProductos() {
     console.log('paramsProduct', this.especie, this.tipo, this.variedad);
+    if(this.especie == undefined){
+      this.especie = "0"
+    }
+    if(this.tipo == undefined){
+      this.tipo = "0"
+    }
+    if(this.variedad == undefined){
+      this.variedad = "0"
+    }
     this.ejecutarListaProducto(this.especie, this.tipo, this.variedad);
   }
 
