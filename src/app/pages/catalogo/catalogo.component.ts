@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { BayerService } from 'src/app/services/bayer.service';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-catalogo',
@@ -42,10 +43,8 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.flagCargando = true;
-    this.flagCargando = false;
     this.cargarComponente();
-   
+
   }
 
   cargarComponente() {
@@ -55,34 +54,59 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     this.cargarTodoProductos();
   }
 
-  
   cargarTodoProductos() {
-    let i ;
+    this.flagCargando = true;
+    setTimeout(
+      () =>
+        swal.fire({
+          title: 'Atención!',
+          text: 'Cargando datos ...',
+          imageUrl: 'assets/img/loadingCircucle.gif',
+          showConfirmButton: false,
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+        }),
+      100
+    );
+    this.flagCargando = false;
     this.listaTodoProductsSubscription = this.bayerService.listarTodoProducto().subscribe((productList) => {
       console.log('todos los productos: ', productList);
-      for(i=0; i<productList.materiales.length;i++){
-        productList.materiales[i].tipoEnvase = productList.envases[i].tipoEnvase
-        productList.materiales[i].nombreEspecie = productList.especies[i].nombreEspecie
-        productList.materiales[i].nombreTipo = productList.tipos[i].nombreTipo
-        productList.materiales[i].nombreVariedad = productList.variadades[i].nombreVariedad
-        productList.materiales[i].cantidadMedida = productList.unidades[i].cantidad
-        productList.materiales[i].unidadMedida = productList.unidades[i].unidadMedida
-        productList.materiales[i].precioporUnidad = productList.preciosPorMateriales[i].valorUnidad
+      if (productList !== null || productList !== undefined) {
+        for (let i = 0; i < productList.materiales.length; i++) {
+          productList.materiales[i].tipoEnvase = productList.envases[i].tipoEnvase;
+          productList.materiales[i].nombreEspecie = productList.especies[i].nombreEspecie;
+          productList.materiales[i].nombreTipo = productList.tipos[i].nombreTipo;
+          productList.materiales[i].nombreVariedad = productList.variadades[i].nombreVariedad;
+          productList.materiales[i].cantidadMedida = productList.unidades[i].cantidad;
+          productList.materiales[i].unidadMedida = productList.unidades[i].unidadMedida;
+          productList.materiales[i].precioporUnidad = productList.preciosPorMateriales[i].valorUnidad;
+        }
+        swal.close();
+        this.arrayProductos = productList.materiales;
+        console.log('arrayProductos: ', this.arrayProductos);
       }
-        
-      this.arrayProductos = productList.materiales;
-      console.log('arrayProductos: ', this.arrayProductos);
     });
   }
 
   ejecutarListaProducto(idEspacie, idTipo, idVariedad) {
-    let i ;
+    this.flagCargando = true;
+    setTimeout(
+      () =>
+        swal.fire({
+          title: 'Atención!',
+          text: 'Cargando datos ...',
+          imageUrl: 'assets/img/loadingCircucle.gif',
+          showConfirmButton: false,
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+        }),
+      100
+    );
+    this.flagCargando = false;
     this.listaTodoProductsSubscription = this.bayerService.filtraListaProducto(idEspacie, idTipo, idVariedad).subscribe(productList => {
       if (productList !== null || productList !== undefined) {
         console.log('productList: ', productList);
-        
-        
-        for(i=0; i<productList.materiales.length;i++){
+        for (let i = 0; i < productList.materiales.length; i++) {
           productList.materiales[i].tipoEnvase = productList.envases[i].tipoEnvase
           productList.materiales[i].nombreEspecie = productList.especies[i].nombreEspecie
           productList.materiales[i].nombreTipo = productList.tipos[i].nombreTipo
@@ -91,9 +115,8 @@ export class CatalogoComponent implements OnInit, OnDestroy {
           productList.materiales[i].unidadMedida = productList.unidades[i].unidadMedida
           productList.materiales[i].precioporUnidad = productList.preciosPorMateriales[i].valorUnidad
         }
-
+        swal.close();
         this.arrayProductos = productList.materiales;
-
         console.log('arrayProductos: ', this.arrayProductos);
       }
     });
@@ -160,7 +183,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   }
 
   buscarProductos() {
-    console.log('paramsProduct',this.especie, this.tipo, this.variedad);
+    console.log('paramsProduct', this.especie, this.tipo, this.variedad);
     this.ejecutarListaProducto(this.especie, this.tipo, this.variedad);
   }
 
