@@ -15,21 +15,22 @@
                         <label for="especie" class="texto-color">Especie</label>
                         <ng-select style="color: #857c85 !important;" placeholder="--Seleccione una opción--" class="form-control form-control-sm"
                             notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="especie" (change)="onChangeEspecies($event);">
-                            <ng-option *ngFor="let e of arrayEspecies" [value]="e.id">{{e.nombreEspecie}}</ng-option>
+                            <!-- <ng-option [value]="0"> </ng-option> -->
+                            <ng-option *ngFor="let e of arrayEspecies" [value]="e.id">{{e.nombreEspecie | lowercase}}</ng-option>
                         </ng-select>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12 text-left">
                         <label for="tipo" class="texto-color">Tipo</label>
                         <ng-select style="color: #857c85 !important;" placeholder="--Seleccione una opción--" class="form-control form-control-sm"
                             notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="tipo" (change)="onChangeTipos($event);">
-                            <ng-option *ngFor="let t of arrayTipos" [value]="t.id">{{t.nombreTipo}}</ng-option>
+                            <ng-option *ngFor="let t of arrayTipos" [value]="t.id">{{t.nombreTipo | lowercase}}</ng-option>
                         </ng-select>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12 text-left">
                         <label for="variedad" class="texto-color">Variedad</label>
                         <ng-select style="color: #857c85 !important;" placeholder="--Seleccione una opción--" class="form-control form-control-sm"
                             notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="variedad" (change)="onChangeVariedades($event);">
-                            <ng-option *ngFor="let v of arrayVariedades" [value]="v.id">{{v.nombreVariedad}}</ng-option>
+                            <ng-option *ngFor="let v of arrayVariedades" [value]="v.id">{{v.nombreVariedad | lowercase}}</ng-option>
                         </ng-select>
                     </div>
                 </div>

@@ -31,9 +31,9 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   public arrayTipos = new Array();
   public arrayVariedades = new Array();
 
-  especie: string;
-  tipo: string;
-  variedad: string;
+  especie: any;
+  tipo: any;
+  variedad: any;
 
   constructor(
     private toastrService: ToastrService,
@@ -44,13 +44,10 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cargarComponente();
-
   }
 
   cargarComponente() {
     this.cargarEspeciesSemillas();
-    this.cargarTiposSemillas();
-    this.cargarVariedadesSemillas();
     this.cargarTodoProductos();
   }
 
@@ -89,37 +86,52 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   }
 
   ejecutarListaProducto(idEspacie, idTipo, idVariedad) {
-    this.flagCargando = true;
-    setTimeout(
-      () =>
-        swal.fire({
-          title: 'Atención!',
-          text: 'Cargando datos ...',
-          imageUrl: 'assets/img/loadingCircucle.gif',
-          showConfirmButton: false,
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-        }),
-      100
-    );
-    this.flagCargando = false;
-    this.listaTodoProductsSubscription = this.bayerService.filtraListaProducto(idEspacie, idTipo, idVariedad).subscribe(productList => {
-      if (productList !== null || productList !== undefined) {
-        console.log('productList: ', productList);
-        for (let i = 0; i < productList.length; i++) {
-          productList[i].tipoEnvase = productList[i].envase.tipoEnvase;
-          productList[i].nombreEspecie = productList[i].especieSemilla.nombreEspecie;
-          productList[i].nombreTipo = productList[i].tipoSemilla.nombreTipo;
-          productList[i].nombreVariedad = productList[i].variedadSemilla.nombreVariedad;
-          productList[i].cantidadMedida = productList[i].unidad.cantidad;
-          productList[i].unidadMedida = productList[i].unidad.unidadMedida;
-          productList[i].precioporUnidad = productList[i].preciosPorMaterial.valorUnidad;
+    // if (idEspacie !== 0 && idTipo !== 0 && idVariedad !== 0) {
+      this.flagCargando = true;
+      setTimeout(
+        () =>
+          swal.fire({
+            title: 'Atención!',
+            text: 'Cargando datos ...',
+            imageUrl: 'assets/img/loadingCircucle.gif',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+          }),
+        100
+      );
+      this.flagCargando = false;
+      this.listaTodoProductsSubscription = this.bayerService.filtraListaProducto(idEspacie, idTipo, idVariedad).subscribe(productList => {
+        if (productList !== null || productList !== undefined) {
+          console.log('productList: ', productList);
+          for (let i = 0; i < productList.length; i++) {
+            productList[i].tipoEnvase = productList[i].envase.tipoEnvase;
+            productList[i].nombreEspecie = productList[i].especieSemilla.nombreEspecie;
+            productList[i].nombreTipo = productList[i].tipoSemilla.nombreTipo;
+            productList[i].nombreVariedad = productList[i].variedadSemilla.nombreVariedad;
+            productList[i].cantidadMedida = productList[i].unidad.cantidad;
+            productList[i].unidadMedida = productList[i].unidad.unidadMedida;
+            productList[i].precioporUnidad = productList[i].preciosPorMaterial.valorUnidad;
+          }
+          swal.close();
+          this.arrayProductos = productList;
+          console.log('arrayProductos: ', this.arrayProductos);
         }
-        swal.close();
-        this.arrayProductos = productList;
-        console.log('arrayProductos: ', this.arrayProductos);
-      }
-    });
+      });
+   /* } else {
+      this.flagCargando = false;
+      setTimeout(
+        () =>
+          swal.fire(
+            'Error',
+            '<span><b><div class="alert alert-danger" role="alert">' +
+            'Debe seleccionar al menos una opción de las listas desplegables!' +
+            '</div></b></span>',
+            'error'
+          ),
+        1000
+      );
+    } */
   }
 
   cargarEspeciesSemillas() {
@@ -128,6 +140,10 @@ export class CatalogoComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe((especies) => {
         if (especies !== null || especies !== undefined) {
+          especies = especies.concat({ id: 0, nombreEspecie: 'Sin especie semilla' });
+          especies = especies.sort((a, b) => {
+            return a.id.toString().localeCompare(b.id);
+          });
           this.arrayEspecies = especies;
           console.log('arrayEspecies: ', this.arrayEspecies);
         } else {
@@ -136,12 +152,16 @@ export class CatalogoComponent implements OnInit, OnDestroy {
       });
   }
 
-  cargarTiposSemillas() {
+  cargarTiposSemillas(idEspecie: number) {
     this.listaTiposSubscription = this.bayerService
-      .listarTipos()
+      .filtraPorIdEspecie(idEspecie)
       .pipe(take(1))
       .subscribe((tipos) => {
         if (tipos !== null || tipos !== undefined) {
+          tipos = tipos.concat({ id: 0, nombreTipo: 'Sin tipo semilla' });
+          tipos = tipos.sort((a, b) => {
+            return a.id.toString().localeCompare(b.id);
+          });
           this.arrayTipos = tipos;
           console.log('arrayTipos: ', this.arrayTipos);
         } else {
@@ -150,30 +170,52 @@ export class CatalogoComponent implements OnInit, OnDestroy {
       });
   }
 
-  cargarVariedadesSemillas() {
-    this.listaVariedadesSubscription = this.bayerService
-      .listarVariedades()
-      .pipe(take(1))
-      .subscribe((variedades) => {
-        if (variedades !== null || variedades !== undefined) {
-          this.arrayVariedades = variedades;
-          console.log('arrayVariedades: ', this.arrayVariedades);
-        } else {
-          console.error('No hay data!');
-        }
-      });
+  cargarVariedadesSemillas(idTipo: number) {
+    if (idTipo === 0) {
+      this.listaVariedadesSubscription = this.bayerService
+        .filtraPorIdTipo(idTipo)
+        .pipe(take(1))
+        .subscribe((variedades) => {
+          if (variedades === null || variedades === undefined) {
+            console.log('variedades: ', variedades);
+            variedades = { id: 0, nombreVariedad: 'Sin variedad semilla' };
+            this.arrayVariedades.push(variedades);
+            console.log('arrayVariedades: ', this.arrayVariedades);
+          }
+        });
+    } else {
+      this.listaVariedadesSubscription = this.bayerService
+        .filtraPorIdTipo(idTipo)
+        .pipe(take(1))
+        .subscribe((variedades) => {
+          if (variedades !== null || variedades !== undefined) {
+            console.log('variedades: ', variedades);
+            variedades = variedades.concat({ id: 0, nombreVariedad: 'Sin variedad semilla' });
+            variedades = variedades.sort((a, b) => {
+              return a.id.toString().localeCompare(b.id);
+            });
+
+            this.arrayVariedades = variedades;
+            console.log('arrayVariedades: ', this.arrayVariedades);
+          } else {
+            console.error('No hay data!');
+          }
+        });
+    }
   }
 
   onChangeEspecies(event) {
     let especieSel: any = this.arrayEspecies.find(e => e.id === event).id;
     this.especie = especieSel;
     console.log('especie: ', this.especie);
+    this.cargarTiposSemillas(this.especie);
   }
 
   onChangeTipos(event) {
     let tipoSel: any = this.arrayTipos.find(t => t.id === event).id;
     this.tipo = tipoSel;
     console.log('tipo: ', this.tipo);
+    this.cargarVariedadesSemillas(this.tipo);
   }
 
   onChangeVariedades(event) {
@@ -184,15 +226,6 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   buscarProductos() {
     console.log('paramsProduct', this.especie, this.tipo, this.variedad);
-    if(this.especie == undefined){
-      this.especie = "0"
-    }
-    if(this.tipo == undefined){
-      this.tipo = "0"
-    }
-    if(this.variedad == undefined){
-      this.variedad = "0"
-    }
     this.ejecutarListaProducto(this.especie, this.tipo, this.variedad);
   }
 
