@@ -42,8 +42,22 @@ export class BayerService {
     );
   }
 
-  public filtraListaProducto(idEspacie: number, idTipo: number, idVariedad): Observable<any>{
-    return this.http.post<any>(this.url + 'filtro/lista-filtro/' + idEspacie +'/'+ idTipo +'/'+ idVariedad, this.httpOptions).pipe(
+  public filtraListaProducto(idEspecie: number, idTipo: number, idVariedad): Observable<any>{
+    return this.http.post<any>(this.url + 'filtro/lista-filtro/' + idEspecie +'/'+ idTipo +'/'+ idVariedad, this.httpOptions).pipe(
+      tap(() => {}),
+      catchError(this.handleError<any>())      
+    );
+  }
+
+  public filtraPorIdEspecie(idEspecie: number): Observable<any>{
+    return this.http.post<any>(this.url + 'tipo-semilla/por-especie/' + idEspecie, this.httpOptions).pipe(
+      tap(() => {}),
+      catchError(this.handleError<any>())      
+    );
+  }
+
+  public filtraPorIdTipo(idTipo: number): Observable<any>{
+    return this.http.post<any>(this.url + 'variedad-semilla/por-tipo/' + idTipo, this.httpOptions).pipe(
       tap(() => {}),
       catchError(this.handleError<any>())      
     );
