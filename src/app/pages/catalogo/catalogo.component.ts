@@ -35,6 +35,10 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   tipo: any;
   variedad: any;
 
+  editing = {};
+  rows = [];
+  labels = [];
+
   constructor(
     private toastrService: ToastrService,
     private bayerService: BayerService
@@ -74,8 +78,11 @@ export class CatalogoComponent implements OnInit, OnDestroy {
           productList[i].nombreEspecie = productList[i].especieSemilla.nombreEspecie;
           productList[i].nombreTipo = productList[i].tipoSemilla.nombreTipo;
           productList[i].nombreVariedad = productList[i].variedadSemilla.nombreVariedad;
-          productList[i].cantidadMedida = productList[i].unidad.cantidad;
           productList[i].unidadMedida = productList[i].unidad.unidadMedida;
+          productList[i].cantidadMedida = productList[i].unidad.cantidad;
+          productList[i].unidadCantidad = `${productList[i].unidad.cantidad}`+ " " + `${productList[i].unidad.unidadMedida}`;
+          productList[i].cantidad = 0;
+
           productList[i].precioporUnidad = productList[i].preciosPorMaterial.valorUnidad;
         }
         swal.close();
@@ -112,6 +119,8 @@ export class CatalogoComponent implements OnInit, OnDestroy {
             productList[i].cantidadMedida = productList[i].unidad.cantidad;
             productList[i].unidadMedida = productList[i].unidad.unidadMedida;
             productList[i].precioporUnidad = productList[i].preciosPorMaterial.valorUnidad;
+            productList[i].unidadCantidad = `${productList[i].unidad.cantidad}`+ `" "` + `${productList[i].unidad.unidadMedida}`;
+            productList[i].cantidad = 0;
           }
           swal.close();
           this.arrayProductos = productList;
@@ -227,6 +236,26 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   buscarProductos() {
     console.log('paramsProduct', this.especie, this.tipo, this.variedad);
     this.ejecutarListaProducto(this.especie, this.tipo, this.variedad);
+  }
+
+  // call to update cell value
+  updateValue(event, rowIndex) {
+    this.arrayProductos[rowIndex].cantidad = event.target.value;
+    this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad;
+    console.log("cantidad:" , this.arrayProductos[rowIndex].cantidad);
+  }
+  disminuirCantidad(rowIndex){
+    if(this.arrayProductos[rowIndex].cantidad < 0){
+      this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad +1;
+    }
+    this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad - 1;
+    console.log("cantidad:" , this.arrayProductos[rowIndex].cantidad);
+  }
+
+  aumentarCantidad(rowIndex){
+    
+    this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad + 1;
+    console.log("cantidad:" , this.arrayProductos[rowIndex].cantidad);
   }
 
   ngOnDestroy(): void {

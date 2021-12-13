@@ -58,14 +58,45 @@
                                     [rows]="arrayProductos" [columnMode]="'force'"
                                     [rowHeight]="'auto'" [scrollbarH]="false" [reorderable]="true"
                                     [messages]="{emptyMessage:'No hay datos en la tabla.'}">
-                                    <ngx-datatable-column name="Especie" prop="nombreEspecie" [width]="100"></ngx-datatable-column>
-                                    <ngx-datatable-column name="Tipo" prop="nombreTipo" [width]="100"></ngx-datatable-column>
-                                    <ngx-datatable-column name="Variedad" prop="nombreVariedad" [width]="100"></ngx-datatable-column>
-                                    <ngx-datatable-column name="Envase" prop="tipoEnvase" [width]="100"></ngx-datatable-column>
-                                    <ngx-datatable-column name="Unidad Medida" prop="unidadMedida" [width]="100"></ngx-datatable-column>
-                                    <ngx-datatable-column name="Precio" prop="precioporUnidad" [width]="100"></ngx-datatable-column>
-                                    <ngx-datatable-column name="Cantidad" prop="cantidadMedida" [width]="100"></ngx-datatable-column>
-                                    <ngx-datatable-column name="Agregar" prop="Agregar" [width]="100"></ngx-datatable-column>
+                                    
+                                        <ngx-datatable-column name="Especie" prop="nombreEspecie" [width]="100"></ngx-datatable-column>
+                                        <ngx-datatable-column name="Tipo" prop="nombreTipo" [width]="100"></ngx-datatable-column>
+                                        <ngx-datatable-column name="Variedad" prop="nombreVariedad" [width]="100"></ngx-datatable-column>
+                                        <ngx-datatable-column name="Envase" prop="tipoEnvase" [width]="100"></ngx-datatable-column>
+                                        <ngx-datatable-column name="Cantidad" prop="unidadCantidad" [width]="100"></ngx-datatable-column>
+                                       
+                                        <ngx-datatable-column name="Precio" prop="precioporUnidad" [width]="100"></ngx-datatable-column>
+                                       
+                                        <ngx-datatable-column name="Cantidad" prop="cantidad" [width]="100">
+                                            <ng-template ngx-datatable-cell-template let-row="row" let-rowIndex="rowIndex">
+                                                <div class="row">
+                                                    <div class="col-sm-2">
+                                                        <button type="button" class="btn btn-danger btn-circle btn-sm" (click)="disminuirCantidad(rowIndex)">-</button>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <input
+                                                        autofocus
+                                                        min="0"
+                                                        type="number"
+                                                        (blur)="updateValue($event, rowIndex)"
+                                                        (keyup.enter)="updateValue($event, rowIndex)"
+                                                        class="form-control"
+                                                        [(ngModel)]="row.cantidad"
+                                                        />
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <button type="button" class="btn btn-success btn-circle btn-sm" (click)="aumentarCantidad(rowIndex)">+</button>
+                                                    </div>
+                                                    
+                                                </div>
+                                            
+                                            
+                                        </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Agregar" prop="Agregar" [width]="100"></ngx-datatable-column>
+
+                                    
+                                    
                                 </ngx-datatable>
                         </div>
                     </div>
