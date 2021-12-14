@@ -245,11 +245,17 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     console.log("cantidad:" , this.arrayProductos[rowIndex].cantidad);
   }
   disminuirCantidad(rowIndex){
-    if(this.arrayProductos[rowIndex].cantidad < 0){
-      this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad +1;
+    
+    if(this.arrayProductos[rowIndex].cantidad == 0){
+      this.arrayProductos[rowIndex].cantidad = 0;
     }
-    this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad - 1;
-    console.log("cantidad:" , this.arrayProductos[rowIndex].cantidad);
+    if(this.arrayProductos[rowIndex].cantidad > 0){
+      this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad - 1;
+      console.log("cantidad:" , this.arrayProductos[rowIndex].cantidad);
+    }
+      
+    
+    
   }
 
   aumentarCantidad(rowIndex){
