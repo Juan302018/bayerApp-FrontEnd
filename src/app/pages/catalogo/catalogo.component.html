@@ -8,73 +8,102 @@
     </div>
     <div class="row">
         <div class="col-12-lg">
-            <div class="card p-3">
-                <h4 class="text-left" style="color: black;">Buscador en catálogo</h4>
-                <div class="row pb-2 ml-4">
-                    <div class="col-lg-3 col-md-3 col-sm-12 text-left">
-                        <label for="especie" class="texto-color">Especie</label>
-                        <ng-select style="color: #857c85 !important;" placeholder="--Seleccione una opción--" class="form-control form-control-sm"
-                            notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="especie" (change)="onChangeEspecies($event);">
-                            <!-- <ng-option [value]="0"> </ng-option> -->
-                            <ng-option *ngFor="let e of arrayEspecies" [value]="e.id">{{e.nombreEspecie | lowercase}}</ng-option>
-                        </ng-select>
+
+            <div class="container">
+                <div class="card p-3">
+                    <h4 class="text-left" style="color: black;">Buscador en catálogo</h4>
+                    <div class="row pb-2 ml-4">
+                        <div class="col-lg-3 col-md-3 col-sm-12 text-left">
+                            <label for="especie" class="texto-color">Especie</label>
+                            <ng-select style="color: #857c85 !important;" placeholder="--Seleccione una opción--" class="form-control form-control-sm"
+                                notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="especie" (change)="onChangeEspecies($event);">
+                                <!-- <ng-option [value]="0"> </ng-option> -->
+                                <ng-option *ngFor="let e of arrayEspecies" [value]="e.id">{{e.nombreEspecie | lowercase}}</ng-option>
+                            </ng-select>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12 text-left">
+                            <label for="tipo" class="texto-color">Tipo</label>
+                            <ng-select style="color: #857c85 !important;" placeholder="--Seleccione una opción--" class="form-control form-control-sm"
+                                notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="tipo" (change)="onChangeTipos($event);">
+                                <ng-option *ngFor="let t of arrayTipos" [value]="t.id">{{t.nombreTipo | lowercase}}</ng-option>
+                            </ng-select>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12 text-left">
+                            <label for="variedad" class="texto-color">Variedad</label>
+                            <ng-select style="color: #857c85 !important;" placeholder="--Seleccione una opción--" class="form-control form-control-sm"
+                                notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="variedad" (change)="onChangeVariedades($event);">
+                                <ng-option *ngFor="let v of arrayVariedades" [value]="v.id">{{v.nombreVariedad | lowercase}}</ng-option>
+                            </ng-select>
+                        </div>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12 text-left">
-                        <label for="tipo" class="texto-color">Tipo</label>
-                        <ng-select style="color: #857c85 !important;" placeholder="--Seleccione una opción--" class="form-control form-control-sm"
-                            notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="tipo" (change)="onChangeTipos($event);">
-                            <ng-option *ngFor="let t of arrayTipos" [value]="t.id">{{t.nombreTipo | lowercase}}</ng-option>
-                        </ng-select>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12 text-left">
-                        <label for="variedad" class="texto-color">Variedad</label>
-                        <ng-select style="color: #857c85 !important;" placeholder="--Seleccione una opción--" class="form-control form-control-sm"
-                            notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="variedad" (change)="onChangeVariedades($event);">
-                            <ng-option *ngFor="let v of arrayVariedades" [value]="v.id">{{v.nombreVariedad | lowercase}}</ng-option>
-                        </ng-select>
-                    </div>
-                </div>
-                <br>
-                <div class="row pb-2 ml-5 col-lg-12">
-                    <div class="col-lg-9 col-md-9 col-sm-9 text-left"></div>
-                    <div class="col-lg-2 col-md-2 col-sm-2 text-left">
-                        <button class="btn btn-danger mr-4 mt-2 pr-5 pl-5" type="button" (click)="buscarProductos();"
-                        triggers="mouseenter:mouseleave"><b>Buscar</b></button>
+                    <br>
+                    <div class="row pb-2 ml-5 col-lg-12">
+                        <div class="col-lg-9 col-md-9 col-sm-9 text-left"></div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 text-left">
+                            <button class="btn btn-danger mr-4 mt-2 pr-5 pl-5" type="button" (click)="buscarProductos();"
+                            triggers="mouseenter:mouseleave"><b>Buscar</b></button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <br><br>
-            <div class="card p-3">
+            <br>
+            
+            <div class="card px-5">
                 <div class="row pb-2">
                     <div class="row-tabla">
                         <div class="row p-0">
-                            <!-- <div class="col-12"> -->
-                                <div class="col-md-12 p-0" *ngIf="flagCargando">
-                                    <ngb-progressbar [value]="100" [striped]="true" [animated]="true"></ngb-progressbar>
-                                </div>
+                               
+                            <div class="col-md-12 p-0" *ngIf="flagCargando">
+                                <ngb-progressbar [value]="100" [striped]="true" [animated]="true"></ngb-progressbar>
+                            </div>
                                 <!-- La propiedad footerHeight oculta el pie de la tabla [footerHeight]="50" -->
-                                <ngx-datatable style="font-size: 14.5px !important;"
-                                    #tabCatalogo class="bootstrap componente-tabla material fullscreen"
+                                <ngx-datatable style="font-size: 14.5px !important; text-align: center;"
+                                    class="material"
+                                    #tabCatalogo
                                     [rows]="arrayProductos" [columnMode]="'force'"
                                     [rowHeight]="'auto'" [scrollbarH]="false" [reorderable]="true"
                                     [messages]="{emptyMessage:'No hay datos en la tabla.'}">
-                                    
-                                        <ngx-datatable-column name="Especie" prop="nombreEspecie" [width]="100"></ngx-datatable-column>
-                                        <ngx-datatable-column name="Tipo" prop="nombreTipo" [width]="100"></ngx-datatable-column>
-                                        <ngx-datatable-column name="Variedad" prop="nombreVariedad" [width]="100"></ngx-datatable-column>
-                                        <ngx-datatable-column name="Envase" prop="tipoEnvase" [width]="100"></ngx-datatable-column>
-                                        <ngx-datatable-column name="Cantidad" prop="unidadCantidad" [width]="100"></ngx-datatable-column>
-                                       
-                                        <ngx-datatable-column name="Precio" prop="precioporUnidad" [width]="100"></ngx-datatable-column>
-                                       
-                                        <ngx-datatable-column name="Cantidad" prop="cantidad" [width]="100">
-                                            <ng-template ngx-datatable-cell-template let-row="row" let-rowIndex="rowIndex">
-                                                <div class="row">
-                                                    <div class="col-sm-2">
-                                                        <button type="button" class="btn btn-danger btn-circle btn-sm" (click)="disminuirCantidad(rowIndex)">-</button>
-                                                    </div>
-                                                    <div class="col-sm-8">
-                                                        <input
+                                        
+                                    <ngx-datatable-column name="Especie" prop="nombreEspecie" cellClass="d-flex align-items-center">
+                                        <ng-template ngx-datatable-cell-template let-value="value">
+                                            {{value}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Tipo" prop="nombreTipo" >
+                                        <ng-template ngx-datatable-cell-template let-value="value">
+                                            {{value}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Variedad" prop="nombreVariedad" >
+                                        <ng-template ngx-datatable-cell-template let-value="value">
+                                            {{value}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Envase" prop="tipoEnvase">
+                                        <ng-template ngx-datatable-cell-template let-value="value">
+                                            {{value}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Cantidad" prop="unidadCantidad">
+                                        <ng-template ngx-datatable-cell-template let-value="value">
+                                            {{value}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                        
+                                    <ngx-datatable-column name="Precio" prop="precioporUnidad">
+                                        <ng-template ngx-datatable-cell-template let-value="value">
+                                            {{value}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                        
+                                    <ngx-datatable-column name="Cantidad" prop="cantidad">
+                                        <ng-template ngx-datatable-cell-template let-row="row" let-rowIndex="rowIndex">
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                                    <button type="button" class="btn btn-danger btn-circle" (click)="disminuirCantidad(rowIndex)"><font size="4">-</font></button>
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <input
                                                         autofocus
                                                         min="0"
                                                         type="number"
@@ -82,26 +111,20 @@
                                                         (keyup.enter)="updateValue($event, rowIndex)"
                                                         class="form-control"
                                                         [(ngModel)]="row.cantidad"
-                                                        />
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <button type="button" class="btn btn-success btn-circle btn-sm" (click)="aumentarCantidad(rowIndex)">+</button>
-                                                    </div>
-                                                    
+                                                    />
                                                 </div>
-                                            
-                                            
+                                                <div class="col-sm-2">
+                                                    <button type="button" class="btn btn-success btn-circle" (click)="aumentarCantidad(rowIndex)"><font size="4">+</font></button>
+                                                </div>    
+                                            </div>
                                         </ng-template>
-                                        </ngx-datatable-column>
-                                        <ngx-datatable-column name="Agregar" prop="Agregar" [width]="100"></ngx-datatable-column>
-
-                                    
-                                    
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Agregar" prop="Agregar" [width]="100"></ngx-datatable-column>
                                 </ngx-datatable>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>   
         </div>
     </div>
 </section>
