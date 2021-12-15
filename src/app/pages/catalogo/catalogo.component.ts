@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BayerService } from 'src/app/services/bayer.service';
 import swal from 'sweetalert2';
 
+
 @Component({
   selector: 'app-catalogo',
   templateUrl: './catalogo.component.html',
@@ -31,6 +32,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   public arrayTipos = new Array();
   public arrayVariedades = new Array();
 
+ 
   especie: any;
   tipo: any;
   variedad: any;
@@ -245,11 +247,17 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     console.log("cantidad:" , this.arrayProductos[rowIndex].cantidad);
   }
   disminuirCantidad(rowIndex){
-    if(this.arrayProductos[rowIndex].cantidad < 0){
-      this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad +1;
+    
+    if(this.arrayProductos[rowIndex].cantidad == 0){
+      this.arrayProductos[rowIndex].cantidad = 0;
     }
-    this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad - 1;
-    console.log("cantidad:" , this.arrayProductos[rowIndex].cantidad);
+    if(this.arrayProductos[rowIndex].cantidad > 0){
+      this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad - 1;
+      console.log("cantidad:" , this.arrayProductos[rowIndex].cantidad);
+    }
+      
+    
+    
   }
 
   aumentarCantidad(rowIndex){
