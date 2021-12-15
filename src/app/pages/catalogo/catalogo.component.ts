@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BayerService } from 'src/app/services/bayer.service';
 import swal from 'sweetalert2';
 
+
 @Component({
   selector: 'app-catalogo',
   templateUrl: './catalogo.component.html',
@@ -38,9 +39,14 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   public arrayTipos = new Array();
   public arrayVariedades = new Array();
 
+ 
   especie: any;
   tipo: any;
   variedad: any;
+
+  editing = {};
+  rows = [];
+  labels = [];
 
   constructor(
     private modalService: NgbModal,
@@ -84,8 +90,11 @@ export class CatalogoComponent implements OnInit, OnDestroy {
           productList[i].nombreEspecie = productList[i].especieSemilla.nombreEspecie;
           productList[i].nombreTipo = productList[i].tipoSemilla.nombreTipo;
           productList[i].nombreVariedad = productList[i].variedadSemilla.nombreVariedad;
-          productList[i].cantidadMedida = productList[i].unidad.cantidad;
           productList[i].unidadMedida = productList[i].unidad.unidadMedida;
+          productList[i].cantidadMedida = productList[i].unidad.cantidad;
+          productList[i].unidadCantidad = `${productList[i].unidad.cantidad}`+ " " + `${productList[i].unidad.unidadMedida}`;
+          productList[i].cantidad = 0;
+
           productList[i].precioporUnidad = productList[i].preciosPorMaterial.valorUnidad;
         }
         swal.close();
@@ -122,6 +131,8 @@ export class CatalogoComponent implements OnInit, OnDestroy {
             productList[i].cantidadMedida = productList[i].unidad.cantidad;
             productList[i].unidadMedida = productList[i].unidad.unidadMedida;
             productList[i].precioporUnidad = productList[i].preciosPorMaterial.valorUnidad;
+            productList[i].unidadCantidad = `${productList[i].unidad.cantidad}`+ `" "` + `${productList[i].unidad.unidadMedida}`;
+            productList[i].cantidad = 0;
           }
           swal.close();
           this.arrayProductos = productList;
@@ -272,6 +283,30 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   actualizarGrilla() {
     this.cargarTodoProductos();
+  }
+
+  // call to update cell value
+  updateValue(event, rowIndex) {
+    this.arrayProductos[rowIndex].cantidad = event.target.value;
+    this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad;
+    console.log("cantidad:" , this.arrayProductos[rowIndex].cantidad);
+  }
+  disminuirCantidad(rowIndex){
+    
+    if(this.arrayProductos[rowIndex].cantidad == 0){
+      this.arrayProductos[rowIndex].cantidad = 0;
+    }
+    if(this.arrayProductos[rowIndex].cantidad > 0){
+      this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad - 1;
+      console.log("cantidad:" , this.arrayProductos[rowIndex].cantidad);
+    }
+    
+  }
+
+  aumentarCantidad(rowIndex){
+    
+    this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad + 1;
+    console.log("cantidad:" , this.arrayProductos[rowIndex].cantidad);
   }
 
   ngOnDestroy(): void {
