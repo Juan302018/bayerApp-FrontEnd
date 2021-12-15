@@ -119,7 +119,13 @@
                                             </div>
                                         </ng-template>
                                     </ngx-datatable-column>
-                                    <ngx-datatable-column name="Agregar" prop="Agregar" [width]="100"></ngx-datatable-column>
+                                    <ngx-datatable-column name="Agregar" prop="Agregar" [width]="100">
+                                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                            <a><button class="btn" placement="left" ngbTooltip="Detalle de compra"
+                                                    (click)="openDetalleDeCompra(ordenDeCompra);"><i
+                                                        class="fa fa-cart-plus fa-2x"></i></button></a>
+                                        </ng-template>
+                                    </ngx-datatable-column>
                                 </ngx-datatable>
                         </div>
                     </div>
@@ -128,3 +134,20 @@
         </div>
     </div>
 </section>
+<footer>
+    <div class="pie">
+        <br>
+        <br>
+        <p><small class="inherit"><b>Valor mínimo de la compra: $500.000 + IVA</b></small></p>
+        <p><small>Los precios expresiones NO incluyen impuestos, tasas, ni gastos de transporte.</small></p>
+        <p><small>Precios y condiciones de venta están sujetos a variación sin previo aviso.</small></p>
+        <p><small>Una vez entregada la semilla, no se aceptan devoluciones.</small></p>
+        <p><small>La orden de compra no garantiza la reserva y precio de la semilla.</small></p>
+        <br>
+    </div>
+</footer>
+
+<ng-template #ordenDeCompra>
+    <app-detalle-orden (envioCerrarModal)="cerrarModal();" (actualizoGrilla)="actualizarGrilla();">
+    </app-detalle-orden>
+</ng-template>
