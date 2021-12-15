@@ -15,24 +15,44 @@
                     <div class="row pb-2 ml-4">
                         <div class="col-lg-3 col-md-3 col-sm-12 text-left">
                             <label for="especie" class="texto-color">Especie</label>
-                            <ng-select style="color: #857c85 !important;" placeholder="--Seleccione una opción--" class="form-control form-control-sm"
-                                notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="especie" (change)="onChangeEspecies($event);">
+                            <ng-select style="color: #857c85 !important;" placeholder="--Seleccione una opción--"
+                                class="form-control form-control-sm" notFoundText="Sin datos!" [clearable]="false"
+                                [(ngModel)]="especie" (change)="onChangeEspecies($event);">
                                 <!-- <ng-option [value]="0"> </ng-option> -->
-                                <ng-option *ngFor="let e of arrayEspecies" [value]="e.id">{{e.nombreEspecie | lowercase}}</ng-option>
+                                <ng-option *ngFor="let e of arrayEspecies" [value]="e.id">{{e.nombreEspecie | lowercase}}
+                                </ng-option>
                             </ng-select>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-12 text-left">
                             <label for="tipo" class="texto-color">Tipo</label>
-                            <ng-select style="color: #857c85 !important;" placeholder="--Seleccione una opción--" class="form-control form-control-sm"
-                                notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="tipo" (change)="onChangeTipos($event);">
-                                <ng-option *ngFor="let t of arrayTipos" [value]="t.id">{{t.nombreTipo | lowercase}}</ng-option>
+                            <ng-select *ngIf="flagActivoTipo === false || especie === 0" style="color: #857c85 !important;"
+                                placeholder="--Seleccione una opción--" class="form-control form-control-sm"
+                                notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="tipo" [disabled]="true">
+                                <ng-option>
+                                </ng-option>
+                            </ng-select>
+                            <ng-select *ngIf="flagActivoTipo === true && especie !== 0 || especie > 0"
+                                style="color: #857c85 !important;" placeholder="--Seleccione una opción--"
+                                class="form-control form-control-sm" notFoundText="Sin datos!" [clearable]="false"
+                                [(ngModel)]="tipo" (change)="onChangeTipos($event);">
+                                <ng-option *ngFor="let t of arrayTipos" [value]="t.id">{{t.nombreTipo | lowercase}}
+                                </ng-option>
                             </ng-select>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-12 text-left">
                             <label for="variedad" class="texto-color">Variedad</label>
-                            <ng-select style="color: #857c85 !important;" placeholder="--Seleccione una opción--" class="form-control form-control-sm"
-                                notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="variedad" (change)="onChangeVariedades($event);">
-                                <ng-option *ngFor="let v of arrayVariedades" [value]="v.id">{{v.nombreVariedad | lowercase}}</ng-option>
+                            <ng-select *ngIf="flagActivoVariedad === false && tipo !== 0" style="color: #857c85 !important;"
+                                placeholder="--Seleccione una opción--" class="form-control form-control-sm"
+                                notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="tipo" [disabled]="true">
+                                <ng-option>
+                                </ng-option>
+                            </ng-select>
+                            <ng-select *ngIf="flagActivoVariedad === true || tipo === 0 || tipo > 0"
+                                style="color: #857c85 !important;" placeholder="--Seleccione una opción--"
+                                class="form-control form-control-sm" notFoundText="Sin datos!" [clearable]="false"
+                                [(ngModel)]="variedad" (change)="onChangeVariedades($event);">
+                                <ng-option *ngFor="let v of arrayVariedades" [value]="v.id">{{v.nombreVariedad | lowercase}}
+                                </ng-option>
                             </ng-select>
                         </div>
                     </div>
@@ -40,15 +60,21 @@
                     <div class="row pb-2 ml-5 col-lg-12">
                         <div class="col-lg-9 col-md-9 col-sm-9 text-left"></div>
                         <div class="col-lg-2 col-md-2 col-sm-2 text-left">
-                            <button class="btn btn-danger mr-4 mt-2 pr-5 pl-5" type="button" (click)="buscarProductos();"
-                            triggers="mouseenter:mouseleave"><b>Buscar</b></button>
+                            <div class="input-group-append">
+                        <!--<button class="btn btn-excel mr-4 mt-2 pr-5 pl-5" type="button"
+                        triggers="mouseenter:mouseleave"><b>Limpiar</b></button> -->
+                            <button *ngIf="especie !== 0" class="btn btn-buscar mr-4 mt-2 pr-5 pl-5" type="button"
+                            (click)="buscarProductos();" triggers="mouseenter:mouseleave"><b>Buscar</b></button>
+                        <button *ngIf="especie === 0" [disabled]="true" class="btn btn-buscar mr-4 mt-2 pr-5 pl-5"
+                            type="button"><b>Buscar</b></button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <br>
             
-            <div class="card px-5">
+            <div class="card px-2">
                 <div class="row pb-2">
                     <div class="row-tabla">
                         <div class="row p-0">
@@ -64,45 +90,45 @@
                                     [rowHeight]="'auto'" [scrollbarH]="false" [reorderable]="true"
                                     [messages]="{emptyMessage:'No hay datos en la tabla.'}">
                                         
-                                    <ngx-datatable-column name="Especie" prop="nombreEspecie" cellClass="d-flex align-items-center">
+                                    <ngx-datatable-column name="Especie" prop="nombreEspecie" [width]="100">
                                         <ng-template ngx-datatable-cell-template let-value="value">
                                             {{value}}
                                         </ng-template>
                                     </ngx-datatable-column>
-                                    <ngx-datatable-column name="Tipo" prop="nombreTipo" >
+                                    <ngx-datatable-column name="Tipo" prop="nombreTipo" [width]="160">
                                         <ng-template ngx-datatable-cell-template let-value="value">
                                             {{value}}
                                         </ng-template>
                                     </ngx-datatable-column>
-                                    <ngx-datatable-column name="Variedad" prop="nombreVariedad" >
+                                    <ngx-datatable-column name="Variedad" prop="nombreVariedad" [width]="100">
                                         <ng-template ngx-datatable-cell-template let-value="value">
                                             {{value}}
                                         </ng-template>
                                     </ngx-datatable-column>
-                                    <ngx-datatable-column name="Envase" prop="tipoEnvase">
+                                    <ngx-datatable-column name="Envase" prop="tipoEnvase" [width]="60">
                                         <ng-template ngx-datatable-cell-template let-value="value">
                                             {{value}}
                                         </ng-template>
                                     </ngx-datatable-column>
-                                    <ngx-datatable-column name="Cantidad" prop="unidadCantidad">
-                                        <ng-template ngx-datatable-cell-template let-value="value">
-                                            {{value}}
-                                        </ng-template>
-                                    </ngx-datatable-column>
-                                        
-                                    <ngx-datatable-column name="Precio" prop="precioporUnidad">
+                                    <ngx-datatable-column name="Cantidad" prop="unidadCantidad" [width]="60">
                                         <ng-template ngx-datatable-cell-template let-value="value">
                                             {{value}}
                                         </ng-template>
                                     </ngx-datatable-column>
                                         
-                                    <ngx-datatable-column name="Cantidad" prop="cantidad">
+                                    <ngx-datatable-column name="Precio" prop="precioporUnidad" [width]="80">
+                                        <ng-template ngx-datatable-cell-template let-value="value">
+                                            {{value}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                        
+                                    <ngx-datatable-column name="Cantidad" prop="cantidad" [width]="140">
                                         <ng-template ngx-datatable-cell-template let-row="row" let-rowIndex="rowIndex">
                                             <div class="row">
                                                 <div class="col-sm-2">
-                                                    <button type="button" class="btn btn-danger btn-circle" (click)="disminuirCantidad(rowIndex)"><font size="4">-</font></button>
+                                                    <button type="button" class="btn btn-danger btn-circle-red" (click)="disminuirCantidad(rowIndex)"><b>-</b></button>
                                                 </div>
-                                                <div class="col-sm-7">
+                                                <div class="col-sm-4 ml-3">
                                                     <input
                                                         autofocus
                                                         min="0"
@@ -114,16 +140,15 @@
                                                     />
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <button type="button" class="btn btn-success btn-circle" (click)="aumentarCantidad(rowIndex)"><font size="4">+</font></button>
+                                                    <button type="button" class="btn btn-success btn-circle" (click)="aumentarCantidad(rowIndex)"><font size="3"><b>+</b></font></button>
                                                 </div>    
                                             </div>
                                         </ng-template>
                                     </ngx-datatable-column>
                                     <ngx-datatable-column name="Agregar" prop="Agregar" [width]="100">
-                                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                                            <a><button class="btn" placement="left" ngbTooltip="Detalle de compra"
-                                                    (click)="openDetalleDeCompra(ordenDeCompra);"><i
-                                                        class="fa fa-cart-plus fa-2x"></i></button></a>
+                                        <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
+                                                <a><button class="btn" placement="left" ngbTooltip="Detalle de compra"
+                                                    (click)="openDetalleDeCompra(ordenDeCompra);"><i class="fa fa-cart-plus fa-2x"></i></button></a>
                                         </ng-template>
                                     </ngx-datatable-column>
                                 </ngx-datatable>
