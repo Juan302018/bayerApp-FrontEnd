@@ -31,6 +31,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   public flagCargando: boolean = false;
   public flagActivoTipo: boolean;
+  public flagDesactivoTipo: boolean;
   public flagActivoVariedad: boolean;
   public flagDesactivo: boolean;
   public dataSourceCatalogo = new Array();
@@ -62,6 +63,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   cargarComponente() {
     this.flagActivoTipo = false;
+    this.flagDesactivoTipo = true;
     this.flagActivoVariedad = false;
     this.cargarEspeciesSemillas();
     this.cargarTodoProductos();
@@ -154,7 +156,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
       );
     }
     this.especie = null;
-    this.flagActivoTipo = false;
+    //this.flagActivoTipo = false;
   }
 
   cargarEspeciesSemillas() {
@@ -177,6 +179,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   cargarTiposSemillas(idEspecie: number) {
     this.flagActivoTipo = true;
+    this.flagDesactivoTipo = false;
     if (idEspecie === 0) {
       this.flagCargando = false;
       setTimeout(
@@ -288,11 +291,12 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   // call to update cell value
   updateValue(event, rowIndex) {
     this.arrayProductos[rowIndex].cantidad = event.target.value;
+    console.log("event:" ,event.target.value);
     this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad;
     console.log("cantidad:" , this.arrayProductos[rowIndex].cantidad);
   }
+
   disminuirCantidad(rowIndex){
-    
     if(this.arrayProductos[rowIndex].cantidad == 0){
       this.arrayProductos[rowIndex].cantidad = 0;
     }
@@ -303,10 +307,9 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     
   }
 
-  aumentarCantidad(rowIndex){
-    
+  aumentarCantidad(rowIndex){ 
     this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad + 1;
-    console.log("cantidad:" , this.arrayProductos[rowIndex].cantidad);
+    console.log("cantidad: " ,this.arrayProductos[rowIndex].cantidad);
   }
 
   ngOnDestroy(): void {

@@ -25,7 +25,7 @@
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-12 text-left">
                             <label for="tipo" class="texto-color">Tipo</label>
-                            <ng-select *ngIf="flagActivoTipo === false || especie === 0" style="color: #857c85 !important;"
+                            <ng-select *ngIf="flagActivoTipo === false || this.flagDesactivoTipo === true || especie === 0" style="color: #857c85 !important;"
                                 placeholder="--Seleccione una opción--" class="form-control form-control-sm"
                                 notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="tipo" [disabled]="true">
                                 <ng-option>
