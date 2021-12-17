@@ -44,6 +44,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   especie: any;
   tipo: any;
   variedad: any;
+  productoAgregadoCarro: any;
 
   editing = {};
   rows = [];
@@ -275,8 +276,9 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     this.ejecutarListaProducto(this.especie, this.tipo, this.variedad);
   }
 
-  openDetalleDeCompra(content) {
+  openDetalleDeCompra(content,rowIndex) {
     // @ts-ignore 
+    this.productoAgregadoCarro = this.arrayProductos[rowIndex];
     this.modalReference = this.modalService.open(content, { windowClass: 'modal-in', backdrop: 'static', keyboard: true, size: 'xl' });
   }
 

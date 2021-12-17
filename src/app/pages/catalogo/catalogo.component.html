@@ -146,9 +146,9 @@
                                         </ng-template>
                                     </ngx-datatable-column>
                                     <ngx-datatable-column name="Agregar" prop="Agregar" [width]="100">
-                                        <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
+                                        <ng-template ngx-datatable-cell-template let-row="row" let-value="value" let-rowIndex="rowIndex">
                                                 <a><button class="btn" placement="left" ngbTooltip="Detalle de compra"
-                                                    (click)="openDetalleDeCompra(ordenDeCompra);"><i class="fa fa-cart-plus fa-2x"></i></button></a>
+                                                    (click)="openDetalleDeCompra(ordenDeCompra,rowIndex);"><i class="fa fa-cart-plus fa-2x"></i></button></a>
                                         </ng-template>
                                     </ngx-datatable-column>
                                 </ngx-datatable>
@@ -173,6 +173,6 @@
 </footer>
 
 <ng-template #ordenDeCompra>
-    <app-detalle-orden (envioCerrarModal)="cerrarModal();" (actualizoGrilla)="actualizarGrilla();">
+    <app-detalle-orden (envioCerrarModal)="cerrarModal();" (actualizoGrilla)="actualizarGrilla();" [nuevoProductoCarro]="productoAgregadoCarro">
     </app-detalle-orden>
 </ng-template>
