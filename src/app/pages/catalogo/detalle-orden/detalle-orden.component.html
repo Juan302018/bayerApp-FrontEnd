@@ -1,108 +1,114 @@
 <section>
-    <div class="modal-content">
-        <div class="modal-header">
+    <div class="modal-content modal-fondo">
+        <div class="modal-header ">
             <h4 class="modal-title titulo">Detalle de la orden</h4>
-            <button type="button" style="color: white !important;" class="btn btn-raised btn-danger btn-cerrar"
-            (click)="cerrarModal();"><b>Cerrar</b></button>
-            
         </div>
     </div>
     <div class="modal-body">
-
-        
-        
         <div class="container">
-                <!-- La propiedad footerHeight oculta el pie de la tabla [footerHeight]="50" -->
-                <div class="row pb-2">
-                    <div class="row-tabla">
-                        <div class="row p-0">
-                            <ngx-datatable style="font-size: 14.5px !important; text-align: center;"
-                                #detalleCompra
-                                class="material"
-                                [rows]="listaProductosCarro" [columnMode]="'force'"
-                                [rowHeight]="'auto'" [scrollbarH]="false" [reorderable]="true"
-                                [messages]="{emptyMessage:'No hay datos en la tabla.'}">
-                            
-                                <ngx-datatable-column name="Especie" prop="nombreEspecie" [width]="150">
-                                    <ng-template ngx-datatable-cell-template let-value="value">
-                                        {{value}}
-                                    </ng-template>
-                                </ngx-datatable-column>
-                                <ngx-datatable-column name="Tipo" prop="nombreTipo" [width]="150">
-                                    <ng-template ngx-datatable-cell-template let-value="value">
-                                        {{value}}
-                                    </ng-template>
-                                </ngx-datatable-column>
-                                <ngx-datatable-column name="Variedad" prop="nombreVariedad" [width]="150">
-                                    <ng-template ngx-datatable-cell-template let-value="value">
-                                        {{value}}
-                                    </ng-template>
-                                </ngx-datatable-column>
-                                <ngx-datatable-column name="Envase" prop="tipoEnvase" [width]="150">
-                                    <ng-template ngx-datatable-cell-template let-value="value">
-                                        {{value}}
-                                    </ng-template>
-                                </ngx-datatable-column>
-                                <ngx-datatable-column name="Cantidad" prop="unidadCantidad" [width]="150">
-                                    <ng-template ngx-datatable-cell-template let-value="value">
-                                        {{value}}
-                                    </ng-template>
-                                </ngx-datatable-column>
-                                    
-                                <ngx-datatable-column name="Precio" prop="precioporUnidad" [width]="150">
-                                    <ng-template ngx-datatable-cell-template let-value="value">
-                                        {{value}}
-                                    </ng-template>
-                                </ngx-datatable-column>
-                                    
-                                <ngx-datatable-column name="Cantidad" prop="cantidad" [width]="250">
-                                    <ng-template ngx-datatable-cell-template let-row="row" let-rowIndex="rowIndex">
-                                        <div class="row">
-                                            <div class="col-sm-2">
-                                                <button type="button" class="btn btn-danger btn-circle-red" (click)="disminuirCantidad(rowIndex)"><b>-</b></button>
-                                            </div>
-                                            <div class="col-sm-4 ml-3">
-                                                <input
-                                                    autofocus
-                                                    min="0"
-                                                    type="number"
-                                                    (blur)="updateValue($event, rowIndex)"
-                                                    (keyup.enter)="updateValue($event, rowIndex)"
-                                                    class="form-control"
-                                                    [(ngModel)]="row.cantidad"
-                                                />
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <button type="button" class="btn btn-success btn-circle" (click)="aumentarCantidad(rowIndex)"><font size="3"><b>+</b></font></button>
-                                            </div>    
-                                        </div>
-                                    </ng-template>
-                                </ngx-datatable-column>
-                                <ngx-datatable-column name="Eliminar" prop="Eliminar" [width]="100">
-                                    <ng-template ngx-datatable-cell-template let-row="row" let-value="value" let-rowIndex="rowIndex">
-                                            <a><button class="btn" placement="left" ngbTooltip="Detalle de compra"
-                                                (click)="eliminarProductodeCarro(rowIndex);"><i class="fa fa-trash"></i></button></a>
-                                    </ng-template>
-                                </ngx-datatable-column>
-                            </ngx-datatable>
+            <!-- La propiedad footerHeight oculta el pie de la tabla [footerHeight]="50" -->
+            <div class="row pb-2">
+                <div class="row-tabla">
+                    <div class="row p-0">
+                        <div class="col-md-12 p-0" *ngIf="flagCargando">
+                            <ngb-progressbar [value]="100" [striped]="true" [animated]="true"></ngb-progressbar>
                         </div>
+                        <ngx-datatable style="font-size: 14.5px !important; text-align: center;"
+                            *ngIf="flagMostrarTabla === false" #detalleCompra class="material"
+                            [rows]="listaProductosCarro" [columnMode]="'force'" [rowHeight]="'auto'"
+                            [scrollbarH]="false" [reorderable]="true"
+                            [messages]="{emptyMessage:'No hay datos en la tabla.'}">
+
+                            <ngx-datatable-column name="Especie" prop="nombreEspecie" [width]="80">
+                                <ng-template ngx-datatable-cell-template let-value="value">
+                                    {{value}}
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Tipo" prop="nombreTipo" [width]="120">
+                                <ng-template ngx-datatable-cell-template let-value="value">
+                                    {{value}}
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Variedad" prop="nombreVariedad" [width]="100">
+                                <ng-template ngx-datatable-cell-template let-value="value">
+                                    {{value}}
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Envase" prop="tipoEnvase" [width]="60">
+                                <ng-template ngx-datatable-cell-template let-value="value">
+                                    {{value}}
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Cantidad" prop="unidadCantidad" [width]="60">
+                                <ng-template ngx-datatable-cell-template let-value="value">
+                                    {{value}}
+                                </ng-template>
+                            </ngx-datatable-column>
+
+                            <ngx-datatable-column name="Precio" prop="precioporUnidad" [width]="80">
+                                <ng-template ngx-datatable-cell-template let-value="value">
+                                    {{value}}
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Cantidad" prop="cantidad" [width]="160">
+                                <ng-template ngx-datatable-cell-template let-row="row" let-rowIndex="rowIndex">
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <button type="button" class="btn btn-danger btn-circle-red"
+                                                (click)="disminuirCantidad(rowIndex)"><b>-</b></button>
+                                        </div>
+                                        <div class="col-sm-4 ml-4">
+                                            <input autofocus min="0" (blur)="updateValue($event, rowIndex)"
+                                                (keyup.enter)="updateValue($event, rowIndex)"
+                                                class="form-control text-center" [(ngModel)]="row.cantidad" />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="button" class="btn btn-success btn-circle"
+                                                (click)="aumentarCantidad(rowIndex)"><b>+</b></button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Eliminar" prop="Eliminar" [width]="70">
+                                <ng-template ngx-datatable-cell-template let-row="row" let-value="value"
+                                    let-rowIndex="rowIndex">
+                                    <a><button class="btn btn-trash" placement="left" ngbTooltip="Eliminar producto"
+                                            (click)="eliminarProductodeCarro(rowIndex);"><i
+                                                class="fa fa-trash fa-2x"></i></button></a>
+                                </ng-template>
+                            </ngx-datatable-column>
+                        </ngx-datatable>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="container">
             <h4>Completar pedido</h4>
             <div class="card">
-                <div class="row">
-                    <span>Total del pedido: {{totalPedido}}</span> 
+                <div class="row col-md-8 ml-3 mr-4 pt-2 pb-2">
+                    <div class="col-sm-3 ml-0"></div>
+                    <div class="col-4">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                            <label>Total del pedido: </label>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                            <input style="color: #857c85;" disabled value="${{totalPedido}}"
+                                placeholder="--No hay registros--" type="text" class="form-control form-control-sm">
+                        </div>
+                    </div>
                 </div>
-            </div> 
-
+            </div>
         </div>
-                        
-                      
-        
     </div>
     <div class="modal-footer">
+        <button type="button" style="color: white !important;" class="btn btn-raised btn-continuar mr-4"
+            triggers="mouseenter:mouseleave" (click)="volverCatalogoCompra();"><b><i
+                    class="fa fa-shopping-cart ml-0 mr-2"></i>Continuar Comprando</b></button>
+        <button type="button" style="color: white !important;" class="btn btn-raised btn-success btn-excel"
+            triggers="mouseenter:mouseleave" (click)="confirmarCarroCompra();"><b><i
+                    class="fa fa-check ml-0 mr-2"></i>Confirmar Orden</b></button>
         <button type="button" style="color: white !important;" class="btn btn-raised btn-danger btn-cerrar"
             (click)="cerrarModal();"><b>Cerrar</b></button>
     </div>

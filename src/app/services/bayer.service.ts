@@ -63,6 +63,13 @@ export class BayerService {
     );
   }
 
+  public carroCompraDetallePedido(detalleCompra: Array<any>): Observable<any>{
+    return this.http.post<any>(this.url + 'detalle-pedido', detalleCompra, this.httpOptions).pipe(
+      tap(() => {}),
+      catchError(this.handleError<any>())      
+    );
+  }
+
 
     /**
 * Handle Http operation that failed.

@@ -1,3 +1,6 @@
+import { DetallePedidoStoreService } from 'src/app/services/local-session/detalle-pedido-store.service';
+import { ToastrService } from 'ngx-toastr';
+import { BayerService } from 'src/app/services/bayer.service';
 import {
   Component,
   EventEmitter,
@@ -9,10 +12,7 @@ import {
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { ToastrService } from 'ngx-toastr';
-import { BayerService } from 'src/app/services/bayer.service';
 import swal from 'sweetalert2';
-
 
 @Component({
   selector: 'app-catalogo',
@@ -31,6 +31,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   public flagCargando: boolean = false;
   public flagActivoTipo: boolean;
+  public flagDesactivoTipo: boolean;
   public flagActivoVariedad: boolean;
   public flagDesactivo: boolean;
   public dataSourceCatalogo = new Array();
@@ -38,8 +39,13 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   public arrayEspecies = new Array();
   public arrayTipos = new Array();
   public arrayVariedades = new Array();
-
  
+  public arrayVariedad: Array<any> = [
+    { id: 0, nombreVariedad: 'Sin variedad semilla' }
+  ];
+
+  detalleCompra: any;
+
   especie: any;
   tipo: any;
   variedad: any;
@@ -52,6 +58,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   constructor(
     private modalService: NgbModal,
     private toastrService: ToastrService,
+    private detallePedidoStoreService: DetallePedidoStoreService,
     private bayerService: BayerService
   ) {
     this.dataSourceCatalogo = [];
@@ -63,6 +70,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   cargarComponente() {
     this.flagActivoTipo = false;
+    this.flagDesactivoTipo = true;
     this.flagActivoVariedad = false;
     this.cargarEspeciesSemillas();
     this.cargarTodoProductos();
@@ -122,7 +130,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
       );
       this.flagCargando = false;
       this.listaTodoProductsSubscription = this.bayerService.filtraListaProducto(idEspacie, idTipo, idVariedad).subscribe(productList => {
-        if (productList !== null || productList !== undefined) {
+        if (productList !== null || productList !== undefined && productList.length > -1) {
           console.log('productList: ', productList);
           for (let i = 0; i < productList.length; i++) {
             productList[i].tipoEnvase = productList[i].envase.tipoEnvase;
@@ -138,6 +146,19 @@ export class CatalogoComponent implements OnInit, OnDestroy {
           swal.close();
           this.arrayProductos = productList;
           console.log('arrayProductos: ', this.arrayProductos);
+        } else if (productList.length ===  undefined) {
+          let msg = productList.error[0].mensaje
+          console.log('msg : ',msg);
+          //this.toastrService.error('No hay registros para esta búsqueda!', 'Atención'), 
+          setTimeout(() =>
+          swal.fire(
+            'Error',
+            '<span><b><div class="alert alert-danger" role="alert">' +
+            '</div></b></span>',
+            'error'
+          ),
+          1000
+          );
         }
       });
       } else {
@@ -154,8 +175,8 @@ export class CatalogoComponent implements OnInit, OnDestroy {
         1000
       );
     }
-    this.especie = null;
-    this.flagActivoTipo = false;
+    //this.especie = null;
+    //this.flagActivoTipo = false;
   }
 
   cargarEspeciesSemillas() {
@@ -178,6 +199,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   cargarTiposSemillas(idEspecie: number) {
     this.flagActivoTipo = true;
+    this.flagDesactivoTipo = false;
     if (idEspecie === 0) {
       this.flagCargando = false;
       setTimeout(
@@ -220,8 +242,8 @@ export class CatalogoComponent implements OnInit, OnDestroy {
         .subscribe((variedades) => {
           if (variedades === null || variedades === undefined) {
             console.log('variedades: ', variedades);
-            variedades = { id: 0, nombreVariedad: 'Sin variedad semilla' };
-            this.arrayVariedades.push(variedades);
+            variedades = this.arrayVariedad;
+            this.arrayVariedades = variedades;
             console.log('arrayVariedades: ', this.arrayVariedades);
           }
         });
@@ -235,7 +257,6 @@ export class CatalogoComponent implements OnInit, OnDestroy {
             variedades = variedades.sort((a, b) => {
               return a.id.toString().localeCompare(b.id);
             });
-
             this.arrayVariedades = variedades;
             console.log('arrayVariedades: ', this.arrayVariedades);
           } else {
@@ -249,15 +270,19 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     let especieSel: any = this.arrayEspecies.find(e => e.id === event).id;
     this.especie = especieSel;
     console.log('especie: ',this.especie);
+    this.flagActivoVariedad = false;
     this.tipo = null;
     this.variedad = null;
     this.cargarTiposSemillas(this.especie);
   }
 
   onChangeTipos(event) {
-    let tipoSel: any = this.arrayTipos.find(t => t.id === event).id;
-    this.tipo = tipoSel;
-    console.log('tipo: ',this.tipo);
+    this.arrayTipos.forEach(t => {
+      if (t.id === event) {
+        this.tipo = event;
+        console.log('tipo: ',this.tipo);
+      }
+    });
     this.variedad = null;
     this.cargarVariedadesSemillas(this.tipo);
   }
@@ -275,7 +300,8 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   openDetalleDeCompra(content,rowIndex) {
     // @ts-ignore 
-    this.productoAgregadoCarro = this.arrayProductos[rowIndex];
+    this.detalleCompra = this.arrayProductos[rowIndex];
+    console.log('detalleCompra: ',this.detalleCompra);
     this.modalReference = this.modalService.open(content, { windowClass: 'modal-in', backdrop: 'static', keyboard: true, size: 'xl' });
   }
 
@@ -287,14 +313,15 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     this.cargarTodoProductos();
   }
 
-  // call to update cell value
+  // Llamada para actualizar el valor de la celda
   updateValue(event, rowIndex) {
     this.arrayProductos[rowIndex].cantidad = event.target.value;
+    console.log("event:" ,event.target.value);
     this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad;
     console.log("cantidad:" , this.arrayProductos[rowIndex].cantidad);
   }
+
   disminuirCantidad(rowIndex){
-    
     if(this.arrayProductos[rowIndex].cantidad == 0){
       this.arrayProductos[rowIndex].cantidad = 0;
     }
@@ -305,10 +332,9 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     
   }
 
-  aumentarCantidad(rowIndex){
-    
+  aumentarCantidad(rowIndex){ 
     this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad + 1;
-    console.log("cantidad:" , this.arrayProductos[rowIndex].cantidad);
+    console.log("cantidad: " ,this.arrayProductos[rowIndex].cantidad);
   }
 
   ngOnDestroy(): void {
