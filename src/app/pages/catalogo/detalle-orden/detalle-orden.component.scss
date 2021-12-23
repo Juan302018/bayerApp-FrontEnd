@@ -127,6 +127,13 @@ input[type='number'] {
     padding: 4px 12px 3px 0;
 }
 
+btn-cart-plus {
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: white !important;
+  border-color: white !important;
+}
+
 .btn-buscar {
     color: white;
     text-align: center;
@@ -139,8 +146,17 @@ input[type='number'] {
     text-align: center;
     outline: none !important;
     box-shadow: none !important;
-    background-color: #04943c !important;
-    border-color: #04943c !important;
+    background-color: #54c454  !important;
+    border-color: #54c454  !important;
+  }
+
+  .btn-continuar {
+    color: white;
+    text-align: center;
+    outline: none !important;
+    box-shadow: none !important;
+    background-color: #0804fc !important;
+    border-color: #0804fc !important;
   }
 
 .masmenos {
@@ -216,17 +232,23 @@ input[type='number'] {
 }
 
 .btn-circle {
-    display:block;
-    border-radius: 50%;
-    //width: 15px;
-    //height: 15px;
+  display:block;
+  border-radius: 50%;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .btn-circle-red {
-    display:block;
-    border-radius: 50%;
-    width: 37px !important;
-    //height: 15px;
+  display:block;
+  border-radius: 50%;
+  width: 37px !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.btn-trash {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 /*

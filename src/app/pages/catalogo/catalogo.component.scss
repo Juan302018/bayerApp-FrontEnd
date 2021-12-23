@@ -95,7 +95,7 @@ input[type='number'] {
     margin-left: 1rem;
 }
 
-.boton_2 {
+.boton {
     background-color: Transparent;
     background-repeat:no-repeat;
     border: none;
@@ -209,6 +209,8 @@ input[type='number'] {
 .btn-circle {
     display:block;
     border-radius: 50%;
+    outline: none !important;
+    box-shadow: none !important;
     //width: 15px;
     //height: 15px;
 }
@@ -217,7 +219,14 @@ input[type='number'] {
     display:block;
     border-radius: 50%;
     width: 37px !important;
+    outline: none !important;
+    box-shadow: none !important;
     //height: 15px;
+}
+
+.btn-cart-plus {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 /*

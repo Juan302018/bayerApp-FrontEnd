@@ -25,7 +25,7 @@
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-12 text-left">
                             <label for="tipo" class="texto-color">Tipo</label>
-                            <ng-select *ngIf="flagActivoTipo === false || this.flagDesactivoTipo === true || especie === 0" style="color: #857c85 !important;"
+                            <ng-select *ngIf="flagActivoTipo === false || this.flagDesactivoTipo === true || especie === 0 && tipo === null" style="color: #857c85 !important;"
                                 placeholder="--Seleccione una opción--" class="form-control form-control-sm"
                                 notFoundText="Sin datos!" [clearable]="false" [(ngModel)]="tipo" [disabled]="true">
                                 <ng-option>
@@ -90,7 +90,7 @@
                                     [rowHeight]="'auto'" [scrollbarH]="false" [reorderable]="true"
                                     [messages]="{emptyMessage:'No hay datos en la tabla.'}">
                                         
-                                    <ngx-datatable-column name="Especie" prop="nombreEspecie" [width]="100">
+                                    <ngx-datatable-column name="Especie" prop="nombreEspecie" [width]="80">
                                         <ng-template ngx-datatable-cell-template let-value="value">
                                             {{value}}
                                         </ng-template>
@@ -128,8 +128,8 @@
                                                 <div class="col-sm-2">
                                                     <button type="button" class="btn btn-danger btn-circle-red" (click)="disminuirCantidad(rowIndex)"><b>-</b></button>
                                                 </div>
-                                                <div class="col-sm-4 ml-3">
-                                                    <input
+                                                <div class="col-sm-4 ml-4">
+                                                    <!--<input
                                                         autofocus
                                                         min="0"
                                                         type="number"
@@ -137,18 +137,26 @@
                                                         (keyup.enter)="updateValue($event, rowIndex)"
                                                         class="form-control"
                                                         [(ngModel)]="row.cantidad"
-                                                    />
+                                                    /> -->
+                                                    <input
+                                                    autofocus
+                                                    min="0"
+                                                    (blur)="updateValue($event, rowIndex)"
+                                                    (keyup.enter)="updateValue($event, rowIndex)"
+                                                    class="form-control text-center"
+                                                    [(ngModel)]="row.cantidad"
+                                                />
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <button type="button" class="btn btn-success btn-circle" (click)="aumentarCantidad(rowIndex)"><font size="3"><b>+</b></font></button>
+                                                    <button type="button" class="btn btn-success btn-circle" (click)="aumentarCantidad(rowIndex)"><b>+</b></button>
                                                 </div>    
                                             </div>
                                         </ng-template>
                                     </ngx-datatable-column>
-                                    <ngx-datatable-column name="Agregar" prop="Agregar" [width]="100">
+                                    <ngx-datatable-column name="Agregar" prop="Agregar" [width]="120">
                                         <ng-template ngx-datatable-cell-template let-row="row" let-value="value" let-rowIndex="rowIndex">
-                                                <a><button class="btn" placement="left" ngbTooltip="Detalle de compra"
-                                                    (click)="openDetalleDeCompra(ordenDeCompra,rowIndex);"><i class="fa fa-cart-plus fa-2x"></i></button></a>
+                                                <a><button class="btn btn-cart-plus" placement="left" ngbTooltip="Detalle de compra"
+                                                    (click)="openDetalleDeCompra(ordenDeCompra, rowIndex);"><i class="fa fa-cart-plus fa-2x"></i></button></a>
                                         </ng-template>
                                     </ngx-datatable-column>
                                 </ngx-datatable>
@@ -173,6 +181,6 @@
 </footer>
 
 <ng-template #ordenDeCompra>
-    <app-detalle-orden (envioCerrarModal)="cerrarModal();" (actualizoGrilla)="actualizarGrilla();" [nuevoProductoCarro]="productoAgregadoCarro">
+    <app-detalle-orden (envioCerrarModal)="cerrarModal();" (actualizoGrilla)="actualizarGrilla();" [nuevoProductoCarro]="detalleCompra">
     </app-detalle-orden>
 </ng-template>
