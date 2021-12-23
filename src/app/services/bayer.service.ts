@@ -63,7 +63,7 @@ export class BayerService {
     );
   }
 
-  public carroCompraDetallePedido(detalleCompra: Array<any>): Observable<any>{
+  public carroCompraDetallePedido(detalleCompra): Observable<any>{
     return this.http.post<any>(this.url + 'detalle-pedido', detalleCompra, this.httpOptions).pipe(
       tap(() => {}),
       catchError(this.handleError<any>())      
