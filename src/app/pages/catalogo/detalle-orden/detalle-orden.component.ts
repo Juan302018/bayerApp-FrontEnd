@@ -18,13 +18,12 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   @Output() actualizoGrilla = new EventEmitter();
   @Input() nuevoProductoCarro: any;
 
-  private confirmaDetalleSubscription: Subscription;
-
   public flagMostrarTabla: boolean = true;
   public flagCargando: boolean = false;
 
-  envioProductoCarro = [];
+  
   listaProductosCarro = [];
+  listaEnvioProductos = [];
   nuevoProductoAgregado: any;
   totalPedido: number;
 
@@ -39,7 +38,6 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     setTimeout(() =>
       this.cargarComponente(), 200);
-    this.envioProductoCarro = [];
     this.listaProductosCarro = [];
     this.flagMostrarTabla = false;
     this.flagCargando = true;
@@ -123,7 +121,24 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   }
 
   confirmarCarroCompra() {
-    this.envioProductoCarro = [];
+    
+    let envioProductoCarro= {
+      materialId: null,
+      variedadId: null,
+      cantidad: null,
+      precioUnitario: null,
+      precioTotal: null,
+    }
+    console.log(envioProductoCarro);
+    for (let i = 0; i < this.listaProductosCarro.length; i++) {
+      envioProductoCarro.materialId = this.listaProductosCarro[i].id;
+      envioProductoCarro.variedadId = this.listaProductosCarro[i].variedadSemilla.id;
+      envioProductoCarro.cantidad = this.listaProductosCarro[i].cantidad;
+      envioProductoCarro.precioUnitario = this.listaProductosCarro[i].precioporUnidad;
+      envioProductoCarro.precioTotal = this.listaProductosCarro[i].precioTotalPorItem;
+      this.listaEnvioProductos.push(envioProductoCarro);
+    }
+    console.log('listaProductoCarro: ', this.listaProductosCarro);
     swal.fire({
       title: '¿Está seguro que desea confirmar el detalle de compra?',
       //html: '<span  class="paraLaInterrogracion"><b></b></span>',
@@ -135,18 +150,14 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
       cancelButtonText: 'Cancelar',
       imageHeight: 71.5,
       imageWidth: 71.5,
-    }).then((result) => {
-      if (result.value) {
+    })
+    .then((result) => {
+      
+      
+       
         if (this.listaProductosCarro !== null || this.listaProductosCarro !== undefined) {
-          for (let i = 0; i < this.listaProductosCarro.length; i++) {
-            this.listaProductosCarro[i].materialId = this.listaProductosCarro[i].id;
-            this.listaProductosCarro[i].variedadId = this.listaProductosCarro[i].variedadSemilla.id;
-            this.listaProductosCarro[i].cantidad = this.listaProductosCarro[i].cantidad;
-            this.listaProductosCarro[i].precioUnitario = this.listaProductosCarro[i].precioporUnidad;
-            this.listaProductosCarro[i].precioTotal = this.listaProductosCarro[i].precioTotalPorItem;
-          }
-          console.log('listaProductoCarro: ', this.listaProductosCarro);
-          this.confirmaDetalleSubscription = this.bayerService.carroCompraDetallePedido(this.listaProductosCarro).subscribe(carro => {
+          
+          this.bayerService.carroCompraDetallePedido(this.listaEnvioProductos).subscribe(carro => {
             console.log('carro: ', carro);
             if (carro !== undefined && carro !== null) {
               let response = carro;
@@ -172,9 +183,9 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
             }
           });
         }
-      } else {
-        console.log('se cancela');
-      }
+      
+    }).catch( e =>{
+      console.log(e);
     });
   }
 
@@ -186,9 +197,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.confirmaDetalleSubscription) {
-      this.confirmaDetalleSubscription.unsubscribe();
-    }
+    
   }
 
 }
