@@ -5,7 +5,6 @@ import swal from 'sweetalert2';
 import { DetallePedidoStoreService } from 'src/app/services/local-session/detalle-pedido-store.service';
 import { BayerService } from 'src/app/services/bayer.service';
 import { ToastrService } from 'ngx-toastr';
-import { DetallePedido } from 'src/app/model/detalle-pedido';
 
 @Component({
   selector: 'app-detalle-orden',
@@ -18,10 +17,11 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   @Output() actualizoGrilla = new EventEmitter();
   @Input() nuevoProductoCarro: any;
 
+  private carroCompraSubscription: Subscription;
+
   public flagMostrarTabla: boolean = true;
   public flagCargando: boolean = false;
 
-  
   listaProductosCarro = [];
   listaEnvioProductos = [];
   nuevoProductoAgregado: any;
@@ -78,13 +78,15 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
     }
     if (this.listaProductosCarro[rowIndex].cantidad > 0) {
       this.listaProductosCarro[rowIndex].cantidad = this.listaProductosCarro[rowIndex].cantidad - 1;
+      this.listaProductosCarro[rowIndex].precioTotalPorItem = this.listaProductosCarro[rowIndex].cantidad * this.listaProductosCarro[rowIndex].precioporUnidad;
       this.sumarTotalPedido(this.listaProductosCarro)
     }
   }
 
   aumentarCantidad(rowIndex) {
     this.listaProductosCarro[rowIndex].cantidad = this.listaProductosCarro[rowIndex].cantidad + 1;
-    this.sumarTotalPedido(this.listaProductosCarro)
+    this.listaProductosCarro[rowIndex].precioTotalPorItem = this.listaProductosCarro[rowIndex].cantidad * this.listaProductosCarro[rowIndex].precioporUnidad;
+    this.sumarTotalPedido(this.listaProductosCarro);
   }
 
   eliminarProductodeCarro(rowIndex) {
@@ -152,16 +154,12 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
       imageWidth: 71.5,
     })
     .then((result) => {
-      
-      
-       
         if (this.listaProductosCarro !== null || this.listaProductosCarro !== undefined) {
-          
-          this.bayerService.carroCompraDetallePedido(this.listaEnvioProductos).subscribe(carro => {
+          this.carroCompraSubscription = this.bayerService.carroCompraDetallePedido(this.listaEnvioProductos).subscribe(carro => {
             console.log('carro: ', carro);
             if (carro !== undefined && carro !== null) {
-              let response = carro;
-              console.log('response: ', response);
+              let response = carro.mensaje;
+              console.log('response: ',response);
               setTimeout(() => swal.fire({
                 title: 'Atención',
                 text: 'Cargando datos ...',
@@ -171,7 +169,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
                 allowEscapeKey: false
               }), 100);
               setTimeout(() =>
-                swal.fire('Solicitud exitosa', '<span><b><div class="alert alert-success" role="alert">Confirmación exitosa!</div></b></span>', 'success'), 1000);
+                swal.fire('Solicitud exitosa', '<span><b><div class="alert alert-success" role="alert">Confirmación exitosa! </div></b></span>', 'success'), 2000);
               this.listaProductosCarro = [];
               this.detallePedidoStoreService.borrarCarroCompra();
               this.actualizarGrilla();
@@ -183,7 +181,6 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
             }
           });
         }
-      
     }).catch( e =>{
       console.log(e);
     });
@@ -197,7 +194,9 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    
+    if (this.carroCompraSubscription) {
+      this.carroCompraSubscription.unsubscribe();
+    }
   }
 
 }
