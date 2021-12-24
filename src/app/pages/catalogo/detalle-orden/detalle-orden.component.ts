@@ -38,7 +38,6 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     setTimeout(() =>
       this.cargarComponente(), 200);
-    this.listaProductosCarro = [];
     this.flagMostrarTabla = false;
     this.flagCargando = true;
   }
@@ -49,10 +48,10 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
     }
     console.log(this.nuevoProductoCarro);
     this.nuevoProductoAgregado = this.nuevoProductoCarro;
-    this.verificarProductoEnCarro();
-    console.log('listaProductosCarro: ', this.listaProductosCarro);
+    this.listaProductosCarro = this.verificarProductoEnCarro(this.listaProductosCarro);
+    //console.log('listaProductosCarro: ', this.listaProductosCarro);
     localStorage.setItem('detallePedido', JSON.stringify(this.listaProductosCarro));
-    this.detallePedidoStoreService.guardarCarroCompra(this.listaProductosCarro);
+    //this.detallePedidoStoreService.guardarCarroCompra(this.listaProductosCarro);
     this.sumarTotalPedido(this.listaProductosCarro);
     this.flagCargando = false;
   }
@@ -107,19 +106,38 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
     this.totalPedido = suma;
   }
 
-  verificarProductoEnCarro() {
+  verificarProductoEnCarro(listaCarro) {
     let contador = 0;
-    console.log('listaProductosCarro', this.listaProductosCarro);
-    for (let i = 0; i < this.listaProductosCarro.length; i++) {
-      if (this.listaProductosCarro[i].codigoMaterial === this.nuevoProductoAgregado.codigoMaterial) {
-        this.listaProductosCarro[i].cantidad = this.nuevoProductoAgregado.cantidad + this.listaProductosCarro[i].cantidad;
-        contador++;
+    console.log('listaProductosCarro', listaCarro);
+    
+    if(this.listaProductosCarro.length > 0){
+      for (let i = 0; i < listaCarro.length; i++) {
+        if (listaCarro[i].codigoMaterial === this.nuevoProductoAgregado.codigoMaterial) {
+          listaCarro[i].cantidad = listaCarro.cantidad + listaCarro[i].cantidad;
+          contador++;
+        }
+        listaCarro[i].precioTotalPorItem = listaCarro[i].cantidad * listaCarro[i].precioporUnidad;
+        console.log("carro 2 ", listaCarro);
       }
-      this.listaProductosCarro[i].precioTotalPorItem = this.listaProductosCarro[i].cantidad * this.listaProductosCarro[i].precioporUnidad;
+      if (contador === 0) {
+        listaCarro.push(this.nuevoProductoAgregado);
+        console.log("carro 3 ", listaCarro);
+      }
+
+      return listaCarro;
+
     }
-    if (contador === 0) {
+
+    if(this.listaProductosCarro.length == 0){
+      
       this.listaProductosCarro.push(this.nuevoProductoAgregado);
+      //this.listaProductosCarro[0].precioTotalPorItem = this.listaProductosCarro[0].cantidad * this.listaProductosCarro[0].precioporUnidad;
+      console.log("carro 1 ", this.listaProductosCarro);
+      return listaCarro;
     }
+
+    
+    
   }
 
   confirmarCarroCompra() {
