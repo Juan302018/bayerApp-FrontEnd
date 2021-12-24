@@ -301,7 +301,6 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   openDetalleDeCompra(content,rowIndex) {
     // @ts-ignore 
     this.detalleCompra = this.arrayProductos[rowIndex];
-    console.log('detalleCompra: ',this.detalleCompra);
     this.modalReference = this.modalService.open(content, { windowClass: 'modal-in', backdrop: 'static', keyboard: true, size: 'xl' });
   }
 
@@ -318,7 +317,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     this.arrayProductos[rowIndex].cantidad = event.target.value;
     console.log("event:" ,event.target.value);
     this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad;
-    console.log("cantidad:" , this.arrayProductos[rowIndex].cantidad);
+    //console.log("cantidad:" , this.arrayProductos[rowIndex].cantidad);
   }
 
   disminuirCantidad(rowIndex){
