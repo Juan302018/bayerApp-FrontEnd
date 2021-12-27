@@ -1,6 +1,6 @@
 <section>
     <div class="modal-content modal-fondo">
-        <div class="modal-header ">
+        <div class="modal-header">
             <h4 class="modal-title titulo">Detalle de la orden</h4>
         </div>
     </div>
@@ -14,7 +14,7 @@
                             <ngb-progressbar [value]="100" [striped]="true" [animated]="true"></ngb-progressbar>
                         </div>
                         <ngx-datatable style="font-size: 14.5px !important; text-align: center;"
-                            *ngIf="flagMostrarTabla === false" #detalleCompra class="material"
+                            *ngIf="flagMostrarTabla" #detalleCompra class="material"
                             [rows]="listaProductosCarro" [columnMode]="'force'" [rowHeight]="'auto'"
                             [scrollbarH]="false" [reorderable]="true"
                             [messages]="{emptyMessage:'No hay datos en la tabla.'}">

@@ -19,7 +19,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
 
   private carroCompraSubscription: Subscription;
 
-  public flagMostrarTabla: boolean = true;
+  public flagMostrarTabla: boolean = false;
   public flagCargando: boolean = false;
   public activaCierreModal: boolean = false;
 
@@ -39,12 +39,15 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     setTimeout(() =>
       this.cargarComponente(), 200);
-    this.flagMostrarTabla = false;
-    this.activaCierreModal = false;
-    this.flagCargando = true;
+    
+  }
+
+  ngDoCheck(): void{
+    this.listaProductosCarro = this.listaProductosCarro;
   }
 
   cargarComponente() {
+    this.flagCargando = true;
     if (JSON.parse(sessionStorage.getItem('detallePedido')) != null) {
       if (this.cerrarModal) {
         this.listaProductosCarro = [];
@@ -55,12 +58,15 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
     }
     this.nuevoProductoAgregado = this.nuevoProductoCarro;
     console.log(this.nuevoProductoCarro);
-    this.verificarProductoEnCarro(this.listaProductosCarro); //?
+    this.listaProductosCarro =this.verificarProductoEnCarro(this.listaProductosCarro);
     //console.log('listaProductosCarro: ', this.listaProductosCarro);
     sessionStorage.setItem('detallePedido', JSON.stringify(this.listaProductosCarro));
     //this.detallePedidoStoreService.guardarCarroCompra(this.listaProductosCarro);
     this.sumarTotalPedido(this.listaProductosCarro);
     this.flagCargando = false;
+    this.flagMostrarTabla = true;
+    this.activaCierreModal = false;
+    
   }
 
   //Emite una output refrescar al mantenedor del componente padre catalogo
@@ -125,7 +131,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
     let contador = 0;
     console.log('listaCarro', listaCarro);
     
-    if(this.listaProductosCarro.length > 0){
+    if(listaCarro.length > 0){
       for (let i = 0; i < listaCarro.length; i++) {
         if (listaCarro[i].codigoMaterial === this.nuevoProductoAgregado.codigoMaterial) {
           listaCarro[i].cantidad = listaCarro.cantidad + listaCarro[i].cantidad;
@@ -142,7 +148,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
       return listaCarro;
     }
 
-    if (listaCarro.length === 0) {
+    if (listaCarro.length == 0) {
       listaCarro.push(this.nuevoProductoAgregado);
       listaCarro[0].precioTotalPorItem = this.listaProductosCarro[0].cantidad * this.listaProductosCarro[0].precioporUnidad;
       console.log("carro 1 ",listaCarro);
