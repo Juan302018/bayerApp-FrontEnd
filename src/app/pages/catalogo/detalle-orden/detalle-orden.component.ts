@@ -143,6 +143,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
         console.log("carro 2 ",listaCarro[i]);
       }
       if (contador === 0) {
+        this.nuevoProductoAgregado.precioTotalPorItem = this.nuevoProductoAgregado.cantidad * this.nuevoProductoAgregado.precioporUnidad;
         listaCarro.push(this.nuevoProductoAgregado);
         console.log("carro 3 ", listaCarro[0]);
       }
@@ -166,16 +167,16 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
       precioUnitario: null,
       precioTotal: null,
     }
-    console.log(envioProductoCarro);
     for (let i = 0; i < this.listaProductosCarro.length; i++) {
       envioProductoCarro.materialId = this.listaProductosCarro[i].id;
       envioProductoCarro.variedadId = this.listaProductosCarro[i].variedadSemilla.id;
       envioProductoCarro.cantidad = this.listaProductosCarro[i].cantidad;
       envioProductoCarro.precioUnitario = this.listaProductosCarro[i].precioporUnidad;
       envioProductoCarro.precioTotal = this.listaProductosCarro[i].precioTotalPorItem;
-      this.listaEnvioProductos.push(envioProductoCarro);
+      console.log("envioProductoCarro", envioProductoCarro);
+      this.listaEnvioProductos.push(JSON.parse(JSON.stringify(envioProductoCarro)));
     }
-    console.log('listaProductoCarro: ', this.listaProductosCarro);
+    console.log('listaEnvioProductos: ', this.listaEnvioProductos);
     swal.fire({
       title: '¿Está seguro que desea confirmar el detalle de compra?',
       //html: '<span  class="paraLaInterrogracion"><b></b></span>',
