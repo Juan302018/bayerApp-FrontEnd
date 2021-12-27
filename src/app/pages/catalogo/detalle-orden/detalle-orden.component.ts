@@ -27,6 +27,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   listaEnvioProductos = [];
   nuevoProductoAgregado: any;
   totalPedido: number;
+  mantenerCarro = false;
 
   constructor(
     private router: Router,
@@ -49,12 +50,9 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   cargarComponente() {
     this.flagCargando = true;
     if (JSON.parse(sessionStorage.getItem('detallePedido')) != null) {
-      if (this.cerrarModal) {
-        this.listaProductosCarro = [];
-        sessionStorage.removeItem('detallePedido');
-      } else if (this.seguirComprando) {
+      
         this.listaProductosCarro = JSON.parse(sessionStorage.getItem('detallePedido'));
-      }
+      
     }
     this.nuevoProductoAgregado = this.nuevoProductoCarro;
     console.log(this.nuevoProductoCarro);
@@ -76,13 +74,17 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
 
   // Emite un output de cierre de modal al padre
   cerrarModal() {
+    sessionStorage.removeItem('detallePedido');
     this.activaCierreModal = true;
     this.envioCerrarModal.emit();
     this.listaProductosCarro = null;
+    this.mantenerCarro = false;
   }
 
   seguirComprando() {
+    sessionStorage.setItem('detallePedido', JSON.stringify(this.listaProductosCarro));
     this.envioCerrarModal.emit();
+    
   }
 
   // call to update cell value
@@ -223,6 +225,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
     let ruta = 'catalogo';
     this.router.navigate([ruta]);
     this.seguirComprando();
+    console.log("seguir comprando: ", this.seguirComprando())
     this.actualizarGrilla();
   }
 
