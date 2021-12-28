@@ -76,6 +76,12 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     this.cargarTodoProductos();
   }
 
+  recibeListaCarroVacia(event) {
+    if (event === null || event === undefined) {
+      console.log('evento: ', event);
+    }
+  }
+
   cargarTodoProductos() {
     this.flagCargando = true;
     setTimeout(
