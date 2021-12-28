@@ -90,7 +90,6 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   // call to update cell value
   updateValue(event, rowIndex) {
     this.listaProductosCarro[rowIndex].cantidad = event.target.value;
-    this.listaProductosCarro[rowIndex].cantidad = this.listaProductosCarro[rowIndex].cantidad;;
   }
 
   disminuirCantidad(rowIndex) {

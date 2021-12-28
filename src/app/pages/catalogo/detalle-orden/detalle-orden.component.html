@@ -58,7 +58,7 @@
                                                 (click)="disminuirCantidad(rowIndex)"><b>-</b></button>
                                         </div>
                                         <div class="col-sm-4 ml-4">
-                                            <input autofocus min="0" (blur)="updateValue($event, rowIndex)"
+                                            <input disabled min="0" (blur)="updateValue($event, rowIndex)"
                                                 (keyup.enter)="updateValue($event, rowIndex)"
                                                 class="form-control text-center" [(ngModel)]="row.cantidad" />
                                         </div>
