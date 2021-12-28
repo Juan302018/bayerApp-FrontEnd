@@ -181,6 +181,6 @@
 </footer>
 
 <ng-template #ordenDeCompra>
-    <app-detalle-orden (envioCerrarModal)="cerrarModal();" (actualizoGrilla)="actualizarGrilla();" [nuevoProductoCarro]="detalleCompra">
+    <app-detalle-orden (cancelaProductCompra)="recibeListaCarroVacia($event)" (envioCerrarModal)="cerrarModal();" (actualizoGrilla)="actualizarGrilla();" [nuevoProductoCarro]="detalleCompra">
     </app-detalle-orden>
 </ng-template>

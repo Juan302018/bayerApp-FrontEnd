@@ -15,6 +15,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
 
   @Output() envioCerrarModal = new EventEmitter();
   @Output() actualizoGrilla = new EventEmitter();
+  @Output() cancelaProductCompra = new EventEmitter();
   @Input() nuevoProductoCarro: any;
 
   private carroCompraSubscription: Subscription;
@@ -40,23 +41,23 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     setTimeout(() =>
       this.cargarComponente(), 200);
-    
+
   }
 
-  ngDoCheck(): void{
+  ngDoCheck(): void {
     this.listaProductosCarro = this.listaProductosCarro;
   }
 
   cargarComponente() {
     this.flagCargando = true;
     if (JSON.parse(sessionStorage.getItem('detallePedido')) != null) {
-      
-        this.listaProductosCarro = JSON.parse(sessionStorage.getItem('detallePedido'));
-      
+
+      this.listaProductosCarro = JSON.parse(sessionStorage.getItem('detallePedido'));
+
     }
     this.nuevoProductoAgregado = this.nuevoProductoCarro;
     console.log(this.nuevoProductoCarro);
-    this.listaProductosCarro =this.verificarProductoEnCarro(this.listaProductosCarro);
+    this.listaProductosCarro = this.verificarProductoEnCarro(this.listaProductosCarro);
     //console.log('listaProductosCarro: ', this.listaProductosCarro);
     sessionStorage.setItem('detallePedido', JSON.stringify(this.listaProductosCarro));
     //this.detallePedidoStoreService.guardarCarroCompra(this.listaProductosCarro);
@@ -64,7 +65,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
     this.flagCargando = false;
     this.flagMostrarTabla = true;
     this.activaCierreModal = false;
-    
+
   }
 
   //Emite una output refrescar al mantenedor del componente padre catalogo
@@ -77,14 +78,15 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
     sessionStorage.removeItem('detallePedido');
     this.activaCierreModal = true;
     this.envioCerrarModal.emit();
-    this.listaProductosCarro = null;
+    let envListCarroVacio = this.listaProductosCarro = null;
+    this.cancelaProductCompra.emit(envListCarroVacio);
     this.mantenerCarro = false;
   }
 
   seguirComprando() {
     sessionStorage.setItem('detallePedido', JSON.stringify(this.listaProductosCarro));
     this.envioCerrarModal.emit();
-    
+
   }
 
   // call to update cell value
@@ -131,15 +133,15 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   verificarProductoEnCarro(listaCarro) {
     let contador = 0;
     console.log('listaCarro', listaCarro);
-    
-    if(listaCarro.length > 0){
+
+    if (listaCarro.length > 0) {
       for (let i = 0; i < listaCarro.length; i++) {
         if (listaCarro[i].codigoMaterial === this.nuevoProductoAgregado.codigoMaterial) {
           listaCarro[i].cantidad = listaCarro.cantidad + listaCarro[i].cantidad;
           contador++;
         }
         listaCarro[i].precioTotalPorItem = listaCarro[i].cantidad * listaCarro[i].precioporUnidad;
-        console.log("carro 2 ",listaCarro[i]);
+        console.log("carro 2 ", listaCarro[i]);
       }
       if (contador === 0) {
         this.nuevoProductoAgregado.precioTotalPorItem = this.nuevoProductoAgregado.cantidad * this.nuevoProductoAgregado.precioporUnidad;
@@ -153,13 +155,13 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
     if (listaCarro.length == 0) {
       listaCarro.push(this.nuevoProductoAgregado);
       listaCarro[0].precioTotalPorItem = this.listaProductosCarro[0].cantidad * this.listaProductosCarro[0].precioporUnidad;
-      console.log("carro 1 ",listaCarro);
+      console.log("carro 1 ", listaCarro);
       return listaCarro;
-    }    
+    }
   }
 
   confirmarCarroCompra() {
-    let envioProductoCarro= {
+    let envioProductoCarro = {
       materialId: null,
       variedadId: null,
       cantidad: null,
@@ -188,37 +190,40 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
       imageHeight: 71.5,
       imageWidth: 71.5,
     })
-    .then((result) => {
-        if (this.listaProductosCarro !== null || this.listaProductosCarro !== undefined) {
-          this.carroCompraSubscription = this.bayerService.carroCompraDetallePedido(this.listaEnvioProductos).subscribe(carro => {
-            console.log('carro: ', carro);
-            if (carro !== undefined && carro !== null) {
-              let response = carro.mensaje;
-              console.log('response: ',response);
-              setTimeout(() => swal.fire({
-                title: 'Atención',
-                text: 'Cargando datos ...',
-                imageUrl: 'assets/img/loadingCircucle.gif',
-                showConfirmButton: false,
-                allowOutsideClick: false,
-                allowEscapeKey: false
-              }), 100);
-              setTimeout(() =>
-                swal.fire('Solicitud exitosa', '<span><b><div class="alert alert-success" role="alert">Confirmación exitosa! </div></b></span>', 'success'), 2000);
-              this.listaProductosCarro = [];
-              this.detallePedidoStoreService.borrarCarroCompra();
-              this.actualizarGrilla();
-              swal.close();
-              this.cerrarModal();
-            } else {
-              this.toastrService.error('No se registraron los productos!', 'Error');
-              swal.close();
-            }
-          });
+      .then((result) => {
+        if (result.value) {
+          if (this.listaProductosCarro !== null || this.listaProductosCarro !== undefined) {
+            this.carroCompraSubscription = this.bayerService.carroCompraDetallePedido(this.listaEnvioProductos).subscribe(carro => {
+              console.log('carro: ', carro);
+              if (carro !== undefined && carro !== null) {
+                let response = carro.mensaje;
+                console.log('response: ', response);
+                swal.fire({
+                  title: 'Atención',
+                  text: 'Cargando datos ...',
+                  imageUrl: 'assets/img/loadingCircucle.gif',
+                  showConfirmButton: false,
+                  allowOutsideClick: false,
+                  allowEscapeKey: false
+                });
+                  swal.fire('Solicitud exitosa', '<span><b><div class="alert alert-success" role="alert">Confirmación exitosa! </div></b></span>', 'success');
+                this.listaProductosCarro = [];
+                this.detallePedidoStoreService.borrarCarroCompra();
+                this.actualizarGrilla();
+                swal.close();
+                this.cerrarModal();
+              } else {
+                this.toastrService.error('No se registraron los productos!', 'Error');
+                swal.close();
+              }
+            });
+          }
+        } else {
+          console.log('se cancela');
         }
-    }).catch( e =>{
-      console.log(e);
-    });
+      }).catch(e => {
+        console.log(e);
+      });
   }
 
   volverCatalogoCompra() {
