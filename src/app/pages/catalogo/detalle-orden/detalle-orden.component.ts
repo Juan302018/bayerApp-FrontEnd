@@ -44,9 +44,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
 
   }
 
-  ngDoCheck(): void {
-    this.listaProductosCarro = this.listaProductosCarro;
-  }
+
 
   cargarComponente() {
     this.flagCargando = true;
@@ -113,10 +111,17 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   }
 
   eliminarProductodeCarro(rowIndex) {
-    this.listaProductosCarro.splice(rowIndex, 1);
+    console.log(rowIndex);
+    for (let x = 0; x < this.listaProductosCarro.length; x++) {
+      if (x === rowIndex) {
+        this.listaProductosCarro.splice(x, 1);
+        this.listaProductosCarro = [...this.listaProductosCarro];
+      }
+      }
     console.log('listaProductosCarro: ', this.listaProductosCarro);
-    sessionStorage.setItem('detallePedido', JSON.stringify(this.listaProductosCarro));
     this.sumarTotalPedido(this.listaProductosCarro);
+    this.listaProductosCarro = this.listaProductosCarro;
+    sessionStorage.setItem('detallePedido', JSON.stringify(this.listaProductosCarro));
     //this.detallePedidoStoreService.borrarCarroCompra();
   }
 
