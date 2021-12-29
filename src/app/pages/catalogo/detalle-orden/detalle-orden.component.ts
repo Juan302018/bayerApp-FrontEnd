@@ -142,7 +142,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
     if (listaCarro.length > 0) {
       for (let i = 0; i < listaCarro.length; i++) {
         if (listaCarro[i].codigoMaterial === this.nuevoProductoAgregado.codigoMaterial) {
-          listaCarro[i].cantidad = listaCarro.cantidad + listaCarro[i].cantidad;
+          listaCarro[i].cantidad = this.nuevoProductoAgregado.cantidad + listaCarro[i].cantidad;
           contador++;
         }
         listaCarro[i].precioTotalPorItem = listaCarro[i].cantidad * listaCarro[i].precioporUnidad;
