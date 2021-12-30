@@ -26,6 +26,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
 
   listaProductosCarro = [];
   listaEnvioProductos = [];
+  envListCarroVacio = [];
   nuevoProductoAgregado: any;
   totalPedido: number;
   mantenerCarro = false;
@@ -41,7 +42,6 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     setTimeout(() =>
       this.cargarComponente(), 200);
-
   }
 
   ngDoCheck(): void {
@@ -51,21 +51,16 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   cargarComponente() {
     this.flagCargando = true;
     if (JSON.parse(sessionStorage.getItem('detallePedido')) != null) {
-
       this.listaProductosCarro = JSON.parse(sessionStorage.getItem('detallePedido'));
-
     }
     this.nuevoProductoAgregado = this.nuevoProductoCarro;
     console.log(this.nuevoProductoCarro);
     this.listaProductosCarro = this.verificarProductoEnCarro(this.listaProductosCarro);
-    //console.log('listaProductosCarro: ', this.listaProductosCarro);
     sessionStorage.setItem('detallePedido', JSON.stringify(this.listaProductosCarro));
-    //this.detallePedidoStoreService.guardarCarroCompra(this.listaProductosCarro);
     this.sumarTotalPedido(this.listaProductosCarro);
     this.flagCargando = false;
     this.flagMostrarTabla = true;
     this.activaCierreModal = false;
-
   }
 
   //Emite una output refrescar al mantenedor del componente padre catalogo
@@ -75,22 +70,27 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
 
   // Emite un output de cierre de modal al padre
   cerrarModal() {
+    this.cancelaProdustos();
     sessionStorage.removeItem('detallePedido');
     this.activaCierreModal = true;
     this.envioCerrarModal.emit();
-    let envListCarroVacio = this.listaProductosCarro = null;
-    this.cancelaProductCompra.emit(envListCarroVacio);
     this.mantenerCarro = false;
+  }
+
+  cancelaProdustos() {
+      let flagCarroVacio = true;
+      this.cancelaProductCompra.emit(flagCarroVacio);
   }
 
   seguirComprando() {
     sessionStorage.setItem('detallePedido', JSON.stringify(this.listaProductosCarro));
     this.envioCerrarModal.emit();
-
   }
 
   // call to update cell value
   updateValue(event, rowIndex) {
+    console.log('rowIndex: ',rowIndex);
+    this.envListCarroVacio.push(rowIndex);
     this.listaProductosCarro[rowIndex].cantidad = event.target.value;
   }
 
@@ -174,7 +174,6 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
       envioProductoCarro.cantidad = this.listaProductosCarro[i].cantidad;
       envioProductoCarro.precioUnitario = this.listaProductosCarro[i].precioporUnidad;
       envioProductoCarro.precioTotal = this.listaProductosCarro[i].precioTotalPorItem;
-      console.log("envioProductoCarro", envioProductoCarro);
       this.listaEnvioProductos.push(JSON.parse(JSON.stringify(envioProductoCarro)));
     }
     console.log('listaEnvioProductos: ', this.listaEnvioProductos);
@@ -197,7 +196,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
               console.log('carro: ', carro);
               if (carro !== undefined && carro !== null) {
                 let response = carro.mensaje;
-                console.log('response: ', response);
+                setTimeout(() =>
                 swal.fire({
                   title: 'Atención',
                   text: 'Cargando datos ...',
@@ -205,8 +204,9 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
                   showConfirmButton: false,
                   allowOutsideClick: false,
                   allowEscapeKey: false
-                });
-                  swal.fire('Solicitud exitosa', '<span><b><div class="alert alert-success" role="alert">Confirmación exitosa! </div></b></span>', 'success');
+                }), 100);
+                setTimeout(() =>
+                  swal.fire('Solicitud exitosa', '<span><b><div class="alert alert-success" role="alert">Confirmación exitosa. ' + response + '!</div></b></span>', 'success'), 2000);
                 this.listaProductosCarro = [];
                 this.detallePedidoStoreService.borrarCarroCompra();
                 this.actualizarGrilla();
@@ -230,7 +230,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
     let ruta = 'catalogo';
     this.router.navigate([ruta]);
     this.seguirComprando();
-    console.log("seguir comprando: ", this.seguirComprando())
+    console.log("seguir comprando: ",this.seguirComprando())
     this.actualizarGrilla();
   }
 
