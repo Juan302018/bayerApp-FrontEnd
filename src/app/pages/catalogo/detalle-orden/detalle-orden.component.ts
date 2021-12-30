@@ -44,9 +44,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
       this.cargarComponente(), 200);
   }
 
-  ngDoCheck(): void {
-    this.listaProductosCarro = this.listaProductosCarro;
-  }
+
 
   cargarComponente() {
     this.flagCargando = true;
@@ -113,10 +111,17 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   }
 
   eliminarProductodeCarro(rowIndex) {
-    this.listaProductosCarro.splice(rowIndex, 1);
+    console.log(rowIndex);
+    for (let x = 0; x < this.listaProductosCarro.length; x++) {
+      if (x === rowIndex) {
+        this.listaProductosCarro.splice(x, 1);
+        this.listaProductosCarro = [...this.listaProductosCarro];
+      }
+      }
     console.log('listaProductosCarro: ', this.listaProductosCarro);
-    sessionStorage.setItem('detallePedido', JSON.stringify(this.listaProductosCarro));
     this.sumarTotalPedido(this.listaProductosCarro);
+    this.listaProductosCarro = this.listaProductosCarro;
+    sessionStorage.setItem('detallePedido', JSON.stringify(this.listaProductosCarro));
     //this.detallePedidoStoreService.borrarCarroCompra();
   }
 
@@ -137,7 +142,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
     if (listaCarro.length > 0) {
       for (let i = 0; i < listaCarro.length; i++) {
         if (listaCarro[i].codigoMaterial === this.nuevoProductoAgregado.codigoMaterial) {
-          listaCarro[i].cantidad = listaCarro.cantidad + listaCarro[i].cantidad;
+          listaCarro[i].cantidad = this.nuevoProductoAgregado.cantidad + listaCarro[i].cantidad;
           contador++;
         }
         listaCarro[i].precioTotalPorItem = listaCarro[i].cantidad * listaCarro[i].precioporUnidad;
