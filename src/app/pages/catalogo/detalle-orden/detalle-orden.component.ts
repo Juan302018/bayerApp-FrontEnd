@@ -209,7 +209,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
                   showConfirmButton: false,
                   allowOutsideClick: false,
                   allowEscapeKey: false
-                }), 100);
+                }), 1);
                 setTimeout(() =>
                   swal.fire('Solicitud exitosa', '<span><b><div class="alert alert-success" role="alert">Confirmación exitosa. ' + response + '!</div></b></span>', 'success'), 2000);
                 this.listaProductosCarro = [];

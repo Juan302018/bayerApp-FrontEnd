@@ -29,11 +29,11 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   private listaTiposSubscription: Subscription;
   private listaVariedadesSubscription: Subscription;
 
+  public flagActivaCompra: boolean = false;
   public flagCargando: boolean = false;
   public flagActivoTipo: boolean;
   public flagDesactivoTipo: boolean;
   public flagActivoVariedad: boolean;
-  public flagDesactivo: boolean;
   public dataSourceCatalogo = new Array();
   public arrayProductos = new Array();
   public arrayEspecies = new Array();
@@ -73,6 +73,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     this.flagActivoTipo = false;
     this.flagDesactivoTipo = true;
     this.flagActivoVariedad = false;
+    this.flagActivaCompra = false;
     this.cargarEspeciesSemillas();
     this.cargarTodoProductos();
   }
@@ -81,7 +82,8 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     if (event === true) {
       for (let i = 0; i < this.arrayProductos.length; i++) {
         if (this.arrayProductos[i].cantidad > 0 || this.arrayProductos[i].cantidad === undefined) {
-          this.arrayProductos[i].cantidad = 0;  
+          this.arrayProductos[i].cantidad = 0;
+          this.validaCantidad(this.arrayProductos[i].cantidad);
         }
       }
     } else {
@@ -324,6 +326,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   openDetalleDeCompra(content, rowIndex) {
     // @ts-ignore 
+    this.validaCantidad(this.arrayProductos[rowIndex].cantidad);
     this.detalleCompra = this.arrayProductos[rowIndex];
     this.modalReference = this.modalService.open(content, { windowClass: 'modal-in', backdrop: 'static', keyboard: true, size: 'xl' });
   }
@@ -338,6 +341,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   // Llamada para actualizar el valor de la celda
   updateValue(event, rowIndex) {
+    console.log('event: ',event.target.value);
     this.arrayProductos[rowIndex].cantidad = event.target.value;
     console.log("event:", event.target.value);
     this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad;
@@ -350,14 +354,46 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     }
     if (this.arrayProductos[rowIndex].cantidad > 0) {
       this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad - 1;
-      console.log("cantidad:", this.arrayProductos[rowIndex].cantidad);
+      console.log("cantidadMenos:", this.arrayProductos[rowIndex].cantidad);
+      this.validaCantidad(this.arrayProductos[rowIndex].cantidad);
     }
 
   }
 
   aumentarCantidad(rowIndex) {
     this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad + 1;
-    console.log("cantidad: ", this.arrayProductos[rowIndex].cantidad);
+    console.log("cantidadMas: ", this.arrayProductos[rowIndex].cantidad);
+    this.validaCantidad(this.arrayProductos[rowIndex].cantidad);
+  }
+
+  validaCantidad(cantidad): boolean {
+    if (cantidad > 0) {
+      this.flagActivaCompra = true;
+      console.log("cantidasVal: ",cantidad);
+      this.padNumber(cantidad);
+      return this.flagActivaCompra;
+    } else if (cantidad === 0){
+      this.flagActivaCompra = false;
+      this.padNumber(cantidad);
+      return this.flagActivaCompra;
+    }
+  }
+
+  padNumber(value: number) {
+    if (this.isNumber(value)) {
+      return `0${value}`.slice(-2);
+    } else {
+      console.error('Valor no es número!');
+      return "";
+    }
+  }
+
+  isNumber(value: any): boolean {
+    return !isNaN(this.toInteger(value));
+  }
+
+  toInteger(value: any): number {
+    return parseInt(`${value}`, 10);
   }
 
   ngOnDestroy(): void {
