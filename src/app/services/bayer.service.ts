@@ -49,14 +49,14 @@ export class BayerService {
     );
   }
 
-  public filtraPorIdEspecie(idEspecie: number): Observable<any>{
+  public filtraPorIdEspecie(idEspecie: number): Observable<any> {
     return this.http.post<any>(this.url + 'tipo-semilla/por-especie/' + idEspecie, this.httpOptions).pipe(
       tap(() => {}),
       catchError(this.handleError<any>())      
     );
   }
 
-  public filtraPorIdTipo(idTipo: number): Observable<any>{
+  public filtraPorIdTipo(idTipo: number): Observable<any> {
     return this.http.post<any>(this.url + 'variedad-semilla/por-tipo/' + idTipo, this.httpOptions).pipe(
       tap(() => {}),
       catchError(this.handleError<any>())      

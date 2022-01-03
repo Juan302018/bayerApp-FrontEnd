@@ -153,12 +153,14 @@
                                             <a><button *ngIf="flagActivaCompra === true" class="btn btn-cart-plus"
                                                     placement="left" ngbTooltip="Ver detalle compra"
                                                     triggers="mouseenter:mouseleave"
-                                                    (click)="openDetalleDeCompra(ordenDeCompra, rowIndex);"><div class="text-center"><i
-                                                        class="fa fa-cart-plus fa-2x"></i></div></button></a>
-                                            <a><button id="disabled" *ngIf="flagActivaCompra === false" class="btn btn-cart-plus"
-                                                    placement="left" ngbTooltip="Ver detalle compra"
-                                                    triggers="mouseenter:mouseleave" [disabled]="true"><div class="text-center"><i
-                                                        class="fa fa-cart-plus fa-2x"></i></div></button></a>
+                                                    (click)="openDetalleDeCompra(ordenDeCompra, rowIndex);">
+                                                    <div class="text-center"><i class="fa fa-cart-plus fa-2x"></i></div>
+                                                </button></a>
+                                            <a><button id="disabled" *ngIf="flagActivaCompra === false"
+                                                    class="btn btn-cart-plus" placement="left"
+                                                    triggers="mouseenter:mouseleave" [disabled]="true">
+                                                    <div class="text-center"><i class="fa fa-cart-plus fa-2x"></i></div>
+                                                </button></a>
                                         </div>
                                     </ng-template>
                                 </ngx-datatable-column>
