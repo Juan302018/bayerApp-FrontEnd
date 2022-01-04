@@ -1,1 +1,34 @@
-<p>login works!</p>
+<form #loginForm="ngForm">
+
+    <div class="inputGroup inputGroup1" style="text-align: center">
+        <label>BayerApp</label>
+    </div>
+
+    <div class="inputGroup inputGroup1">
+        <label for="user1">Usuario</label>
+        <input type="text" placeholder="--Ingrese usuario--" id="user" name="user" [(ngModel)]="username" class="email"
+            maxlength="256" required />
+
+        <span class="indicator"></span>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="inputGroup inputGroup2">
+                <input [type]="hide ? 'text' : 'password'" name="password" [(ngModel)]="password" class="form-control password1" value="clave" placeholder="" />
+                <span (click)="mostrarPassword();" [class]="showEye ? 'fa fa-eye fa-2x' : 'fa fa-eye-slash fa-2x' " class="password-icon show-password"></span>
+                <br>
+                
+            </div>
+        </div>
+    </div>
+    <div class="inputGroup inputGroup3">
+        <button id="login" type="button" (click)="iniciarSesion()">Iniciar Sesión
+            <i class="fa fa-sign-in" aria-hidden="true"></i>
+        </button>
+
+    </div>
+
+    <!--<mat-card *ngIf="mensaje">{{mensaje}}</mat-card>
+    <mat-card *ngIf="error">{{error}}</mat-card>-->
+
+</form>
