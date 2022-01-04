@@ -321,7 +321,19 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   }
 
   buscarProductos() {
+    if(this.tipo == null){
+      this.tipo = 0;
+
+    }
+
+    if(this.variedad == null){
+      this.variedad = 0;
+
+    }
     this.ejecutarListaProducto(this.especie, this.tipo, this.variedad);
+    this.especie = null; 
+    this.tipo = null;
+    this.variedad = null;
   }
 
   openDetalleDeCompra(content, rowIndex) {

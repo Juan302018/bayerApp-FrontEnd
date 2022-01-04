@@ -1,12 +1,16 @@
 <form #loginForm="ngForm">
 
     <div class="inputGroup inputGroup1" style="text-align: center">
-        <label>BayerApp</label>
+        <img src="../../../assets/icons/ico/bayer-chiquito.png"  width="250" height="100"> 
+    </div>
+
+    <div class="inputGroup inputGroup1" style="text-align: center">
+        <label>Bienvenido a Seminis Bayer</label>
     </div>
 
     <div class="inputGroup inputGroup1">
         <label for="user1">Usuario</label>
-        <input type="text" placeholder="--Ingrese usuario--" id="user" name="user" [(ngModel)]="username" class="email"
+        <input type="text" placeholder="Ingrese usuario" id="user" name="user" [(ngModel)]="username" class="email"
             maxlength="256" required />
 
         <span class="indicator"></span>
@@ -14,7 +18,8 @@
     <div class="row">
         <div class="col-md-12 mb-3">
             <div class="inputGroup inputGroup2">
-                <input [type]="hide ? 'text' : 'password'" name="password" [(ngModel)]="password" class="form-control password1" value="clave" placeholder="" />
+                <label for="password">Contraseña</label>
+                <input placeholder="Ingrese contraseña" [type]="hide ? 'text' : 'password'" name="password" [(ngModel)]="password" class="form-control password1" value="clave" />
                 <span (click)="mostrarPassword();" [class]="showEye ? 'fa fa-eye fa-2x' : 'fa fa-eye-slash fa-2x' " class="mb-5 mr-4 password-icon show-password"></span>
             </div>
         </div>
