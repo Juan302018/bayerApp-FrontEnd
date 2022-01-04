@@ -68,10 +68,9 @@
                             <div class="input-group-append">
                                 <!--<button class="btn btn-excel mr-4 mt-2 pr-5 pl-5" type="button"
                         triggers="mouseenter:mouseleave"><b>Limpiar</b></button> -->
-                                <button *ngIf="especie !== 0" class="btn btn-buscar mr-4 mt-2 pr-5 pl-5" type="button"
+                                <button *ngIf="especie !== 0" [disabled]="especie === 0 || especie == null" class="btn btn-buscar mr-4 mt-2 pr-5 pl-5" type="button"
                                     (click)="buscarProductos();" triggers="mouseenter:mouseleave"><b>Buscar</b></button>
-                                <button *ngIf="especie === 0" [disabled]="true"
-                                    class="btn btn-buscar mr-4 mt-2 pr-5 pl-5" type="button"><b>Buscar</b></button>
+                               
                             </div>
                         </div>
                     </div>
