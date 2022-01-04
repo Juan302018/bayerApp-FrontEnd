@@ -229,6 +229,11 @@ input[type='number'] {
   box-shadow: none !important;
 }
 
+.btn-center {
+  display: flex !important;
+  justify-content: center !important;
+}
+
 /*
   This stylesheet uses scss valiables for most of the colors / background-colors of the table
   to enable the customization of the displayed table without cloning the stylesheet into the

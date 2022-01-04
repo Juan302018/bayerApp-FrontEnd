@@ -19,7 +19,7 @@
                             [scrollbarH]="false" [reorderable]="true"
                             [messages]="{emptyMessage:'No hay datos en la tabla.'}">
 
-                            <ngx-datatable-column name="Especie" prop="nombreEspecie" [width]="80">
+                            <ngx-datatable-column name="Especie" prop="nombreEspecie" [width]="70">
                                 <ng-template ngx-datatable-cell-template let-value="value">
                                     {{value}}
                                 </ng-template>
@@ -69,7 +69,7 @@
                                     </div>
                                 </ng-template>
                             </ngx-datatable-column>
-                            <ngx-datatable-column name="Eliminar" prop="Eliminar" [width]="70">
+                            <ngx-datatable-column name="Eliminar" prop="Eliminar" [width]="80">
                                 <ng-template ngx-datatable-cell-template let-row="row" let-value="value"
                                     let-rowIndex="rowIndex">
                                     <a><button class="btn btn-trash" placement="left" ngbTooltip="Eliminar producto"
@@ -110,6 +110,6 @@
             triggers="mouseenter:mouseleave" (click)="confirmarCarroCompra();"><b><i
                     class="fa fa-check ml-0 mr-2"></i>Confirmar Orden</b></button>
         <button type="button" style="color: white !important;" class="btn btn-raised btn-danger btn-cerrar"
-            (click)="cerrarModal();"><b>Cerrar</b></button>
+         (click)="cerrarModal();"><b>Cerrar</b></button>
     </div>
 </section>
