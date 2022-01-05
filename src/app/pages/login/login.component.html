@@ -16,13 +16,11 @@
         <span class="indicator"></span>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 mb-3">
             <div class="inputGroup inputGroup2">
                 <label for="password">Contraseña</label>
-                <input placeholder="Ingrese contraseña" [type]="hide ? 'text' : 'password'" name="password" [(ngModel)]="password" class="form-control password1" value="clave" placeholder="" />
-                <span (click)="mostrarPassword();" [class]="showEye ? 'fa fa-eye fa-2x' : 'fa fa-eye-slash fa-2x' " class="password-icon show-password"></span>
-                <br>
-                
+                <input placeholder="Ingrese contraseña" [type]="hide ? 'text' : 'password'" name="password" [(ngModel)]="password" class="form-control password1" value="clave" />
+                <span (click)="mostrarPassword();" [class]="showEye ? 'fa fa-eye fa-2x' : 'fa fa-eye-slash fa-2x' " class="mb-5 mr-4 password-icon show-password"></span>
             </div>
         </div>
     </div>
