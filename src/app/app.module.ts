@@ -11,6 +11,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ArchwizardModule } from 'angular-archwizard';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToastrModule } from 'ngx-toastr';
+import { JwtModule } from '@auth0/angular-jwt';
 import { NgbDatepickerModule, NgbModalModule, NgbModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -21,6 +22,12 @@ import { CatalogoComponent } from './pages/catalogo/catalogo.component';
 import { DetalleOrdenComponent } from './pages/catalogo/detalle-orden/detalle-orden.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { environment } from 'src/environments/environment';
+
+export function tokenGetter() {
+  let tk = sessionStorage.getItem(environment.token);
+  return tk != null ? tk : '';
+}
 
 @NgModule({
   declarations: [
@@ -54,6 +61,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ScrollingModule,
     NgbModule,
     NgbTooltipModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

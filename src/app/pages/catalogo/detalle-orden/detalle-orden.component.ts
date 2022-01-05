@@ -44,8 +44,6 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
       this.cargarComponente(), 200);
   }
 
-
-
   cargarComponente() {
     this.flagCargando = true;
     if (JSON.parse(sessionStorage.getItem('detallePedido')) != null) {
@@ -233,7 +231,9 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
 
   volverCatalogoCompra() {
     let ruta = 'catalogo';
-    this.router.navigate([ruta]);
+    setTimeout(() => {
+      this.router.navigate([ruta]);
+    }, 2000);
     this.seguirComprando();
     console.log("seguir comprando: ",this.seguirComprando())
     this.actualizarGrilla();
