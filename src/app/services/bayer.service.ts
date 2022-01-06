@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { LoginStoreService } from './local-session/login-store.services';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,16 @@ import { environment } from 'src/environments/environment';
 export class BayerService {
 
   private url = environment.API;
-  private httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+  private token = this.loginStoreService.obtenerToken();
+  //private httpOptToken = { headers: new HttpHeaders().set('Authorization: ', `Bearer ${this.token}`).set('Content-Type', 'application/json') };
+  private httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private loginStoreService: LoginStoreService,
+    private http: HttpClient
+    ) { 
+      //console.log('tokenServices: ',this.token);
+    }
 
   public listarEspecies(): Observable<any> {
     return this.http.get<any>(this.url + 'especie-semilla', this.httpOptions).pipe(

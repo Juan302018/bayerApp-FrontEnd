@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   API: 'http://localhost:8080/',
+  //REINTENTOS?: 4,
   token: ''
 };
 

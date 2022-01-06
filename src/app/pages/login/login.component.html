@@ -1,7 +1,7 @@
 <form #loginForm="ngForm">
 
     <div class="inputGroup inputGroup1" style="text-align: center">
-        <img src="../../../assets/icons/ico/bayer-chiquito.png"  width="250" height="100"> 
+        <img src="../../../assets/icons/ico/bayer-chiquito.png" width="250" height="100">
     </div>
 
     <div class="inputGroup inputGroup1" style="text-align: center">
@@ -19,8 +19,10 @@
         <div class="col-md-12 mb-3">
             <div class="inputGroup inputGroup2">
                 <label for="password">Contraseña</label>
-                <input placeholder="Ingrese contraseña" [type]="hide ? 'text' : 'password'" name="password" [(ngModel)]="password" class="form-control password1" value="clave" />
-                <span (click)="mostrarPassword();" [class]="showEye ? 'fa fa-eye fa-2x' : 'fa fa-eye-slash fa-2x' " class="mb-5 mr-4 password-icon show-password"></span>
+                <input placeholder="Ingrese contraseña" [type]="hide ? 'text' : 'password'" name="password"
+                    [(ngModel)]="password" class="form-control password1" value="clave" />
+                <span (click)="mostrarPassword();" [class]="showEye ? 'fa fa-eye fa-2x' : 'fa fa-eye-slash fa-2x' "
+                    class="mb-5 mr-4 password-icon show-password"></span>
             </div>
         </div>
     </div>
@@ -30,8 +32,13 @@
         </button>
 
     </div>
-
     <!--<mat-card *ngIf="mensaje">{{mensaje}}</mat-card>
     <mat-card *ngIf="error">{{error}}</mat-card>-->
 
 </form>
+
+<div *ngIf="obtLogin.mensaje" class="alert alert-success toast-container toast-wrapper" role="alert">
+    <h4 class="alert-heading toast-header"><b>Bienvenido!</b></h4>
+    <hr>
+    <p class="mb-0"><b>{{obtLogin.mensaje}}</b></p>
+</div>
