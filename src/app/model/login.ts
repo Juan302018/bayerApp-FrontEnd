@@ -1,4 +1,4 @@
-import { Usuario } from "./Usuario";
+import { Usuario } from "../model/usuario";
 
 export class Login {
   mensaje: string;

@@ -11,7 +11,6 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ArchwizardModule } from 'angular-archwizard';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToastrModule } from 'ngx-toastr';
-import { JwtModule } from '@auth0/angular-jwt';
 import { NgbDatepickerModule, NgbModalModule, NgbModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -62,12 +61,7 @@ export function tokenGetter() {
     NgSelectModule,
     ScrollingModule,
     NgbModule,
-    NgbTooltipModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter
-      }
-    })
+    NgbTooltipModule
   ],
   providers: [
     {
