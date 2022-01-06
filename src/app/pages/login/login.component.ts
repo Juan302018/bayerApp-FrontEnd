@@ -7,6 +7,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Login } from 'src/app/model/login';
 import { Usuario } from 'src/app/model/Usuario';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup,  FormBuilder,  Validators, FormsModule, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -26,13 +28,16 @@ export class LoginComponent implements OnInit, OnDestroy {
   username: string;
   password: string;
 
+  ngForm: FormGroup;
+
   constructor(
     private loginStoreService: LoginStoreService,
     private loginService: LoginService,
     private toastrService: ToastrService,
+    private formBuilder: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute
-    ) { }
+    private route: ActivatedRoute,
+  ) { this.createForm(); }
 
   ngOnInit(): void {
   }
@@ -64,6 +69,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   mostrarPassword() {
     this.hide = !this.hide;
     this.showEye = !this.showEye;
+  }
+
+  createForm() {
+    this.ngForm = this.formBuilder.group({
+       user: new FormControl("", [Validators.required, Validators.minLength(5)]),
+       password: new FormControl("", [Validators.required, Validators.minLength(5)]),
+    });
   }
 
   ngOnDestroy(): void {
