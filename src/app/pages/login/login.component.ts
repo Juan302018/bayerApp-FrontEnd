@@ -6,8 +6,6 @@ import { LoginService } from 'src/app/services/login.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Login } from 'src/app/model/login';
-import { Usuario } from 'src/app/model/Usuario';
-import { Component, OnInit } from '@angular/core';
 import { FormGroup,  FormBuilder,  Validators, FormsModule, FormControl } from '@angular/forms';
 
 @Component({
