@@ -1,4 +1,5 @@
 import { DetallePedidoStoreService } from 'src/app/services/local-session/detalle-pedido-store.service';
+import { LoginStoreService } from 'src/app/services/local-session/login-store.services';
 import { ToastrService } from 'ngx-toastr';
 import { BayerService } from 'src/app/services/bayer.service';
 import {
@@ -13,8 +14,8 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import swal from 'sweetalert2';
-import { LoginStoreService } from 'src/app/services/local-session/login-store.services';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-catalogo',
@@ -61,6 +62,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   fechaActual: string;
 
   constructor(
+    private router: Router,
     private modalService: NgbModal,
     private toastrService: ToastrService,
     private loginStoreService: LoginStoreService,
@@ -84,7 +86,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     this.fechaHoy = new Date();
     this.fechaActual = this.datePipe.transform(this.fechaHoy, "dd-MM-yyyy");
     let user = this.loginStoreService.obtenerLogin();
-    this.nombreUser = user.username;
+    this.nombreUser = user.user.username;
     this.cargarEspeciesSemillas();
     this.cargarTodoProductos();
   }
@@ -403,7 +405,12 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    
+    this.loginStoreService.limpiarToken();
+    this.loginStoreService.borrarLogin();
+    setTimeout(() => {
+      this.router.navigate(['login']);
+    }, 2000);
+
   }
 
   padNumber(value: number) {

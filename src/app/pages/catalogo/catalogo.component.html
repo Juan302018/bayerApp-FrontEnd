@@ -8,56 +8,60 @@
     </div>
 
     <header>
-        <div class="container-fluid mb-2">
-            <div>
-                <nav class="navbar navbar-expand-md navbar-light border-3 border-primary">
-                    <div class="container-fluid">
-                        <a href="">
-                            <img src="../../../assets/icons/ico/bayer-chiquito.png" align="left">
-                        </a>
-                        <button type="button" class="navbar-toggler" data-bs-toggle="collapse"
-                            data-bs-target="#MenuNavegacion">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                    </div>
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-md navbar-light border-3 border-primary">
+                <div class="container-fluid mb-1">
+                    <a>
+                        <img src="../../../assets/icons/ico/bayer-chiquito.png">
+                    </a>
+                </div>
 
-                    <div id="MenuNavegacion" class="collapse navbar-collapse">
-                        <ul class="navbar-nav ms-3">
-                            <li class="nav-item">
-                                <a class="nav-link active" routerLink="detalle">Carrito</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link">Fecha: {{fechaActual}}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link"><i class="fa fa-user fa-2x">Usuario: {{nombreUser}}</i></a>
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav ms-3">
-                            <li class="nav-item">
-                                <a class="nav-link text-nowrap" (click)="logout();"><i
-                                        class="fa fa-sign-out fa-2x"> Cerrar Sesión</i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
+                <div id="MenuNavegacion" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ms-3">
+                        <li class="nav-item">
+                            <a class="nav-link active mt-2" style="color: black;" (click)="openDetalleDeCompra(ordenDeCompra, -1);"><b>Carrito</b></a>
+                        </li>
+                        <!--<li class="nav-item ml-2">
+                            <a class="nav-link" style="color: black;"><i class="fa fa-user fa-2x"></i></a>
+                        </li>
+                        <li class="nav-item mr-2 mt-1">
+                            <a class="nav-link" style="color: black;"><b>{{nombreUser}}</b></a>
+                        </li> -->
+                    </ul>
+                    <ul class="navbar-nav ms-3">
+                        <li class="nav-item">
+                            <a style="color: black;" class="nav-link text-nowrap" (click)="logout();"><i
+                                    class="fa fa-user fa-2x"></i><b class="mb-1 ml-1"> User {{nombreUser}}</b></a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-3">
+                        <li class="nav-item">
+                            <a class="nav-link text-nowrap mt-2" style="color: black;"><b>Fecha {{fechaActual}}</b></a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-3">
+                        <li class="nav-item">
+                            <a style="color: black;" class="nav-link text-nowrap" (click)="logout();"><i
+                                    class="fa fa-sign-out fa-2x"></i><b class="mb-2 ml-1">Cerrar Sesión</b></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </div>
     </header>
     <!-- <br> -->
-    <div class="banner-1 mb-2">
+    <div class="banner-1 mb">
         <img class="imagen-1" src="../../../assets/icons/fondo-catalogo-grande.jpg">
-        <h1 class="texto-encima">Catalógo en línea</h1>
+        <label class="texto-encima ml-5"><i>Catalógo en línea</i></label>
     </div>
 
-
-    <div class="row">
+    <div class="row mb-5">
         <div class="col-12-lg">
 
             <div class="container">
                 <div class="card p-3">
                     <h4 class="text-left" style="color: black;">Buscador en catálogo</h4>
-                    <div class="row pb-2 ml-4">
+                    <div class="row pb-1 ml-4">
                         <div class="col-lg-3 col-md-3 col-sm-12 text-left">
                             <label for="especie" class="texto-color">Especie</label>
                             <ng-select style="color: #857c85 !important;" placeholder="--Seleccione una opción--"
@@ -125,7 +129,7 @@
             <br>
 
             <div class="card px-2">
-                <div class="row pb-2">
+                <div class="row pb">
                     <div class="row-tabla">
                         <div class="row p-0">
 

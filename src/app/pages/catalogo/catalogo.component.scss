@@ -5,6 +5,11 @@
     margin: auto;
 }
 
+.fondoImg {
+  width: 90px !important;
+  height: 90px !important;
+}
+
 .parrafo {
     margin-left: 1rem;
     margin-right: 1rem;
@@ -161,7 +166,7 @@ input[type='number'] {
 .texto-encima {
     position: absolute;
     font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
-    font-size: 50px;
+    font-size: 47px;
     color: #10384f;
     display:flex;
 }

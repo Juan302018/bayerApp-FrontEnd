@@ -36,4 +36,8 @@ export class LoginStoreService {
     public borrarToken(): void {
       sessionStorage.removeItem(LoginStoreService.TOKEN);
     }
+
+    public limpiarToken(): void {
+      sessionStorage.clear();
+    }
 }
