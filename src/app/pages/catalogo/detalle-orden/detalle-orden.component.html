@@ -14,9 +14,8 @@
                             <ngb-progressbar [value]="100" [striped]="true" [animated]="true"></ngb-progressbar>
                         </div>
                         <ngx-datatable style="font-size: 14.5px !important; text-align: center;"
-                            *ngIf="flagMostrarTabla" #detalleCompra class="material"
-                            [rows]="listaProductosCarro" [columnMode]="'force'" [rowHeight]="'auto'"
-                            [scrollbarH]="false" [reorderable]="true"
+                            *ngIf="flagMostrarTabla" #detalleCompra class="material" [rows]="listaProductosCarro"
+                            [columnMode]="'force'" [rowHeight]="'auto'" [scrollbarH]="false" [reorderable]="true"
                             [messages]="{emptyMessage:'No hay datos en la tabla.'}">
 
                             <ngx-datatable-column name="Especie" prop="nombreEspecie" [width]="70">
@@ -110,6 +109,6 @@
             triggers="mouseenter:mouseleave" (click)="confirmarCarroCompra();"><b><i
                     class="fa fa-check ml-0 mr-2"></i>Confirmar Orden</b></button>
         <button type="button" style="color: white !important;" class="btn btn-raised btn-danger btn-cerrar"
-         (click)="cerrarModal();"><b>Cerrar</b></button>
+            (click)="cerrarModal();"><b>Cerrar</b></button>
     </div>
 </section>

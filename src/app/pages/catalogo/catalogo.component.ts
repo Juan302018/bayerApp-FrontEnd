@@ -13,6 +13,8 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import swal from 'sweetalert2';
+import { LoginStoreService } from 'src/app/services/local-session/login-store.services';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-catalogo',
@@ -29,6 +31,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   private listaTiposSubscription: Subscription;
   private listaVariedadesSubscription: Subscription;
 
+  public fechaHoy = new Date();
   public flagActivaCompra: boolean = false;
   public flagCargando: boolean = false;
   public flagActivoTipo: boolean;
@@ -54,12 +57,16 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   editing = {};
   rows = [];
   labels = [];
+  nombreUser: string;
+  fechaActual: string;
 
   constructor(
     private modalService: NgbModal,
     private toastrService: ToastrService,
+    private loginStoreService: LoginStoreService,
     private detallePedidoStoreService: DetallePedidoStoreService,
-    private bayerService: BayerService
+    private bayerService: BayerService,
+    private datePipe: DatePipe
   ) {
     this.dataSourceCatalogo = [];
     this.arrayCantVacio = [];
@@ -74,6 +81,10 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     this.flagDesactivoTipo = true;
     this.flagActivoVariedad = false;
     this.flagActivaCompra = false;
+    this.fechaHoy = new Date();
+    this.fechaActual = this.datePipe.transform(this.fechaHoy, "dd-MM-yyyy");
+    let user = this.loginStoreService.obtenerLogin();
+    this.nombreUser = user.username;
     this.cargarEspeciesSemillas();
     this.cargarTodoProductos();
   }
@@ -389,6 +400,10 @@ export class CatalogoComponent implements OnInit, OnDestroy {
       this.padNumber(cantidad);
       return this.flagActivaCompra;
     }
+  }
+
+  logout() {
+    
   }
 
   padNumber(value: number) {

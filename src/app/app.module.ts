@@ -15,7 +15,7 @@ import { NgbDatepickerModule, NgbModalModule, NgbModule, NgbTooltipModule } from
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AppComponent } from './app.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { LoginComponent } from './pages/login/login.component';
 import { CatalogoComponent } from './pages/catalogo/catalogo.component';
 import { DetalleOrdenComponent } from './pages/catalogo/detalle-orden/detalle-orden.component';
@@ -68,7 +68,8 @@ export function tokenGetter() {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi: true
-    }
+    },
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

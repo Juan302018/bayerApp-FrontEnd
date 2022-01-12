@@ -5,6 +5,7 @@ import swal from 'sweetalert2';
 import { DetallePedidoStoreService } from 'src/app/services/local-session/detalle-pedido-store.service';
 import { BayerService } from 'src/app/services/bayer.service';
 import { ToastrService } from 'ngx-toastr';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-detalle-orden',
@@ -20,6 +21,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
 
   private carroCompraSubscription: Subscription;
 
+  public fechaHoy = new Date();
   public flagMostrarTabla: boolean = false;
   public flagCargando: boolean = false;
   public activaCierreModal: boolean = false;
@@ -29,6 +31,8 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   envListCarroVacio = [];
   nuevoProductoAgregado: any;
   totalPedido: number;
+  fechaActual: string;
+  comentario: string;
   mantenerCarro = false;
 
   constructor(
@@ -36,7 +40,8 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private toastrService: ToastrService,
     private detallePedidoStoreService: DetallePedidoStoreService,
-    private bayerService: BayerService
+    private bayerService: BayerService,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit(): void {
@@ -57,6 +62,8 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
     this.flagCargando = false;
     this.flagMostrarTabla = true;
     this.activaCierreModal = false;
+    this.fechaHoy = new Date();
+    this.fechaActual = this.datePipe.transform(this.fechaHoy, "dd-MM-yyyy");
   }
 
   //Emite una output refrescar al mantenedor del componente padre catalogo

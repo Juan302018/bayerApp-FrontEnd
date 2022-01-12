@@ -6,6 +6,51 @@
             </div>
         </div>
     </div>
+
+    <header>
+        <div class="container-fluid mb-2">
+            <div>
+                <nav class="navbar navbar-expand-md navbar-light border-3 border-primary">
+                    <div class="container-fluid">
+                        <a href="">
+                            <img src="../../../assets/icons/ico/bayer-chiquito.png" align="left">
+                        </a>
+                        <button type="button" class="navbar-toggler" data-bs-toggle="collapse"
+                            data-bs-target="#MenuNavegacion">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+
+                    <div id="MenuNavegacion" class="collapse navbar-collapse">
+                        <ul class="navbar-nav ms-3">
+                            <li class="nav-item">
+                                <a class="nav-link active" routerLink="detalle">Carrito</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link">Fecha: {{fechaActual}}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link"><i class="fa fa-user fa-2x">Usuario: {{nombreUser}}</i></a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav ms-3">
+                            <li class="nav-item">
+                                <a class="nav-link text-nowrap" (click)="logout();"><i
+                                        class="fa fa-sign-out fa-2x"> Cerrar Sesión</i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <!-- <br> -->
+    <div class="banner-1 mb-2">
+        <img class="imagen-1" src="../../../assets/icons/fondo-catalogo-grande.jpg">
+        <h1 class="texto-encima">Catalógo en línea</h1>
+    </div>
+
+
     <div class="row">
         <div class="col-12-lg">
 
@@ -68,9 +113,10 @@
                             <div class="input-group-append">
                                 <!--<button class="btn btn-excel mr-4 mt-2 pr-5 pl-5" type="button"
                         triggers="mouseenter:mouseleave"><b>Limpiar</b></button> -->
-                                <button *ngIf="especie !== 0" [disabled]="especie === 0 || especie == null" class="btn btn-buscar mr-4 mt-2 pr-5 pl-5" type="button"
+                                <button *ngIf="especie !== 0" [disabled]="especie === 0 || especie == null"
+                                    class="btn btn-buscar mr-4 mt-2 pr-5 pl-5" type="button"
                                     (click)="buscarProductos();" triggers="mouseenter:mouseleave"><b>Buscar</b></button>
-                               
+
                             </div>
                         </div>
                     </div>
