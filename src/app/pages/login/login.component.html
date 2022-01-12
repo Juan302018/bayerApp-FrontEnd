@@ -11,7 +11,7 @@
         <div class="inputGroup inputGroup1">
             <label for="user1">Usuario</label>
             <input formControlName="user" type="text" placeholder="Ingrese usuario" id="user" name="user"
-                [(ngModel)]="username" required />
+                 required />
             <span class="indicator"></span>
         </div>
         <div class="row">
@@ -19,7 +19,7 @@
                 <div class="inputGroup inputGroup2">
                     <label for="password">Contraseña</label>
                     <input placeholder="Ingrese contraseña" [type]="hide ? 'text' : 'password'" name="password"
-                        [(ngModel)]="password" class="form-control password1" value="clave" />
+                        formControlName="password" class="form-control password1" value="clave" />
                     <span (click)="mostrarPassword();" [class]="showEye ? 'fa fa-eye fa-2x' : 'fa fa-eye-slash fa-2x' "
                         class="mb-5 mr-4 password-icon show-password"></span>
                 </div>
@@ -43,8 +43,8 @@
         </div>
 
         <div class="inputGroup inputGroup3">
-            <button id="login" type="button" (click)="iniciarSesion()"
-                [disabled]="username == '' || password == '' || ngForm.invalid">Iniciar Sesión
+            <button id="login" type="button" (click)="iniciarSesion()" [disabled]="ngForm.valid == false"
+                >Iniciar Sesión
                 <i class="fa fa-sign-in" aria-hidden="true"></i>
             </button>
 

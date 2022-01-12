@@ -41,7 +41,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   iniciarSesion() {
-    console.log('Credenciales: ', this.username.trim(), this.password.trim());
+    this.username = this.ngForm.get('user').value;
+    this.password = this.ngForm.get('password').value;
+    console.log('Credenciales: ', this.username, this.password);
     this.loginSubscription = this.loginService.login(this.username, this.password).subscribe(data => {
       console.log('data: ', data);
       environment.token = data.token;
@@ -71,10 +73,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   createForm() {
-    this.ngForm = this.formBuilder.group({
+    this.ngForm = new FormGroup({
        user: new FormControl("", [Validators.required, Validators.minLength(5)]),
        password: new FormControl("", [Validators.required, Validators.minLength(5)]),
     });
+    
   }
 
   ngOnDestroy(): void {
@@ -82,5 +85,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.loginSubscription.unsubscribe();
     }
   }
+
+  
 
 }
