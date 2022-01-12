@@ -19,17 +19,6 @@
                 <div id="MenuNavegacion" class="collapse navbar-collapse">
                     <ul class="navbar-nav ms-3">
                         <li class="nav-item">
-                            <a class="nav-link active mt-2" style="color: black;" (click)="openDetalleDeCompra(ordenDeCompra, -1);"><b>Carrito</b></a>
-                        </li>
-                        <!--<li class="nav-item ml-2">
-                            <a class="nav-link" style="color: black;"><i class="fa fa-user fa-2x"></i></a>
-                        </li>
-                        <li class="nav-item mr-2 mt-1">
-                            <a class="nav-link" style="color: black;"><b>{{nombreUser}}</b></a>
-                        </li> -->
-                    </ul>
-                    <ul class="navbar-nav ms-3">
-                        <li class="nav-item">
                             <a style="color: black;" class="nav-link text-nowrap" (click)="logout();"><i
                                     class="fa fa-user fa-2x"></i><b class="mb-1 ml-1"> User {{nombreUser}}</b></a>
                         </li>
@@ -41,7 +30,7 @@
                     </ul>
                     <ul class="navbar-nav ms-3">
                         <li class="nav-item">
-                            <a style="color: black;" class="nav-link text-nowrap" (click)="logout();"><i
+                            <a style="color: black;" class="nav-link text-nowrap"><i (click)="logout();"
                                     class="fa fa-sign-out fa-2x"></i><b class="mb-2 ml-1">Cerrar Sesión</b></a>
                         </li>
                     </ul>

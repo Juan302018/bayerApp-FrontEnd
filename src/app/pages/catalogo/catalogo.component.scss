@@ -5,9 +5,9 @@
     margin: auto;
 }
 
-.fondoImg {
-  width: 90px !important;
-  height: 90px !important;
+.btnSinBorde:focus {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .parrafo {
