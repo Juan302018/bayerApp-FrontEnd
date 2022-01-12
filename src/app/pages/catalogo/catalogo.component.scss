@@ -155,8 +155,45 @@ input[type='number'] {
     height: 100%;
     background-color: #00BEFF;
     position: absolute;
-    opacity: 0.7;
+    opacity: 0.5;
+
 }
+
+.banner-2::content {
+  content: "";
+  margin-left: 40%;
+  width: 10%;
+  height: 100%;
+  background-color: #00BEFF;
+  position: absolute;
+  opacity: 0.5;
+  border-bottom: 410px solid transparent;
+  border-left: 200px solid #00BEFF;
+  background-clip: padding-box;
+}
+
+
+
+.banner-3::content {
+  content: "";
+  background-color: #00BEFF;
+  width: 10%;
+  height: 100%;
+  border-top: 410px solid transparent;
+  opacity: 0.5;
+  
+  border-right: 200px  solid #00BEFF; 
+
+  background-clip: padding-box;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+
+
+
+
 
 .texto-encima {
     position: absolute;
