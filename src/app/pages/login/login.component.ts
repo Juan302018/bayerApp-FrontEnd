@@ -52,21 +52,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     console.log('Credenciales: ', this.username, this.password);
     this.loginService.login(this.username, this.password)
     this.loginSubscription = this.loginService.login(this.username, this.password).subscribe(data => {
-      if (data == undefined) {
-        //this.interceptorConexion()
-        setTimeout(
-          () =>
-            //swal.fire('Error', '<span><div class="alert alert-danger" role="alert">' + '<b>El orden objeto ingresado ya se encuentra registrado!</b></div></span>', 'error'),
-            swal.fire(
-              'Error',
-              '<span><b><div class="alert alert-danger" role="alert">' +
-              'Error de autenticación: username o password incorrecto!' +
-              '</div></b></span>',
-              'error'
-            ),
-          90
-        );
-      } else if (data !== null || data !== undefined) {
         console.log('data: ', data);
         environment.token = data.token;
         console.log('token: ', environment.token);
@@ -83,10 +68,17 @@ export class LoginComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           this.router.navigate(['catalogo']);
         }, 2000);
-      }
+      
     },
-      (err) => {
+      err => {
         console.error('Error: ', err);
+        swal.fire(
+          'Error',
+          '<span><b><div class="alert alert-danger" role="alert">' +
+          `${err.error.mensaje}` +
+          '</div></b></span>',
+          'error'
+        )
         this.interceptorConexion()
       },
     );
