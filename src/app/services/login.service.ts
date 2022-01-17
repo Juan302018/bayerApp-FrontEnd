@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { LoginStoreService } from './local-session/login-store.services';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class LoginService {
   private httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}) };
 
   constructor(private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private loginStoreService: LoginStoreService
     ) { }
 
   public login(username, password): Observable<any> {
@@ -52,12 +54,12 @@ export class LoginService {
 * @param operation - name of the operation that failed
 * @param result - optional value to return as the observable result
 */
-private handleError<T>(operation = 'operation', result?: T) {
+public handleError<T>(operation = 'operation', result?: T) {
   return (error: any): Observable<T> => {
 
     // TODO: send the error to remote logging infrastructure
     console.error('ERROR', error); // log to console instead
-
+  
     // TODO: better job of transforming error for user consumption
     console.log(`${operation} failed: ${error.message}`);
 

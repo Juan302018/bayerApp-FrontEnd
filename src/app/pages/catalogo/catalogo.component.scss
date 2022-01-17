@@ -112,7 +112,7 @@ input[type='number'] {
 .imagen-1 {
     display: block;
     max-width: 100%;
-    height: 410px;
+    height: 300px;
 }
 
 .utility-nav {
@@ -164,6 +164,19 @@ input[type='number'] {
 
 }
 
+.banner::content {
+  content: "";
+  margin-left: 40%;
+  width: 5%;
+  height: 100%;
+  background-color: #00BEFF;
+  position: absolute;
+  opacity: 0.1;
+  border-bottom: 300px solid transparent;
+  border-left: 200px solid #00BEFF;
+  background-clip: padding-box;
+}
+
 .banner-2::content {
   content: "";
   margin-left: 40%;
@@ -172,7 +185,7 @@ input[type='number'] {
   background-color: #00BEFF;
   position: absolute;
   opacity: 0.5;
-  border-bottom: 410px solid transparent;
+  border-bottom: 300px solid transparent;
   border-left: 200px solid #00BEFF;
   background-clip: padding-box;
 }
@@ -184,7 +197,7 @@ input[type='number'] {
   background-color: #00BEFF;
   width: 10%;
   height: 100%;
-  border-top: 410px solid transparent;
+  border-top: 300px solid transparent;
   opacity: 0.5;
   
   border-right: 200px  solid #00BEFF; 

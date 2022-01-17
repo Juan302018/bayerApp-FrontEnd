@@ -11,6 +11,8 @@ export class LoginStoreService {
   static readonly USER_LOGIN = 'login';
   static readonly TOKEN = 'access_token';
 
+  @Output() loginEventServices: EventEmitter<any> = new EventEmitter<any>();
+
   public guardarLogin(userLogin: Login): void {
       sessionStorage.setItem(LoginStoreService.USER_LOGIN, JSON.stringify(userLogin));
     }
@@ -39,5 +41,9 @@ export class LoginStoreService {
 
     public limpiarToken(): void {
       sessionStorage.clear();
+    }
+
+    public loginEventService(data: any): void{
+      this.loginEventServices.emit(data);
     }
 }

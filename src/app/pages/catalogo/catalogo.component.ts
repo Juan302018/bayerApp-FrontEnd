@@ -409,7 +409,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     this.loginStoreService.borrarLogin();
     setTimeout(() => {
       this.router.navigate(['login']);
-    }, 2000);
+    }, 100);
   }
 
   padNumber(value: number) {

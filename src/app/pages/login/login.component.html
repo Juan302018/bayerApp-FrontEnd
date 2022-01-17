@@ -29,16 +29,16 @@
         <div *ngIf="(ngForm.controls['user'].invalid && (ngForm.controls['user'].dirty || ngForm.controls['user'].touched)) || (ngForm.controls['password'].invalid && (ngForm.controls['password'].dirty || ngForm.controls['password'].touched))"
             class="alert alert-danger">
             <div *ngIf="ngForm.get('user').hasError('required')">
-                - Debe ingresar cuenta de usuario.
+                 Debe ingresar cuenta de usuario.
             </div>
             <div *ngIf="ngForm.get('password').hasError('required')">
-                - Debe ingresar contraseña de usuario.
+                 Debe ingresar contraseña de usuario.
             </div>
             <div *ngIf="ngForm.get('user').hasError('minlength')">
-                - La cuenta de usuario debe tener minimo 5 caracteres.
+                 La cuenta de usuario debe tener minimo 5 caracteres.
             </div>
             <div *ngIf="ngForm.get('password').hasError('minlength')">
-                - La contraseña debe tener minimo 5 caracteres.
+                 La contraseña debe tener minimo 5 caracteres.
             </div>
         </div>
 
