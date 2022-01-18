@@ -52,26 +52,26 @@ export class LoginComponent implements OnInit, OnDestroy {
     console.log('Credenciales: ', this.username, this.password);
     this.loginService.login(this.username, this.password)
     this.loginSubscription = this.loginService.login(this.username, this.password).subscribe(data => {
-        console.log('data: ', data);
-        environment.token = data.token;
-        console.log('token: ', environment.token);
-        this.loginStoreService.guardarToken(environment.token);
+      environment.token = data.token;
+      this.loginStoreService.guardarToken(environment.token);
+
+      this.loginService.loginCambio.next(data.mensaje);
+      this.loginService.mensajeCambio.next('Inicio de sesión correctamente!');
+      setTimeout(() => {
+        this.router.navigate(['catalogo']);
+      }, 2000);
+      this.loginService.detalleUsuario(this.username).subscribe(detalleUser => {
+        console.log('detalleUser: ',detalleUser);
         this.obtLogin.mensaje = data.mensaje;
         this.obtLogin.token = environment.token;
         this.obtLogin.user = data.user;
+        this.obtLogin.email = detalleUser.emailUsuario;
         console.log('obtLogin: ', this.obtLogin);
         this.loginStoreService.guardarLogin(this.obtLogin);
-        //sessionStorage.setItem('token',environment.token);
-
-        this.loginService.loginCambio.next(data.mensaje);
-        this.loginService.mensajeCambio.next('Inicio de sesión correctamente!');
-        setTimeout(() => {
-          this.router.navigate(['catalogo']);
-        }, 2000);
-      
+      });
     },
       err => {
-        console.error('Error: ', err);
+        //console.error('Error: ', err);
         swal.fire(
           'Error',
           '<span><b><div class="alert alert-danger" role="alert">' +
@@ -79,11 +79,12 @@ export class LoginComponent implements OnInit, OnDestroy {
           '</div></b></span>',
           'error'
         )
-        this.interceptorConexion()
+        //this.interceptorConexion()
       },
     );
   }
 
+  /*
   interceptorConexion() {
     var request: HttpRequest<any>
     var next: HttpHandler
@@ -128,7 +129,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         console.log('EMPTY: ', EMPTY);
         return EMPTY;
       }));
-  }
+  }¨
+  */
 
   mostrarPassword() {
     this.hide = !this.hide;

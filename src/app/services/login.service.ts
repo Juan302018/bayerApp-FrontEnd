@@ -16,6 +16,7 @@ export class LoginService {
 
   private body = new URLSearchParams();
   private url = environment.API;
+  private httpOption = { headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
   private httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'}) };
 
   constructor(private http: HttpClient,
@@ -29,16 +30,9 @@ export class LoginService {
     return this.http.post<any>(this.url + 'api/login', this.body.toString(), this.httpOptions);
   }
 
-  /*
-  cerrarSesion() {
-    let token = sessionStorage.getItem(environment.token);
-
-    this.http.get(this.url + tokens/anular/environment.token).subscribe(() => {
-      sessionStorage.clear();
-      this.router.navigate(['login']);
-    });
+  public detalleUsuario(username): Observable<any> {
+    return this.http.post<any>(this.url + 'usuario/detallePorNombre/'+username, this.httpOption);
   }
-  */
 
   estaLogeado() {
     let token = sessionStorage.getItem(environment.token);
