@@ -71,7 +71,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       });
     },
       err => {
-        //console.error('Error: ', err);
         swal.fire(
           'Error',
           '<span><b><div class="alert alert-danger" role="alert">' +

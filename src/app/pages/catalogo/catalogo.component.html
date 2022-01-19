@@ -31,7 +31,7 @@
                     <ul class="navbar-nav ms-3">
                         <li class="nav-item">
                             <a style="color: black;" class="nav-link text-nowrap"><i (click)="logout();"
-                                    class="fa fa-sign-out fa-2x"></i><b class="mb-2 ml-1">Cerrar Sesión</b></a>
+                                    class="fa fa-sign-out fa-2x"></i><b class="mb-2 ml-1">Cerrar sesión</b></a>
                         </li>
                     </ul>
                 </div>
@@ -60,11 +60,11 @@
         <div class="col-12-lg">
 
             <div class="container">
-                <div class="card p-3">
+                <div class="card cardCatalogo p-3">
                     <h4 class="text-left" style="color: black;">Buscador en catálogo</h4>
                     <div class="row pb-1 ml-4">
                         <div class="col-lg-3 col-md-3 col-sm-12 text-left">
-                            <label for="especie" class="texto-color">Especie</label>
+                            <label for="especie" class="texto-color">Especie *</label>
                             <ng-select style="color: #857c85 !important;" placeholder="--Seleccione una opción--"
                                 class="form-control form-control-sm" notFoundText="Sin datos!" [clearable]="false"
                                 [(ngModel)]="especie" (change)="onChangeEspecies($event);">
@@ -75,7 +75,7 @@
                             </ng-select>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-12 text-left">
-                            <label for="tipo" class="texto-color">Tipo</label>
+                            <label for="tipo" class="texto-color">Tipo *</label>
                             <ng-select
                                 *ngIf="flagActivoTipo === false || this.flagDesactivoTipo === true || especie === 0 && tipo === null"
                                 style="color: #857c85 !important;" placeholder="--Seleccione una opción--"
@@ -93,7 +93,7 @@
                             </ng-select>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-12 text-left">
-                            <label for="variedad" class="texto-color">Variedad</label>
+                            <label for="variedad" class="texto-color">Variedad *</label>
                             <ng-select *ngIf="flagActivoVariedad === false && tipo !== 0"
                                 style="color: #857c85 !important;" placeholder="--Seleccione una opción--"
                                 class="form-control form-control-sm" notFoundText="Sin datos!" [clearable]="false"

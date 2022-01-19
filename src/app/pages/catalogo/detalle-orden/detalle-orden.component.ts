@@ -3,9 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import swal from 'sweetalert2';
 import { DetallePedidoStoreService } from 'src/app/services/local-session/detalle-pedido-store.service';
+import { LoginStoreService } from 'src/app/services/local-session/login-store.services';
 import { BayerService } from 'src/app/services/bayer.service';
+import { EmailService } from 'src/app/services/email.service';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
+import { Email } from 'src/app/model/email';
+import { EmailEnum } from 'src/app/enum/email-enum';
 
 @Component({
   selector: 'app-detalle-orden',
@@ -20,6 +24,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   @Input() nuevoProductoCarro: any;
 
   private carroCompraSubscription: Subscription;
+  private emialSubscription: Subscription;
 
   public fechaHoy = new Date();
   public flagMostrarTabla: boolean = false;
@@ -31,16 +36,20 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   envListCarroVacio = [];
   nuevoProductoAgregado: any;
   totalPedido: number;
+  capturaIdCompra: number;
   fechaActual: string;
   comentario: string;
+  email: string;
   mantenerCarro = false;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private toastrService: ToastrService,
+    private loginStoreService: LoginStoreService,
     private detallePedidoStoreService: DetallePedidoStoreService,
     private bayerService: BayerService,
+    private emailService: EmailService,
     private datePipe: DatePipe
   ) { }
 
@@ -62,6 +71,8 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
     this.flagCargando = false;
     this.flagMostrarTabla = true;
     this.activaCierreModal = false;
+    let capturaEmail = this.loginStoreService.obtenerLogin();
+    this.email = capturaEmail.email;
     this.fechaHoy = new Date();
     this.fechaActual = this.datePipe.transform(this.fechaHoy, "dd-MM-yyyy");
   }
@@ -206,6 +217,8 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
               console.log('carro: ', carro);
               if (carro !== undefined && carro !== null) {
                 let response = carro.mensaje;
+                this.capturaIdCompra = carro.idCompra;
+                this.enviarNotificacionEmail(this.capturaIdCompra);
                 setTimeout(() =>
                 swal.fire({
                   title: 'Atención',
@@ -216,7 +229,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
                   allowEscapeKey: false
                 }), 1);
                 setTimeout(() =>
-                  swal.fire('Solicitud exitosa', '<span><b><div class="alert alert-success" role="alert">Confirmación exitosa. ' + response + '!</div></b></span>', 'success'), 2000);
+                  swal.fire('Solicitud exitosa', '<span><b><div class="alert alert-success" role="alert">Confirmación exitosa. ' + response + '!</div></b></span>', 'success'), 1000);
                 this.listaProductosCarro = [];
                 this.detallePedidoStoreService.borrarCarroCompra();
                 this.actualizarGrilla();
@@ -236,19 +249,39 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
       });
   }
 
+  enviarNotificacionEmail(idCompra: number) {
+    const email: Email = new Email();
+    email.content = EmailEnum.textHeaderMessage+EmailEnum.textMessage;
+    email.averageContent = EmailEnum.textAverageMessage;
+    email.footerContent = EmailEnum.textFooterMessage;
+    email.subject = EmailEnum.subject+idCompra;
+    email.email = this.email;
+    console.log('email: ',email);
+    setTimeout(() =>
+    this.toastrService.success('Detalle de compra '+idCompra+'. Mail enviado exitosamente!', 'Success'), 200);
+    this.emialSubscription = this.emailService.email(email).subscribe(dataEmail => {
+      if(dataEmail !== null) {
+        console.log('email: ',dataEmail);
+      }
+    });
+  }
+
   volverCatalogoCompra() {
     let ruta = 'catalogo';
     setTimeout(() => {
       this.router.navigate([ruta]);
     }, 2000);
     this.seguirComprando();
-    console.log("seguir comprando: ",this.seguirComprando())
+    //console.log("seguir comprando: ",this.seguirComprando())
     this.actualizarGrilla();
   }
 
   ngOnDestroy(): void {
     if (this.carroCompraSubscription) {
       this.carroCompraSubscription.unsubscribe();
+    }
+    if (this.emialSubscription) {
+      this.emialSubscription.unsubscribe();
     }
   }
 

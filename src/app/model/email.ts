@@ -1,7 +1,7 @@
 export class Email {
-    textMessage: string; 
-    textAverageMessage: string; 
-    textFooterMessage: string; 
+    content: string; 
+    averageContent: string; 
+    footerContent: string; 
     email: string; 
     subject: string;
   
