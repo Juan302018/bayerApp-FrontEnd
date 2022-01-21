@@ -233,7 +233,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe((especies) => {
         if (especies !== null || especies !== undefined) {
-          especies = especies.concat({ id: 0, nombreEspecie: 'Sin especie semilla' });
+          //especies = especies.concat({ id: 0, nombreEspecie: 'Sin especie semilla' });
           especies = especies.sort((a, b) => {
             return a.id.toString().localeCompare(b.id);
           });
@@ -267,7 +267,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
         .pipe(take(1))
         .subscribe((tipos) => {
           if (tipos !== null || tipos !== undefined) {
-            tipos = tipos.concat({ id: 0, nombreTipo: 'Sin tipo semilla' });
+            //tipos = tipos.concat({ id: 0, nombreTipo: 'Sin tipo semilla' });
             tipos = tipos.sort((a, b) => {
               return a.id.toString().localeCompare(b.id);
             });

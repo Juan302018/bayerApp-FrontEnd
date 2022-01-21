@@ -116,11 +116,13 @@
                         <div class="col-lg-9 col-md-9 col-sm-9 text-left"></div>
                         <div class="col-lg-2 col-md-2 col-sm-2 text-left">
                             <div class="input-group-append">
-                                <!--<button class="btn btn-excel mr-4 mt-2 pr-5 pl-5" type="button"
-                        triggers="mouseenter:mouseleave"><b>Limpiar</b></button> -->
-                                <button *ngIf="especie !== 0" [disabled]="especie === 0 || especie == null"
+                                <button style="background-color: #10384f !important;" *ngIf="especie > 0"
                                     class="btn btn-buscar mr-4 mt-2 pr-5 pl-5" type="button"
                                     (click)="buscarProductos();" triggers="mouseenter:mouseleave"><b>Buscar</b></button>
+
+                                <button  *ngIf="especie <= 0 || especie == null" style="background-color: black !important;" [disabled]="especie === 0 || especie == null"
+                                    class="btn btn-buscar mr-4 mt-2 pr-5 pl-5" type="button"
+                                   ><b>Buscar</b></button>
 
                             </div>
                         </div>
