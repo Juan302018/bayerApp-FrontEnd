@@ -1,3 +1,19 @@
+.custom-pagination ::ng-deep .ngx-pagination .current {
+  background: #025802 !important;
+  border-radius: 50px !important;
+  color: white!important;
+}
+
+ .ngx-pagination .Siguiente {
+  border-radius: 50px !important;
+  color: white!important;
+}
+
+.selector .current {
+  background: #025802 !important;
+  color: white!important;
+}
+
 .cardCatalogo {
   background-color: #90d42c !important;
 }
@@ -132,10 +148,13 @@ input[type='number'] {
 }
 
 .btn-buscar {
-    color: white;
     text-align: center;
     background-color: #10384f;
     padding: 10px 10px 10px 10px;
+    color: white !important;
+    z-index: 10000; // Para posicionar el objeto en primer posición visual.
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .btn-excel {

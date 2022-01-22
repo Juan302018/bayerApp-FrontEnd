@@ -116,11 +116,12 @@
                         <div class="col-lg-9 col-md-9 col-sm-9 text-left"></div>
                         <div class="col-lg-2 col-md-2 col-sm-2 text-left">
                             <div class="input-group-append">
-                                <button style="background-color: #10384f !important;" *ngIf="especie > 0"
+                                <button *ngIf="especie > 0"
                                     class="btn btn-buscar mr-4 mt-2 pr-5 pl-5" type="button"
                                     (click)="buscarProductos();" triggers="mouseenter:mouseleave"><b>Buscar</b></button>
 
-                                <button  *ngIf="especie <= 0 || especie == null" style="background-color: black !important;" [disabled]="especie === 0 || especie == null"
+                                    <!-- Se quita el disable: [disabled]="especie === 0 || especie == null"-->
+                                <button *ngIf="especie <= 0 || especie == null" placement="top" ngbTooltip="!Debe seleccionar una especie para la búsqueda!"
                                     class="btn btn-buscar mr-4 mt-2 pr-5 pl-5" type="button"
                                    ><b>Buscar</b></button>
 
@@ -140,8 +141,8 @@
                                 <ngb-progressbar [value]="100" [striped]="true" [animated]="true"></ngb-progressbar>
                             </div>
                             <!-- La propiedad footerHeight oculta el pie de la tabla [footerHeight]="50" -->
-                            <ngx-datatable style="font-size: 14.5px !important; text-align: center;" class="material"
-                                #tabCatalogo [rows]="arrayProductos" [columnMode]="'force'" [rowHeight]="'auto'"
+                            <ngx-datatable #tabCatalagoProductos style="font-size: 14.5px !important; text-align: center;" class="material"
+                                #tabCatalogo [rows]="arrayProductos | paginate: configCatalogo" [columnMode]="'force'" [rowHeight]="'auto'"
                                 [scrollbarH]="false" [reorderable]="true"
                                 [messages]="{emptyMessage:'No hay datos en la tabla.'}">
 
@@ -217,6 +218,24 @@
                                     </ng-template>
                                 </ngx-datatable-column>
                             </ngx-datatable>
+                        </div>
+                    </div>
+                    <br>
+                    <!-- Implementar Paginación: paginador y seleccionador!-->
+                    <div style="justify-content: center !important;" class="d-flex justify-content-between mt-2 mb-2 py-3">
+                        <div style="display: flex;">
+                            <pagination-controls class="custom-pagination" style="color: black !important;" [id]="'paginationCatalogo'" [autoHide]="false" [responsive]="true"
+                                previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="onPageChangeCatalogo($event)">
+                            </pagination-controls>&nbsp;
+                            <div style="margin-left: 15px !important;">
+                                <select class="selector custom-select" style="width: auto; color: black !important;" name="pageSize"
+                                [(ngModel)]="configCatalogo.itemsPerPage">
+                                <option class="selector" [ngValue]="10">10</option>
+                                <option class="selector" [ngValue]="25">25</option>
+                                <option class="selector" [ngValue]="50">50</option>
+                                <option class="selector" [ngValue]="100">100</option>
+                            </select>
+                            </div>
                         </div>
                     </div>
                 </div>

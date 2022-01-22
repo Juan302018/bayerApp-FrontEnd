@@ -9,6 +9,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
@@ -16,6 +17,7 @@ import { take } from 'rxjs/operators';
 import swal from 'sweetalert2';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'app-catalogo',
@@ -25,6 +27,8 @@ import { Router } from '@angular/router';
 
 export class CatalogoComponent implements OnInit, OnDestroy {
 
+  @ViewChild(DatatableComponent) public tabCatalagoProductos: DatatableComponent;
+  
   private modalReference: NgbModalRef;
 
   private listaTodoProductsSubscription: Subscription;
@@ -44,9 +48,17 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   public arrayTipos = new Array();
   public arrayVariedades = new Array();
 
+  /*
   public arrayVariedad: Array<any> = [
     { id: 0, nombreVariedad: 'Sin variedad semilla' }
-  ];
+  ];*/
+
+  public configCatalogo = {
+    id: 'paginationCatalogo',
+    itemsPerPage: 10,
+    currentPage: 1,
+    totalItems: this.arrayProductos.length
+  };
 
   detalleCompra: any;
 
@@ -91,6 +103,12 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     this.cargarTodoProductos();
   }
 
+  onPageChangeCatalogo(event) {
+    if (event) {
+      this.configCatalogo.currentPage = event;
+    }
+  }
+
   recibeResultCarroVacio(event: any) {
     if (event === true) {
       for (let i = 0; i < this.arrayProductos.length; i++) {
@@ -125,10 +143,10 @@ export class CatalogoComponent implements OnInit, OnDestroy {
           productList[i].tipoEnvase = productList[i].envase.tipoEnvase;
           productList[i].nombreEspecie = productList[i].especieSemilla.nombreEspecie;
           productList[i].nombreTipo = productList[i].tipoSemilla.nombreTipo;
-          productList[i].nombreVariedad = productList[i].variedadSemilla.nombreVariedad;
+          productList[i].nombreVariedad = productList[i].variedadSemilla.nombreVariedad.toLowerCase();
           productList[i].unidadMedida = productList[i].unidad.unidadMedida;
           productList[i].cantidadMedida = productList[i].unidad.cantidad;
-          productList[i].unidadCantidad = `${productList[i].unidad.cantidad}` + " " + `${productList[i].unidad.unidadMedida}`;
+          productList[i].unidadCantidad = `${productList[i].unidad.cantidad}` +' '+`${productList[i].unidad.unidadMedida}`;
           productList[i].cantidad = 0;
 
           productList[i].precioporUnidad = productList[i].preciosPorMaterial.valorUnidad;
@@ -136,6 +154,10 @@ export class CatalogoComponent implements OnInit, OnDestroy {
         swal.close();
         this.arrayProductos = productList;
         console.log('arrayProductos: ', this.arrayProductos);
+        
+        this.configCatalogo.totalItems = this.arrayProductos.length;
+        this.tabCatalagoProductos.offset = Math.floor((this.configCatalogo.totalItems) / this.configCatalogo.itemsPerPage);
+        console.log('tabCatalagoProductos: ',this.tabCatalagoProductos.offset);
       }
     });
   }
@@ -147,15 +169,19 @@ export class CatalogoComponent implements OnInit, OnDestroy {
           productAct[i].tipoEnvase = productAct[i].envase.tipoEnvase;
           productAct[i].nombreEspecie = productAct[i].especieSemilla.nombreEspecie;
           productAct[i].nombreTipo = productAct[i].tipoSemilla.nombreTipo;
-          productAct[i].nombreVariedad = productAct[i].variedadSemilla.nombreVariedad;
+          productAct[i].nombreVariedad = productAct[i].variedadSemilla.nombreVariedad.toLowerCase();;
           productAct[i].unidadMedida = productAct[i].unidad.unidadMedida;
           productAct[i].cantidadMedida = productAct[i].unidad.cantidad;
-          productAct[i].unidadCantidad = `${productAct[i].unidad.cantidad}` + " " + `${productAct[i].unidad.unidadMedida}`;
+          productAct[i].unidadCantidad = `${productAct[i].unidad.cantidad}` +' '+`${productAct[i].unidad.unidadMedida}`;
           productAct[i].cantidad = 0;
           productAct[i].precioporUnidad = productAct[i].preciosPorMaterial.valorUnidad;
         }
         this.arrayProductos = productAct;
         console.log('arrayProductos: ', this.arrayProductos);
+
+        this.configCatalogo.totalItems = this.arrayProductos.length;
+        this.tabCatalagoProductos.offset = Math.floor((this.configCatalogo.totalItems) / this.configCatalogo.itemsPerPage);
+        console.log('tabCatalagoProductos2: ',this.tabCatalagoProductos.offset);
       } else {
         console.error('No hay productos!');
       }
@@ -184,16 +210,21 @@ export class CatalogoComponent implements OnInit, OnDestroy {
             productList[i].tipoEnvase = productList[i].envase.tipoEnvase;
             productList[i].nombreEspecie = productList[i].especieSemilla.nombreEspecie;
             productList[i].nombreTipo = productList[i].tipoSemilla.nombreTipo;
-            productList[i].nombreVariedad = productList[i].variedadSemilla.nombreVariedad;
+            productList[i].nombreVariedad = productList[i].variedadSemilla.nombreVariedad.toLowerCase();;
             productList[i].cantidadMedida = productList[i].unidad.cantidad;
             productList[i].unidadMedida = productList[i].unidad.unidadMedida;
             productList[i].precioporUnidad = productList[i].preciosPorMaterial.valorUnidad;
-            productList[i].unidadCantidad = `${productList[i].unidad.cantidad}` + `" "` + `${productList[i].unidad.unidadMedida}`;
+            productList[i].unidadCantidad = `${productList[i].unidad.cantidad}` +' '+ `${productList[i].unidad.unidadMedida}`;
             productList[i].cantidad = 0;
           }
           swal.close();
           this.arrayProductos = productList;
           console.log('arrayProductos: ', this.arrayProductos);
+
+          this.configCatalogo.totalItems = this.arrayProductos.length;
+          this.tabCatalagoProductos.offset = Math.floor((this.configCatalogo.totalItems) / this.configCatalogo.itemsPerPage);
+          console.log('tabCatalagoProductos2: ',this.tabCatalagoProductos.offset);
+
         } else if (productList.length === undefined) {
           let msg = productList.error[0].mensaje
           console.log('msg : ', msg);
@@ -201,7 +232,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
           setTimeout(() =>
             swal.fire(
               'Error',
-              '<span><b><div class="alert alert-danger" role="alert">' +
+              '<span><b><div class="alert alert-danger" role="alert">' + msg +
               '</div></b></span>',
               'error'
             ),
@@ -228,16 +259,18 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   }
 
   cargarEspeciesSemillas() {
+    let arregloEspecies = [];
     this.listaEspeciesSubscription = this.bayerService
       .listarEspecies()
       .pipe(take(1))
       .subscribe((especies) => {
         if (especies !== null || especies !== undefined) {
           //especies = especies.concat({ id: 0, nombreEspecie: 'Sin especie semilla' });
-          especies = especies.sort((a, b) => {
-            return a.id.toString().localeCompare(b.id);
+          arregloEspecies = especies;
+          arregloEspecies.sort((a, b) => {
+            return a.nombreEspecie.toString().localeCompare(b.nombreEspecie.toString());
           });
-          this.arrayEspecies = especies;
+          this.arrayEspecies = arregloEspecies;
         } else {
           console.error('No hay data!');
         }
@@ -269,7 +302,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
           if (tipos !== null || tipos !== undefined) {
             //tipos = tipos.concat({ id: 0, nombreTipo: 'Sin tipo semilla' });
             tipos = tipos.sort((a, b) => {
-              return a.id.toString().localeCompare(b.id);
+              return a.nombreTipo.toString().localeCompare(b.nombreTipo.toString());
             });
             this.arrayTipos = tipos;
           } else {
@@ -287,7 +320,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
         .pipe(take(1))
         .subscribe((variedades) => {
           if (variedades === null || variedades === undefined) {
-            variedades = this.arrayVariedad;
+            //variedades = this.arrayVariedad;
             this.arrayVariedades = variedades;
             console.log('arrayVariedades: ', this.arrayVariedades);
           }
@@ -299,7 +332,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
         .subscribe((variedades) => {
           if (variedades !== null || variedades !== undefined) {
             variedades = variedades.sort((a, b) => {
-              return a.id.toString().localeCompare(b.id);
+              return a.nombreVariedad.toString().localeCompare(b.nombreVariedad.toString());
             });
             this.arrayVariedades = variedades;
           } else {
