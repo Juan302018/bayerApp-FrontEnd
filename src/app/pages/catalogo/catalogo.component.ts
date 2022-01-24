@@ -120,7 +120,6 @@ export class CatalogoComponent implements OnInit, OnDestroy {
       console.error('No recibe evento!');
     }
   }
-
   cargarProductosActualizados() {
     this.listaTodoProductsSubscription = this.bayerService.listarTodoProducto().pipe(take(1)).subscribe((productAct) => {
       if (productAct !== null || productAct !== undefined) {
@@ -342,10 +341,22 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   }
 
   openDetalleDeCompra(content, rowIndex) {
-    // @ts-ignore 
-    this.validaCantidad(this.arrayProductos[rowIndex].cantidad);
-    this.detalleCompra = this.arrayProductos[rowIndex];
-    this.modalReference = this.modalService.open(content, { windowClass: 'modal-in', backdrop: 'static', keyboard: true, size: 'xl' });
+    // @ts-ignore
+    if(this.configCatalogo.currentPage == 1){
+      this.validaCantidad(this.arrayProductos[rowIndex].cantidad);
+      this.detalleCompra = this.arrayProductos[rowIndex];
+      this.modalReference = this.modalService.open(content, { windowClass: 'modal-in', backdrop: 'static', keyboard: true, size: 'xl' });
+    }
+
+    if(this.configCatalogo.currentPage > 1){
+      let indexPaginacion = rowIndex +((this.configCatalogo.currentPage - 1) * this.configCatalogo.itemsPerPage)
+      this.validaCantidad(this.arrayProductos[indexPaginacion].cantidad);
+      this.detalleCompra = this.arrayProductos[indexPaginacion];
+      this.modalReference = this.modalService.open(content, { windowClass: 'modal-in', backdrop: 'static', keyboard: true, size: 'xl' });
+    }
+
+    
+    
   }
 
   cerrarModal() {
@@ -366,21 +377,40 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   }
 
   disminuirCantidad(rowIndex) {
-    if (this.arrayProductos[rowIndex].cantidad == 0) {
-      this.arrayProductos[rowIndex].cantidad = 0;
+    if(this.configCatalogo.currentPage == 1){
+      if (this.arrayProductos[rowIndex].cantidad == 0) {
+        this.arrayProductos[rowIndex].cantidad = 0;
+      }
+      if (this.arrayProductos[rowIndex].cantidad > 0) {
+        this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad - 1;
+        console.log("cantidadMenos:", this.arrayProductos[rowIndex].cantidad);
+        this.validaCantidad(this.arrayProductos[rowIndex].cantidad);
+      }
     }
-    if (this.arrayProductos[rowIndex].cantidad > 0) {
-      this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad - 1;
-      console.log("cantidadMenos:", this.arrayProductos[rowIndex].cantidad);
-      this.validaCantidad(this.arrayProductos[rowIndex].cantidad);
+
+    if(this.configCatalogo.currentPage > 1){
+      let indexPaginacion = rowIndex +((this.configCatalogo.currentPage - 1) * this.configCatalogo.itemsPerPage)
+      console.log(indexPaginacion)
+      this.arrayProductos[indexPaginacion].cantidad = this.arrayProductos[indexPaginacion].cantidad - 1;
+      this.validaCantidad(this.arrayProductos[indexPaginacion].cantidad);
     }
 
   }
 
   aumentarCantidad(rowIndex) {
-    this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad + 1;
+    console.log(this.configCatalogo)
+    if(this.configCatalogo.currentPage == 1){
+      this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad + 1;
     console.log("cantidadMas: ", this.arrayProductos[rowIndex].cantidad);
     this.validaCantidad(this.arrayProductos[rowIndex].cantidad);
+    }
+    if(this.configCatalogo.currentPage > 1){
+      let indexPaginacion = rowIndex +((this.configCatalogo.currentPage - 1) * this.configCatalogo.itemsPerPage)
+      console.log(indexPaginacion)
+      this.arrayProductos[indexPaginacion].cantidad = this.arrayProductos[indexPaginacion].cantidad + 1;
+      this.validaCantidad(this.arrayProductos[indexPaginacion].cantidad);
+    }
+    
   }
 
   validaCantidad(cantidad): boolean {
