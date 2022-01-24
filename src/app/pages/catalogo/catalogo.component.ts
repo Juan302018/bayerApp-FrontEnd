@@ -100,7 +100,6 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     let user = this.loginStoreService.obtenerLogin();
     this.nombreUser = user.user.username;
     this.cargarEspeciesSemillas();
-    this.cargarTodoProductos();
   }
 
   onPageChangeCatalogo(event) {
@@ -120,46 +119,6 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     } else {
       console.error('No recibe evento!');
     }
-  }
-
-  cargarTodoProductos() {
-    this.flagCargando = true;
-    setTimeout(
-      () =>
-        swal.fire({
-          title: 'Atención!',
-          text: 'Cargando datos ...',
-          imageUrl: 'assets/img/loadingCircucle.gif',
-          showConfirmButton: false,
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-        }),
-      100
-    );
-    this.flagCargando = false;
-    this.listaTodoProductsSubscription = this.bayerService.listarTodoProducto().subscribe((productList) => {
-      if (productList !== null || productList !== undefined) {
-        for (let i = 0; i < productList.length; i++) {
-          productList[i].tipoEnvase = productList[i].envase.tipoEnvase;
-          productList[i].nombreEspecie = productList[i].especieSemilla.nombreEspecie;
-          productList[i].nombreTipo = productList[i].tipoSemilla.nombreTipo;
-          productList[i].nombreVariedad = productList[i].variedadSemilla.nombreVariedad.toLowerCase();
-          productList[i].unidadMedida = productList[i].unidad.unidadMedida;
-          productList[i].cantidadMedida = productList[i].unidad.cantidad;
-          productList[i].unidadCantidad = `${productList[i].unidad.cantidad}` +' '+`${productList[i].unidad.unidadMedida}`;
-          productList[i].cantidad = 0;
-
-          productList[i].precioporUnidad = productList[i].preciosPorMaterial.valorUnidad;
-        }
-        swal.close();
-        this.arrayProductos = productList;
-        console.log('arrayProductos: ', this.arrayProductos);
-        
-        this.configCatalogo.totalItems = this.arrayProductos.length;
-        this.tabCatalagoProductos.offset = Math.floor((this.configCatalogo.totalItems) / this.configCatalogo.itemsPerPage);
-        console.log('tabCatalagoProductos: ',this.tabCatalagoProductos.offset);
-      }
-    });
   }
 
   cargarProductosActualizados() {
