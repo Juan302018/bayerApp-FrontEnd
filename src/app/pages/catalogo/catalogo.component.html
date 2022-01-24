@@ -174,7 +174,7 @@
 
                                 <ngx-datatable-column name="Precio" prop="precioporUnidad" [width]="80">
                                     <ng-template ngx-datatable-cell-template let-value="value">
-                                        {{value}}
+                                        {{value | currency:'CLP':''}}
                                     </ng-template>
                                 </ngx-datatable-column>
 

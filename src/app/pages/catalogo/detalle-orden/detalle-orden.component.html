@@ -46,7 +46,7 @@
 
                             <ngx-datatable-column name="Precio" prop="precioporUnidad" [width]="80">
                                 <ng-template ngx-datatable-cell-template let-value="value">
-                                    {{value}}
+                                    {{value | currency:'CLP':''}}
                                 </ng-template>
                             </ngx-datatable-column>
                             <ngx-datatable-column name="Cantidad" prop="cantidad" [width]="160">
@@ -93,7 +93,7 @@
                     </div>
                     <div class="col-5">
                         <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                            <input style="color: #857c85;" disabled value="${{totalPedido}}"
+                            <input style="color: #857c85;" disabled value="${{totalPedido | currency:'CLP':''}}"
                                 placeholder="--No hay registros--" type="text" class="form-control form-control-sm">
                         </div>
                     </div>
