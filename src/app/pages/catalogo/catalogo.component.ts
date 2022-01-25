@@ -60,6 +60,12 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     totalItems: this.arrayProductos.length
   };
 
+  formatter = new Intl.NumberFormat('es-CL', {
+    style: 'currency',
+    currency: 'CLP',
+    minimumFractionDigits: 0
+  })
+
   detalleCompra: any;
 
   especie: any;
@@ -88,6 +94,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cargarComponente();
+    setTimeout(() => this.cargarEspeciesSemillas(), 200);
   }
 
   cargarComponente() {
@@ -120,6 +127,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
       console.error('No recibe evento!');
     }
   }
+
   cargarProductosActualizados() {
     this.listaTodoProductsSubscription = this.bayerService.listarTodoProducto().pipe(take(1)).subscribe((productAct) => {
       if (productAct !== null || productAct !== undefined) {
@@ -135,7 +143,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
           productAct[i].precioporUnidad = productAct[i].preciosPorMaterial.valorUnidad;
         }
         this.arrayProductos = productAct;
-        console.log('arrayProductos: ', this.arrayProductos);
+        console.log('arrayProductosMap: ', this.arrayProductos);
 
         this.configCatalogo.totalItems = this.arrayProductos.length;
         this.tabCatalagoProductos.offset = Math.floor((this.configCatalogo.totalItems) / this.configCatalogo.itemsPerPage);
@@ -177,7 +185,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
           }
           swal.close();
           this.arrayProductos = productList;
-          console.log('arrayProductos: ', this.arrayProductos);
+          console.log('arrayProductosMap2: ',this.arrayProductos);
 
           this.configCatalogo.totalItems = this.arrayProductos.length;
           this.tabCatalagoProductos.offset = Math.floor((this.configCatalogo.totalItems) / this.configCatalogo.itemsPerPage);
@@ -217,18 +225,17 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   }
 
   cargarEspeciesSemillas() {
-    let arregloEspecies = [];
+    //let arregloEspecies = [];
     this.listaEspeciesSubscription = this.bayerService
       .listarEspecies()
       .pipe(take(1))
       .subscribe((especies) => {
         if (especies !== null || especies !== undefined) {
           //especies = especies.concat({ id: 0, nombreEspecie: 'Sin especie semilla' });
-          arregloEspecies = especies;
-          arregloEspecies.sort((a, b) => {
+          this.arrayEspecies = especies;
+          return this.arrayEspecies.sort((a, b) => {
             return a.nombreEspecie.toString().localeCompare(b.nombreEspecie.toString());
           });
-          this.arrayEspecies = arregloEspecies;
         } else {
           console.error('No hay data!');
         }

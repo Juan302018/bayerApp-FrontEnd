@@ -13,12 +13,12 @@
                         <div class="col-md-12 p-0" *ngIf="flagCargando">
                             <ngb-progressbar [value]="100" [striped]="true" [animated]="true"></ngb-progressbar>
                         </div>
-                        <ngx-datatable style="font-size: 14.5px !important; text-align: center;"
+                        <ngx-datatable style="font-size: 14.5px !important;"
                             *ngIf="flagMostrarTabla" #detalleCompra class="material" [rows]="listaProductosCarro"
                             [columnMode]="'force'" [rowHeight]="'auto'" [scrollbarH]="false" [reorderable]="true"
                             [messages]="{emptyMessage:'No hay datos en la tabla.'}">
 
-                            <ngx-datatable-column name="Especie" prop="nombreEspecie" [width]="70">
+                            <ngx-datatable-column name="Especie" prop="nombreEspecie" [width]="50">
                                 <ng-template ngx-datatable-cell-template let-value="value">
                                     {{value}}
                                 </ng-template>
@@ -28,7 +28,7 @@
                                     {{value}}
                                 </ng-template>
                             </ngx-datatable-column>
-                            <ngx-datatable-column name="Variedad" prop="nombreVariedad" [width]="100">
+                            <ngx-datatable-column name="Variedad" prop="nombreVariedad" [width]="80">
                                 <ng-template ngx-datatable-cell-template let-value="value">
                                     {{value}}
                                 </ng-template>
@@ -44,12 +44,12 @@
                                 </ng-template>
                             </ngx-datatable-column>
 
-                            <ngx-datatable-column name="Precio" prop="precioporUnidad" [width]="80">
+                            <ngx-datatable-column name="Precio" prop="precioporUnidad" [width]="60">
                                 <ng-template ngx-datatable-cell-template let-value="value">
                                     {{value | currency:'CLP':''}}
                                 </ng-template>
                             </ngx-datatable-column>
-                            <ngx-datatable-column name="Cantidad" prop="cantidad" [width]="160">
+                            <ngx-datatable-column style="text-align: center !important;" name="Cantidad" prop="cantidad" [width]="160">
                                 <ng-template ngx-datatable-cell-template let-row="row" let-rowIndex="rowIndex">
                                     <div class="row">
                                         <div class="col-sm-2">
@@ -68,7 +68,7 @@
                                     </div>
                                 </ng-template>
                             </ngx-datatable-column>
-                            <ngx-datatable-column name="Eliminar" prop="Eliminar" [width]="80">
+                            <ngx-datatable-column name="Eliminar" prop="Eliminar" [width]="70">
                                 <ng-template ngx-datatable-cell-template let-row="row" let-value="value"
                                     let-rowIndex="rowIndex">
                                     <a><button class="btn btn-trash" placement="left" ngbTooltip="Eliminar producto"
@@ -93,7 +93,7 @@
                     </div>
                     <div class="col-5">
                         <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                            <input style="color: #857c85;" disabled value="${{totalPedido | currency:'CLP':''}}"
+                            <input style="color: #857c85;" disabled value="{{totalPedido}}"
                                 placeholder="--No hay registros--" type="text" class="form-control form-control-sm">
                         </div>
                     </div>

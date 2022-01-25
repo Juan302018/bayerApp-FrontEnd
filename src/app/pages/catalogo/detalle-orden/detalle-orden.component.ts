@@ -34,13 +34,19 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   listaProductosCarro = [];
   listaEnvioProductos = [];
   envListCarroVacio = [];
-  nuevoProductoAgregado: any;
-  totalPedido: number;
+    nuevoProductoAgregado: any;
+  totalPedido: string;
   capturaIdCompra: number;
   fechaActual: string;
   comentario: string;
   email: string;
   mantenerCarro = false;
+
+  formatter = new Intl.NumberFormat('es-CL', {
+    style: 'currency',
+    currency: 'CLP',
+    minimumFractionDigits: 0
+  })
 
   constructor(
     private router: Router,
@@ -148,7 +154,9 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
       aux = listaProductos[i].cantidad * listaProductos[i].precioporUnidad;
       suma = suma + aux;
     }
-    this.totalPedido = suma;
+    let totalCLP = suma;
+    this.totalPedido = this.formatter.format(totalCLP);
+    console.log('totalPedido',this.totalPedido);
   }
 
   verificarProductoEnCarro(listaCarro) {
@@ -157,10 +165,11 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
 
     if (listaCarro.length > 0) {
       for (let i = 0; i < listaCarro.length; i++) {
-        if (listaCarro[i].codigoMaterial === this.nuevoProductoAgregado.codigoMaterial) {
+        if (listaCarro[i].id === this.nuevoProductoAgregado.id) {
           listaCarro[i].cantidad = this.nuevoProductoAgregado.cantidad + listaCarro[i].cantidad;
           contador++;
         }
+        console.log('listaCarroLength: ',listaCarro.length)
         listaCarro[i].precioTotalPorItem = listaCarro[i].cantidad * listaCarro[i].precioporUnidad;
         console.log("carro 2 ", listaCarro[i]);
       }
@@ -250,8 +259,10 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   }
 
   enviarNotificacionEmail(idCompra: number) {
+    //let totalCLP = this.formatter.format(this.totalPedido);
+    //console.log('CLP: ',totalCLP)
     const email: Email = new Email();
-    email.content = EmailEnum.textHeaderMessage+EmailEnum.textMessage;
+    email.content = EmailEnum.textHeaderMessage+EmailEnum.textMessageFecha+this.fechaActual+EmailEnum.textMessageMonto+this.totalPedido;
     email.averageContent = EmailEnum.textAverageMessage;
     email.footerContent = EmailEnum.textFooterMessage;
     email.subject = EmailEnum.subject+idCompra;
