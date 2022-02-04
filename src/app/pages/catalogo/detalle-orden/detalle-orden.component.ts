@@ -156,7 +156,6 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
     }
     let totalCLP = suma;
     this.totalPedido = this.formatter.format(totalCLP);
-    console.log('totalPedido',this.totalPedido);
   }
 
   verificarProductoEnCarro(listaCarro) {
@@ -259,8 +258,6 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   }
 
   enviarNotificacionEmail(idCompra: number) {
-    //let totalCLP = this.formatter.format(this.totalPedido);
-    //console.log('CLP: ',totalCLP)
     const email: Email = new Email();
     email.content = EmailEnum.textHeaderMessage+EmailEnum.textMessageFecha+this.fechaActual+EmailEnum.textMessageMonto+this.totalPedido;
     email.averageContent = EmailEnum.textAverageMessage;
@@ -283,7 +280,6 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
       this.router.navigate([ruta]);
     }, 2000);
     this.seguirComprando();
-    //console.log("seguir comprando: ",this.seguirComprando())
     this.actualizarGrilla();
   }
 

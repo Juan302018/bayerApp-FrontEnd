@@ -18,24 +18,24 @@
                             [columnMode]="'force'" [rowHeight]="'auto'" [scrollbarH]="false" [reorderable]="true"
                             [messages]="{emptyMessage:'No hay datos en la tabla.'}">
 
-                            <ngx-datatable-column name="Especie" prop="nombreEspecie" [width]="50">
+                            <ngx-datatable-column style="margin-left: 15px !important;" name="Especie" prop="nombreEspecie" [width]="50">
                                 <ng-template ngx-datatable-cell-template let-value="value">
-                                    {{value}}
+                                    {{value | uppercase}}
                                 </ng-template>
                             </ngx-datatable-column>
                             <ngx-datatable-column name="Tipo" prop="nombreTipo" [width]="120">
                                 <ng-template ngx-datatable-cell-template let-value="value">
-                                    {{value}}
+                                    {{value | uppercase}}
                                 </ng-template>
                             </ngx-datatable-column>
                             <ngx-datatable-column name="Variedad" prop="nombreVariedad" [width]="80">
                                 <ng-template ngx-datatable-cell-template let-value="value">
-                                    {{value}}
+                                    {{value | uppercase}}
                                 </ng-template>
                             </ngx-datatable-column>
                             <ngx-datatable-column name="Envase" prop="tipoEnvase" [width]="60">
                                 <ng-template ngx-datatable-cell-template let-value="value">
-                                    {{value}}
+                                    {{value | uppercase}}
                                 </ng-template>
                             </ngx-datatable-column>
                             <ngx-datatable-column name="Cantidad" prop="unidadCantidad" [width]="60">
@@ -68,7 +68,7 @@
                                     </div>
                                 </ng-template>
                             </ngx-datatable-column>
-                            <ngx-datatable-column name="Eliminar" prop="Eliminar" [width]="70">
+                            <ngx-datatable-column name="Eliminar" prop="Eliminar" [width]="60">
                                 <ng-template ngx-datatable-cell-template let-row="row" let-value="value"
                                     let-rowIndex="rowIndex">
                                     <a><button class="btn btn-trash" placement="left" ngbTooltip="Eliminar producto"

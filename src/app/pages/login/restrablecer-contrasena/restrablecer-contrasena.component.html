@@ -1,0 +1,36 @@
+<form [formGroup]="ngFormRecuperaPass">
+    <div class="inputGroup inputGroup1" style="text-align: center">
+        <img src="../../../assets/icons/ico/bayer-chiquito.png" width="250" height="100">
+    </div>
+    <div style="text-align: center">
+        <label>Restablecer la contraseña</label>
+    </div>
+    <div class="form-group">
+        <div class="inputGroup inputGroup2">
+            <label for="email">Ingrese email</label>
+            <input formControlName="email" type="text" placeholder="Email corporativo" id="recuperarPass" name="recuperarPass"
+                 required/>
+            <p style="font-size: x-small; color: red;">¡Se enviará un email con la notificación para el cambio de contraseña!</p>
+            <span class="indicator"></span>
+        </div>
+
+        <div *ngIf="(ngFormRecuperaPass.controls['email'].invalid && (ngFormRecuperaPass.controls['email'].dirty || ngFormRecuperaPass.controls['email'].touched))"
+        class="alert alert-danger">
+        <div *ngIf="ngFormRecuperaPass.get('email').hasError('required')">
+             Debe ingresar el correo corporativo.
+        </div>
+    </div>
+
+        <div class="inputGroup inputGroup3">
+            <button (click)="restablecerContrasena();" id="recuperarPass" type="button" [disabled]="ngFormRecuperaPass.valid == false"
+                >Restablecer pass
+                <i class="fa fa-lock" aria-hidden="true"></i>
+            </button>
+
+        </div>
+        <div>
+            <button type="button" style="color: white !important;" class="btn btn-raised btn-success btn-excel"
+            triggers="mouseenter:mouseleave" (click)="volver();"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Volver</button>
+        </div>
+    </div>
+</form>

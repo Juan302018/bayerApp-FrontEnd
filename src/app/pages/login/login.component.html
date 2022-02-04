@@ -43,11 +43,13 @@
         </div>
 
         <div class="inputGroup inputGroup3">
-            <button id="login" type="button" (click)="iniciarSesion()" [disabled]="ngForm.valid == false"
+            <button style="margin-bottom: 15px !important;" id="login" type="button" (click)="iniciarSesion()" [disabled]="ngForm.valid == false"
                 >Iniciar Sesión
                 <i class="fa fa-sign-in" aria-hidden="true"></i>
             </button>
-
+            <nav>
+                <a routerLink="/recuperar-contrasena" class="txtRestablecerPass"><b>Recuperar contraseña</b></a>
+            </nav>
         </div>
     </div>
 </form>

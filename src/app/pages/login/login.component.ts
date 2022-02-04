@@ -20,8 +20,8 @@ import { catchError, retry, tap } from 'rxjs/operators';
 export class LoginComponent implements OnInit, OnDestroy {
 
   private loginSubscription: Subscription;
-  private REINTENTOS: 5;
 
+  public flagRecuperaPass: boolean = false;
   public hide: boolean = false;
   public showEye: Boolean = false;
   public hideConf: boolean = false;
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.router.navigate(['catalogo']);
       }, 2000);
       this.loginService.detalleUsuario(this.username).subscribe(detalleUser => {
-        console.log('detalleUser: ',detalleUser);
+        console.log('detalleUser: ', detalleUser);
         this.obtLogin.mensaje = data.mensaje;
         this.obtLogin.token = environment.token;
         this.obtLogin.user = data.user;
@@ -83,54 +83,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     );
   }
 
-  /*
-  interceptorConexion() {
-    var request: HttpRequest<any>
-    var next: HttpHandler
-    //console.log('handle: ',next.handle)
-    return next.handle(request).pipe(retry(this.REINTENTOS)).
-      pipe(tap(event => {
-        if (event instanceof HttpResponse) {
-          if (event.body && event.body.error === true && event.body.errorMessage) {
-            throw new Error(event.body.errorMessage);
-          }
-        }
-      })).pipe(catchError((err) => {
-        console.log(err.error.status);
-        if (err.error.status === 400) {
-          setTimeout(() => {
-            this.toastrService.error(err.error.message, 'ERROR 400')
-          }, 2000);
-        }
-        else if (err.error.status === 401) {
-          setTimeout(() => {
-            this.toastrService.error(err.error.message, 'ERROR 401')
-          }, 2000);
-          sessionStorage.clear();
-          this.router.navigate(['/login']);
-        }
-        else if (err.error.status === 403) {
-          setTimeout(() => {
-            this.toastrService.error(err.error.message, 'ERROR 403')
-          }, 2000);
-          sessionStorage.clear();
-          this.router.navigate(['/login']);
-        }
-        else if (err.error.status === 500) {
-          setTimeout(() => {
-            this.toastrService.error(err.error.mensaje, 'ERROR 500')
-          }, 2000);
-        } else {
-          setTimeout(() => {
-            this.toastrService.error(err.error.mensaje, 'ERROR')
-          }, 2000);
-        }
-        console.log('EMPTY: ', EMPTY);
-        return EMPTY;
-      }));
-  }¨
-  */
-
   mostrarPassword() {
     this.hide = !this.hide;
     this.showEye = !this.showEye;
@@ -143,6 +95,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
 
   }
+
+  /*
+  recuperarPassword() {
+    setTimeout(() => {
+    this.router.navigate(['recuperar-contrasena'])}, 2000);
+  }
+  */
 
   ngOnDestroy(): void {
     if (this.loginSubscription) {

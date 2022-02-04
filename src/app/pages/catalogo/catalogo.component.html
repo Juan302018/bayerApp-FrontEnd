@@ -24,8 +24,8 @@
                     </ul>
                     <ul class="navbar-nav ms-3">
                         <li class="nav-item">
-                            <a style="color: black;" class="nav-link text-nowrap"><i
-                                    class="fa fa-user fa-2x"></i><b class="mb-1 ml-1"> User {{nombreUser}}</b></a>
+                            <a style="color: black;" class="nav-link text-nowrap"><i class="fa fa-user fa-2x"></i><b
+                                    class="mb-1 ml-1"> User {{nombreUser}}</b></a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-3">
@@ -42,18 +42,16 @@
     <div class="banner-1 mb">
         <img class="imagen-1" src="../../../assets/icons/fondo-catalogo-grande.jpg">
         <label class="texto-encima ml-5"><i>Catálogo en línea</i></label>
-        <div class="banner">
-        
-        </div>
         <div class="banner-2">
-        
+
         </div>
+        <!-- VERIFICAR ESTA LÍNEA CELESTE EL BANNER CATÁLOGO -->
+        <!--<div class="inner-line lmnt-theme-primary-bg"></div>-->
         <div class="banner-3">
-        
+
         </div>
     </div>
 
-    
 
 
     <div class="row">
@@ -70,7 +68,7 @@
                                 [(ngModel)]="especie" (change)="onChangeEspecies($event);">
                                 <!-- <ng-option [value]="0"> </ng-option> -->
                                 <ng-option *ngFor="let e of arrayEspecies" [value]="e.id">{{e.nombreEspecie |
-                                    lowercase}}
+                                    uppercase}}
                                 </ng-option>
                             </ng-select>
                         </div>
@@ -88,7 +86,7 @@
                                 style="color: #857c85 !important;" placeholder="--Seleccione una opción--"
                                 class="form-control form-control-sm" notFoundText="Sin datos!" [clearable]="false"
                                 [(ngModel)]="tipo" (change)="onChangeTipos($event);">
-                                <ng-option *ngFor="let t of arrayTipos" [value]="t.id">{{t.nombreTipo | lowercase}}
+                                <ng-option *ngFor="let t of arrayTipos" [value]="t.id">{{t.nombreTipo | uppercase}}
                                 </ng-option>
                             </ng-select>
                         </div>
@@ -105,8 +103,7 @@
                                 style="color: #857c85 !important;" placeholder="--Seleccione una opción--"
                                 class="form-control form-control-sm" notFoundText="Sin datos!" [clearable]="false"
                                 [(ngModel)]="variedad" (change)="onChangeVariedades($event);">
-                                <ng-option *ngFor="let v of arrayVariedades" [value]="v.id">{{v.nombreVariedad |
-                                    lowercase}}
+                                <ng-option *ngFor="let v of arrayVariedades" [value]="v.id">{{v.nombreVariedad}}
                                 </ng-option>
                             </ng-select>
                         </div>
@@ -116,14 +113,13 @@
                         <div class="col-lg-9 col-md-9 col-sm-9 text-left"></div>
                         <div class="col-lg-2 col-md-2 col-sm-2 text-left">
                             <div class="input-group-append">
-                                <button *ngIf="especie > 0"
-                                    class="btn btn-buscar mr-4 mt-2 pr-5 pl-5" type="button"
+                                <button *ngIf="especie > 0" class="btn btn-buscar mr-4 mt-2 pr-5 pl-5" type="button"
                                     (click)="buscarProductos();" triggers="mouseenter:mouseleave"><b>Buscar</b></button>
 
-                                    <!-- Se quita el disable: [disabled]="especie === 0 || especie == null"-->
-                                <button *ngIf="especie <= 0 || especie == null" placement="top" ngbTooltip="!Debe seleccionar una especie para la búsqueda!"
-                                    class="btn btn-buscar mr-4 mt-2 pr-5 pl-5" type="button"
-                                   ><b>Buscar</b></button>
+                                <!-- Se quita el disable: [disabled]="especie === 0 || especie == null"-->
+                                <button *ngIf="especie <= 0 || especie == null" placement="top"
+                                    ngbTooltip="¡Debe seleccionar un tipo de especie para iniciar la búsqueda!"
+                                    class="btn btn-buscar mr-4 mt-2 pr-5 pl-5" type="button"><b>Buscar</b></button>
 
                             </div>
                         </div>
@@ -141,29 +137,30 @@
                                 <ngb-progressbar [value]="100" [striped]="true" [animated]="true"></ngb-progressbar>
                             </div>
                             <!-- La propiedad footerHeight oculta el pie de la tabla [footerHeight]="50" -->
-                            <ngx-datatable #tabCatalagoProductos style="font-size: 14.5px !important; text-align: center;" class="material"
-                                #tabCatalogo [rows]="arrayProductos | paginate: configCatalogo" [columnMode]="'force'" [rowHeight]="'auto'"
-                                [scrollbarH]="false" [reorderable]="true"
+                            <ngx-datatable #tabCatalagoProductos
+                                style="font-size: 14.5px !important; text-align: center;" class="material" #tabCatalogo
+                                [rows]="arrayProductos | paginate: configCatalogo" [columnMode]="'force'"
+                                [rowHeight]="'auto'" [scrollbarH]="false" [reorderable]="true"
                                 [messages]="{emptyMessage:'No hay datos en la tabla.'}">
 
-                                <ngx-datatable-column name="Especie" prop="nombreEspecie" [width]="80">
+                                <ngx-datatable-column name="Especie" prop="nombreEspecie" [width]="60">
                                     <ng-template ngx-datatable-cell-template let-value="value">
-                                        {{value}}
+                                        {{value | uppercase}}
                                     </ng-template>
                                 </ngx-datatable-column>
                                 <ngx-datatable-column name="Tipo" prop="nombreTipo" [width]="160">
                                     <ng-template ngx-datatable-cell-template let-value="value">
-                                        {{value}}
+                                        {{value | uppercase}}
                                     </ng-template>
                                 </ngx-datatable-column>
-                                <ngx-datatable-column name="Variedad" prop="nombreVariedad" [width]="100">
+                                <ngx-datatable-column name="Variedad" prop="nombreVariedad" [width]="140">
                                     <ng-template ngx-datatable-cell-template let-value="value">
-                                        {{value}}
+                                        {{value | uppercase}}
                                     </ng-template>
                                 </ngx-datatable-column>
-                                <ngx-datatable-column name="Envase" prop="tipoEnvase" [width]="60">
+                                <ngx-datatable-column name="Envase" prop="tipoEnvase" [width]="50">
                                     <ng-template ngx-datatable-cell-template let-value="value">
-                                        {{value}}
+                                        {{value | uppercase}}
                                     </ng-template>
                                 </ngx-datatable-column>
                                 <ngx-datatable-column name="Cantidad" prop="unidadCantidad" [width]="60">
@@ -172,7 +169,7 @@
                                     </ng-template>
                                 </ngx-datatable-column>
 
-                                <ngx-datatable-column name="Precio" prop="precioporUnidad" [width]="80">
+                                <ngx-datatable-column name="Precio" prop="precioporUnidad" [width]="70">
                                     <ng-template ngx-datatable-cell-template let-value="value">
                                         {{value | currency:'CLP':''}}
                                     </ng-template>
@@ -222,19 +219,22 @@
                     </div>
                     <br>
                     <!-- Implementar Paginación: paginador y seleccionador!-->
-                    <div style="justify-content: center !important;" class="d-flex justify-content-between mt-2 mb-2 py-3">
+                    <div style="justify-content: center !important;"
+                        class="d-flex justify-content-between mt-2 mb-2 py-3">
                         <div style="display: flex;">
-                            <pagination-controls class="custom-pagination" style="color: black !important;" [id]="'paginationCatalogo'" [autoHide]="false" [responsive]="true"
-                                previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="onPageChangeCatalogo($event)">
+                            <pagination-controls class="custom-pagination" style="color: black !important;"
+                                [id]="'paginationCatalogo'" [autoHide]="false" [responsive]="true"
+                                previousLabel="Anterior" nextLabel="Siguiente"
+                                (pageChange)="onPageChangeCatalogo($event)">
                             </pagination-controls>&nbsp;
                             <div style="margin-left: 15px !important;">
-                                <select class="selector custom-select" style="width: auto; color: black !important;" name="pageSize"
-                                [(ngModel)]="configCatalogo.itemsPerPage">
-                                <option class="selector" [ngValue]="10">10</option>
-                                <option class="selector" [ngValue]="25">25</option>
-                                <option class="selector" [ngValue]="50">50</option>
-                                <option class="selector" [ngValue]="100">100</option>
-                            </select>
+                                <select class="selector custom-select" style="width: auto; color: black !important;"
+                                    name="pageSize" [(ngModel)]="configCatalogo.itemsPerPage">
+                                    <option class="selector" [ngValue]="10">10</option>
+                                    <option class="selector" [ngValue]="25">25</option>
+                                    <option class="selector" [ngValue]="50">50</option>
+                                    <option class="selector" [ngValue]="100">100</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -245,13 +245,41 @@
 </section>
 <footer>
     <div class="pie">
+        <h2 class="text-footer mb-4 mt-3"><i>Customer Service</i></h2>
+        <label class="mb-3">TELÉFONO: +56(2) 240 53560</label>
         <br>
+        <label class="alinear">E-MAIL: service.las.west.customer@bayer.com</label>
         <br>
-        <p><small class="inherit"><b>Valor mínimo de la compra: $500.000 + IVA</b></small></p>
+        <p><small><b>Valor mínimo de la compra: $500.000 + IVA</b></small></p>
         <p><small>Los precios expresiones NO incluyen impuestos, tasas, ni gastos de transporte.</small></p>
         <p><small>Precios y condiciones de venta están sujetos a variación sin previo aviso.</small></p>
         <p><small>Una vez entregada la semilla, no se aceptan devoluciones.</small></p>
-        <p><small>La orden de compra no garantiza la reserva y precio de la semilla.</small></p>
+        <p class="mb-6"><small>La orden de compra no garantiza la reserva y precio de la semilla.</small></p>
+        <br>
+            <div class="col-lg-12 mt-1">
+                <div class="mb-4 content-center">
+                        <nav>
+                            <a target="_blank" href="https://www.instagram.com/seminis.sudamerica/"><i
+                                    class="iconos fa fa-instagram fa-2x" aria-hidden="true"></i></a><small class="mb-2">
+                                @Seminis.Sudamerica</small>
+                        </nav>&nbsp;&nbsp;
+                        <nav>
+                            <a target="_blank" href="https://www.facebook.com/SeminisSudamerica/"><i
+                                    class="iconos fa fa-facebook fa-2x"></i></a><small class="mb-2">
+                                @Seminis.Sudamerica</small>
+                        </nav>&nbsp;&nbsp;
+                        <nav>
+                            <a target="_blank" href="https://www.youtube.com/c/seminissudamerica"><i
+                                    class="iconos fa fa-youtube-play fa-2x"></i></a><small class="mb-2"> Seminis
+                                Sudamérica</small>
+                        </nav>
+                </div>
+            </div>
+        <br>
+        <div class="mb-4 col-lg-12">
+            <a target="_blank" class="iconos"
+                href="https://www.vegetables.bayer.com/cl/es-cl.html"><small>https://www.vegetables.bayer.com/cl/es-cl.html</small></a>
+        </div>
         <br>
     </div>
 </footer>

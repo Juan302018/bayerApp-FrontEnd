@@ -34,6 +34,10 @@ export class LoginService {
     return this.http.post<any>(this.url + 'usuario/detallePorNombre/'+username, this.httpOption);
   }
 
+  public recuperarPassword(email: string) {
+    return this.http.post<any>(this.url + 'recuperarPassword/correo/'+email, this.httpOption);
+  }
+
   estaLogeado() {
     let token = sessionStorage.getItem(environment.token);
     return token != null;

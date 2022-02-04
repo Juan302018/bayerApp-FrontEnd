@@ -24,6 +24,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { ServerErrorsInterceptorService } from './util/server-errors-interceptor.service';
 import { AuthInterceptorService } from './util/auth-interceptor.service';
+import { RestrablecerContrasenaComponent } from './pages/login/restrablecer-contrasena/restrablecer-contrasena.component';
 
 export function tokenGetter() {
   let tk = sessionStorage.getItem(environment.token);
@@ -36,7 +37,8 @@ export function tokenGetter() {
     LoginComponent,
     CatalogoComponent,
     DetalleOrdenComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    RestrablecerContrasenaComponent
   ],
   imports: [
     BrowserModule,

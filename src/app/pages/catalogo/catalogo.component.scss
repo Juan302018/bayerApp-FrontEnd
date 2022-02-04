@@ -89,6 +89,24 @@ input[type='number'] {
         float: right;
 }
 
+.iconos {
+  color: white !important;
+}
+
+
+
+.text-footer {
+  color: white !important;
+  //background-color: white !important;
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+.alinear {
+  margin-bottom: 30px !important;
+  //margin-top: 10px !important;
+}
+
+
 .pie {
     color: white;
     text-align: center;
@@ -96,6 +114,12 @@ input[type='number'] {
     padding: 1px;
     //text-transform: uppercase;
     line-height: 35%;
+}
+
+.content-center {
+  -ms-flex-pack: center!important;
+  justify-content: center!important;
+  display: flex!important;
 }
 
 .top {
@@ -163,6 +187,43 @@ input[type='number'] {
 .masmenos {
     border: none;
     outline: none;
+}
+
+.inner-line {
+  right: 5.5%;
+  width: 1.7px;
+  height: 90%;
+  top: -22px;
+  bottom: auto;
+  position: absolute;
+  z-index: 1;
+  transform: translateX(0px) rotate(
+12deg
+);
+  transition: transform 0.5s ease-out 0s;
+  backface-visibility: hidden;
+}
+
+.lmnt-theme-primary-bg {
+  background-color: rgb(0, 190, 255);
+}
+.lmnt-theme-primary-bg {
+  //background-color: #10384f;
+  color: hsla(0,0%,100%,.87);
+}
+
+.banner {
+  width: 56%;
+  transform: skewX(
+-12deg
+);
+  opacity: 1;
+  transition: all 1s ease 0.05s;
+  height: 100%;
+  z-index: 1;
+  left: -25%;
+  top: 0px;
+  position: absolute;
 }
 
 .banner-1 {
