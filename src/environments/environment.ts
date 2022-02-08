@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API: 'http://localhost:8080/',
+  API: 'http://3.137.148.251:8080/',
   //REINTENTOS?: 4,
   token: ''
 };
