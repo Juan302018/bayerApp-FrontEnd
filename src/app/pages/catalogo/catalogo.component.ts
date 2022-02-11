@@ -1,4 +1,3 @@
-import { DetallePedidoStoreService } from 'src/app/services/local-session/detalle-pedido-store.service';
 import { LoginStoreService } from 'src/app/services/local-session/login-store.services';
 import { ToastrService } from 'ngx-toastr';
 import { BayerService } from 'src/app/services/bayer.service';
@@ -44,6 +43,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   public flagActivoVariedad: boolean;
   public dataSourceCatalogo = new Array();
   public arrayProductos = new Array();
+  public arrayProductosEliminados = new Array();
   public arrayEspecies = new Array();
   public arrayTipos = new Array();
   public arrayVariedades = new Array();
@@ -82,9 +82,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private modalService: NgbModal,
-    private toastrService: ToastrService,
     private loginStoreService: LoginStoreService,
-    private detallePedidoStoreService: DetallePedidoStoreService,
     private bayerService: BayerService,
     private datePipe: DatePipe
   ) {
@@ -128,6 +126,22 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     }
   }
 
+  obtieneProductosElimnadosCarro(event: any) {
+    if (event !== null || event !== undefined) {
+      this.arrayProductosEliminados = event;
+      for (let j=0; j < this.arrayProductosEliminados.length; j++) {
+        for (let i = 0; i < this.arrayProductos.length; i++) {
+          if (this.arrayProductos[i].id == this.arrayProductosEliminados[j].id) {
+            this.arrayProductos[i].cantidad = 0;
+            this.validaCantidad(this.arrayProductos[i].cantidad);
+          }
+        }
+      }
+    } else {
+      console.error('No recibe evento!');
+    }
+  }
+
   cargarProductosActualizados() {
     this.listaTodoProductsSubscription = this.bayerService.listarTodoProducto().pipe(take(1)).subscribe((productAct) => {
       if (productAct !== null || productAct !== undefined) {
@@ -143,11 +157,10 @@ export class CatalogoComponent implements OnInit, OnDestroy {
           productAct[i].precioporUnidad = productAct[i].preciosPorMaterial.valorUnidad;
         }
         this.arrayProductos = productAct;
-        console.log('arrayProductosMap: ', this.arrayProductos);
 
         this.configCatalogo.totalItems = this.arrayProductos.length;
         this.tabCatalagoProductos.offset = Math.floor((this.configCatalogo.totalItems) / this.configCatalogo.itemsPerPage);
-        console.log('tabCatalagoProductos2: ',this.tabCatalagoProductos.offset);
+
       } else {
         console.error('No hay productos!');
       }
@@ -189,12 +202,10 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
           this.configCatalogo.totalItems = this.arrayProductos.length;
           this.tabCatalagoProductos.offset = Math.floor((this.configCatalogo.totalItems) / this.configCatalogo.itemsPerPage);
-          console.log('tabCatalagoProductos2: ',this.tabCatalagoProductos.offset);
 
         } else if (productList.length === undefined) {
           let msg = productList.error[0].mensaje
           console.log('msg : ', msg);
-          //this.toastrService.error('No hay registros para esta búsqueda!', 'Atención'), 
           setTimeout(() =>
             swal.fire(
               'Error',
@@ -334,13 +345,12 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   buscarProductos() {
     if(this.tipo == null){
       this.tipo = 0;
-
     }
 
     if(this.variedad == null){
       this.variedad = 0;
-
     }
+
     this.ejecutarListaProducto(this.especie, this.tipo, this.variedad);
     this.especie = null; 
     this.tipo = null;
@@ -349,13 +359,13 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   openDetalleDeCompra(content, rowIndex) {
     // @ts-ignore
-    if(this.configCatalogo.currentPage == 1){
+    if (this.configCatalogo.currentPage == 1) {
       this.validaCantidad(this.arrayProductos[rowIndex].cantidad);
       this.detalleCompra = this.arrayProductos[rowIndex];
       this.modalReference = this.modalService.open(content, { windowClass: 'modal-in', backdrop: 'static', keyboard: true, size: 'xl' });
     }
 
-    if(this.configCatalogo.currentPage > 1){
+    if (this.configCatalogo.currentPage > 1) {
       let indexPaginacion = rowIndex +((this.configCatalogo.currentPage - 1) * this.configCatalogo.itemsPerPage)
       this.validaCantidad(this.arrayProductos[indexPaginacion].cantidad);
       this.detalleCompra = this.arrayProductos[indexPaginacion];
@@ -376,9 +386,7 @@ export class CatalogoComponent implements OnInit, OnDestroy {
 
   // Llamada para actualizar el valor de la celda
   updateValue(event, rowIndex) {
-    console.log('event: ',event.target.value);
     this.arrayProductos[rowIndex].cantidad = event.target.value;
-    console.log("event:", event.target.value);
     this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad;
     //console.log("cantidad:" , this.arrayProductos[rowIndex].cantidad);
   }
@@ -390,14 +398,12 @@ export class CatalogoComponent implements OnInit, OnDestroy {
       }
       if (this.arrayProductos[rowIndex].cantidad > 0) {
         this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad - 1;
-        console.log("cantidadMenos:", this.arrayProductos[rowIndex].cantidad);
         this.validaCantidad(this.arrayProductos[rowIndex].cantidad);
       }
     }
 
-    if(this.configCatalogo.currentPage > 1){
-      let indexPaginacion = rowIndex +((this.configCatalogo.currentPage - 1) * this.configCatalogo.itemsPerPage)
-      console.log(indexPaginacion)
+    if (this.configCatalogo.currentPage > 1) {
+      let indexPaginacion = rowIndex +((this.configCatalogo.currentPage - 1) * this.configCatalogo.itemsPerPage);
       this.arrayProductos[indexPaginacion].cantidad = this.arrayProductos[indexPaginacion].cantidad - 1;
       this.validaCantidad(this.arrayProductos[indexPaginacion].cantidad);
     }
@@ -408,10 +414,10 @@ export class CatalogoComponent implements OnInit, OnDestroy {
     console.log(this.configCatalogo)
     if(this.configCatalogo.currentPage == 1){
       this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad + 1;
-    console.log("cantidadMas: ", this.arrayProductos[rowIndex].cantidad);
     this.validaCantidad(this.arrayProductos[rowIndex].cantidad);
     }
-    if(this.configCatalogo.currentPage > 1){
+
+    if (this.configCatalogo.currentPage > 1) {
       let indexPaginacion = rowIndex +((this.configCatalogo.currentPage - 1) * this.configCatalogo.itemsPerPage)
       console.log(indexPaginacion)
       this.arrayProductos[indexPaginacion].cantidad = this.arrayProductos[indexPaginacion].cantidad + 1;
@@ -423,7 +429,6 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   validaCantidad(cantidad): boolean {
     if (cantidad > 0) {
       this.flagActivaCompra = true;
-      console.log("cantidasVal: ",cantidad);
       this.padNumber(cantidad);
       return this.flagActivaCompra;
     } else if (cantidad === 0){

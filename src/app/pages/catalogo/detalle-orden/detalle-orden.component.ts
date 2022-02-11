@@ -21,6 +21,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   @Output() envioCerrarModal = new EventEmitter();
   @Output() actualizoGrilla = new EventEmitter();
   @Output() cancelaProductCompra = new EventEmitter();
+  @Output() eliminaProductoCarro = new EventEmitter();
   @Input() nuevoProductoCarro: any;
 
   private carroCompraSubscription: Subscription;
@@ -34,7 +35,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   listaProductosCarro = [];
   listaEnvioProductos = [];
   envListCarroVacio = [];
-    nuevoProductoAgregado: any;
+  nuevoProductoAgregado: any;
   totalPedido: string;
   capturaIdCompra: number;
   fechaActual: string;
@@ -98,8 +99,8 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   }
 
   cancelaProdustos() {
-      let flagCarroVacio = true;
-      this.cancelaProductCompra.emit(flagCarroVacio);
+    let flagCarroVacio = true;
+    this.cancelaProductCompra.emit(flagCarroVacio);
   }
 
   seguirComprando() {
@@ -109,7 +110,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
 
   // call to update cell value
   updateValue(event, rowIndex) {
-    console.log('rowIndex: ',rowIndex);
+    console.log('rowIndex: ', rowIndex);
     this.envListCarroVacio.push(rowIndex);
     this.listaProductosCarro[rowIndex].cantidad = event.target.value;
   }
@@ -133,18 +134,20 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
   }
 
   eliminarProductodeCarro(rowIndex) {
+    let obtieneProdEliminado = new Array();
     console.log(rowIndex);
     for (let x = 0; x < this.listaProductosCarro.length; x++) {
       if (x === rowIndex) {
+        obtieneProdEliminado.push(this.listaProductosCarro[x]);
         this.listaProductosCarro.splice(x, 1);
         this.listaProductosCarro = [...this.listaProductosCarro];
       }
-      }
+    }
     console.log('listaProductosCarro: ', this.listaProductosCarro);
+    this.eliminaProductoCarro.emit(obtieneProdEliminado);
     this.sumarTotalPedido(this.listaProductosCarro);
     this.listaProductosCarro = this.listaProductosCarro;
     sessionStorage.setItem('detallePedido', JSON.stringify(this.listaProductosCarro));
-    //this.detallePedidoStoreService.borrarCarroCompra();
   }
 
   sumarTotalPedido(listaProductos) {
@@ -168,7 +171,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
           listaCarro[i].cantidad = this.nuevoProductoAgregado.cantidad + listaCarro[i].cantidad;
           contador++;
         }
-        console.log('listaCarroLength: ',listaCarro.length)
+        console.log('listaCarroLength: ', listaCarro.length)
         listaCarro[i].precioTotalPorItem = listaCarro[i].cantidad * listaCarro[i].precioporUnidad;
         console.log("carro 2 ", listaCarro[i]);
       }
@@ -197,6 +200,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
       precioUnitario: null,
       precioTotal: null,
     }
+
     for (let i = 0; i < this.listaProductosCarro.length; i++) {
       envioProductoCarro.materialId = this.listaProductosCarro[i].id;
       envioProductoCarro.variedadId = this.listaProductosCarro[i].variedadSemilla.id;
@@ -205,7 +209,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
       envioProductoCarro.precioTotal = this.listaProductosCarro[i].precioTotalPorItem;
       this.listaEnvioProductos.push(JSON.parse(JSON.stringify(envioProductoCarro)));
     }
-    console.log('listaEnvioProductos: ', this.listaEnvioProductos);
+
     swal.fire({
       title: '¿Está seguro que desea confirmar el detalle de compra?',
       //html: '<span  class="paraLaInterrogracion"><b></b></span>',
@@ -228,14 +232,14 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
                 this.capturaIdCompra = carro.idCompra;
                 this.enviarNotificacionEmail(this.capturaIdCompra);
                 setTimeout(() =>
-                swal.fire({
-                  title: 'Atención',
-                  text: 'Cargando datos ...',
-                  imageUrl: 'assets/img/loadingCircucle.gif',
-                  showConfirmButton: false,
-                  allowOutsideClick: false,
-                  allowEscapeKey: false
-                }), 1);
+                  swal.fire({
+                    title: 'Atención',
+                    text: 'Cargando datos ...',
+                    imageUrl: 'assets/img/loadingCircucle.gif',
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                  }), 1);
                 setTimeout(() =>
                   swal.fire('Solicitud exitosa', '<span><b><div class="alert alert-success" role="alert">Confirmación exitosa. ' + response + '!</div></b></span>', 'success'), 1000);
                 this.listaProductosCarro = [];
@@ -259,17 +263,17 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
 
   enviarNotificacionEmail(idCompra: number) {
     const email: Email = new Email();
-    email.content = EmailEnum.textHeaderMessage+EmailEnum.textMessageFecha+this.fechaActual+EmailEnum.textMessageMonto+this.totalPedido;
+    email.content = EmailEnum.textHeaderMessage + EmailEnum.textMessageFecha + this.fechaActual + EmailEnum.textMessageMonto + this.totalPedido;
     email.averageContent = EmailEnum.textAverageMessage;
     email.footerContent = EmailEnum.textFooterMessage;
-    email.subject = EmailEnum.subject+idCompra;
+    email.subject = EmailEnum.subject + idCompra;
     email.email = this.email;
-    console.log('email: ',email);
+    console.log('email: ', email);
     setTimeout(() =>
-    this.toastrService.success('Detalle de compra '+idCompra+'. Mail enviado exitosamente!', 'Success'), 200);
+      this.toastrService.success('Detalle de compra ' + idCompra + '. Mail enviado exitosamente!', 'Success'), 200);
     this.emialSubscription = this.emailService.email(email).subscribe(dataEmail => {
-      if(dataEmail !== null) {
-        console.log('email: ',dataEmail);
+      if (dataEmail !== null) {
+        console.log('email: ', dataEmail);
       }
     });
   }

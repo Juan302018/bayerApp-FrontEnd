@@ -285,7 +285,7 @@
 </footer>
 
 <ng-template #ordenDeCompra>
-    <app-detalle-orden (cancelaProductCompra)="recibeResultCarroVacio($event)" (envioCerrarModal)="cerrarModal();"
+    <app-detalle-orden (cancelaProductCompra)="recibeResultCarroVacio($event)" (eliminaProductoCarro)="obtieneProductosElimnadosCarro($event)" (envioCerrarModal)="cerrarModal();"
         (actualizoGrilla)="actualizarGrilla();" [nuevoProductoCarro]="detalleCompra">
     </app-detalle-orden>
 </ng-template>
