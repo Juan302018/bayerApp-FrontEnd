@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { Email } from 'src/app/model/email';
 import { EmailEnum } from 'src/app/enum/email-enum';
+import { EmailReceptorEnum } from 'src/app/enum/email-receptor-enum';
 
 @Component({
   selector: 'app-detalle-orden',
@@ -71,7 +72,6 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
       this.listaProductosCarro = JSON.parse(sessionStorage.getItem('detallePedido'));
     }
     this.nuevoProductoAgregado = this.nuevoProductoCarro;
-    console.log(this.nuevoProductoCarro);
     this.listaProductosCarro = this.verificarProductoEnCarro(this.listaProductosCarro);
     sessionStorage.setItem('detallePedido', JSON.stringify(this.listaProductosCarro));
     this.sumarTotalPedido(this.listaProductosCarro);
@@ -110,7 +110,6 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
 
   // call to update cell value
   updateValue(event, rowIndex) {
-    console.log('rowIndex: ', rowIndex);
     this.envListCarroVacio.push(rowIndex);
     this.listaProductosCarro[rowIndex].cantidad = event.target.value;
   }
@@ -135,7 +134,6 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
 
   eliminarProductodeCarro(rowIndex) {
     let obtieneProdEliminado = new Array();
-    console.log(rowIndex);
     for (let x = 0; x < this.listaProductosCarro.length; x++) {
       if (x === rowIndex) {
         obtieneProdEliminado.push(this.listaProductosCarro[x]);
@@ -143,7 +141,7 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
         this.listaProductosCarro = [...this.listaProductosCarro];
       }
     }
-    console.log('listaProductosCarro: ', this.listaProductosCarro);
+
     this.eliminaProductoCarro.emit(obtieneProdEliminado);
     this.sumarTotalPedido(this.listaProductosCarro);
     this.listaProductosCarro = this.listaProductosCarro;
@@ -163,31 +161,26 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
 
   verificarProductoEnCarro(listaCarro) {
     let contador = 0;
-    console.log('listaCarro', listaCarro);
-
     if (listaCarro.length > 0) {
       for (let i = 0; i < listaCarro.length; i++) {
         if (listaCarro[i].id === this.nuevoProductoAgregado.id) {
           listaCarro[i].cantidad = this.nuevoProductoAgregado.cantidad + listaCarro[i].cantidad;
           contador++;
         }
-        console.log('listaCarroLength: ', listaCarro.length)
         listaCarro[i].precioTotalPorItem = listaCarro[i].cantidad * listaCarro[i].precioporUnidad;
-        console.log("carro 2 ", listaCarro[i]);
       }
+
       if (contador === 0) {
         this.nuevoProductoAgregado.precioTotalPorItem = this.nuevoProductoAgregado.cantidad * this.nuevoProductoAgregado.precioporUnidad;
         listaCarro.push(this.nuevoProductoAgregado);
-        console.log("carro 3 ", listaCarro[0]);
       }
-
       return listaCarro;
+
     }
 
     if (listaCarro.length == 0) {
       listaCarro.push(this.nuevoProductoAgregado);
       listaCarro[0].precioTotalPorItem = this.listaProductosCarro[0].cantidad * this.listaProductosCarro[0].precioporUnidad;
-      console.log("carro 1 ", listaCarro);
       return listaCarro;
     }
   }
@@ -226,11 +219,11 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
         if (result.value) {
           if (this.listaProductosCarro !== null || this.listaProductosCarro !== undefined) {
             this.carroCompraSubscription = this.bayerService.carroCompraDetallePedido(this.listaEnvioProductos).subscribe(carro => {
-              console.log('carro: ', carro);
               if (carro !== undefined && carro !== null) {
                 let response = carro.mensaje;
                 this.capturaIdCompra = carro.idCompra;
                 this.enviarNotificacionEmail(this.capturaIdCompra);
+                this.usuarioReceptorCompra(this.capturaIdCompra);
                 setTimeout(() =>
                   swal.fire({
                     title: 'Atención',
@@ -268,14 +261,22 @@ export class DetalleOrdenComponent implements OnInit, OnDestroy {
     email.footerContent = EmailEnum.textFooterMessage;
     email.subject = EmailEnum.subject + idCompra;
     email.email = this.email;
-    console.log('email: ', email);
     setTimeout(() =>
       this.toastrService.success('Detalle de compra ' + idCompra + '. Mail enviado exitosamente!', 'Success'), 200);
     this.emialSubscription = this.emailService.email(email).subscribe(dataEmail => {
       if (dataEmail !== null) {
-        console.log('email: ', dataEmail);
       }
     });
+  }
+
+  usuarioReceptorCompra(capturaIdCompra: number) {
+    const emaiReceptorCompra: Email = new Email();
+    emaiReceptorCompra.content = EmailEnum.textHeaderMessage + EmailEnum.textMessageFecha + this.fechaActual + EmailEnum.textMessageMonto + this.totalPedido;
+    emaiReceptorCompra.averageContent = EmailEnum.textAverageMessage;
+    emaiReceptorCompra.footerContent = EmailEnum.textFooterMessage;
+    emaiReceptorCompra.subject = EmailEnum.subject + capturaIdCompra;
+    emaiReceptorCompra.email = EmailReceptorEnum.emailReceptor;
+    this.emailService.emailReceptorCompras(emaiReceptorCompra).subscribe(email => { });
   }
 
   volverCatalogoCompra() {

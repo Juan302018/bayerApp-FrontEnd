@@ -24,6 +24,13 @@ export class EmailService {
     );
   }
 
+  public emailReceptorCompras(email: Email): Observable<any> {
+    return this.http.post<any>(this.url + 'email/sendReceptorCompras', email, this.httpOptions).pipe(
+      tap(() => { }),
+      catchError(this.handleError<any>())
+    );
+  }
+
 
     /**
 * Handle Http operation that failed.

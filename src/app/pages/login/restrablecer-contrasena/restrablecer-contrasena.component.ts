@@ -13,32 +13,30 @@ import swal from 'sweetalert2';
 export class RestrablecerContrasenaComponent implements OnInit, OnDestroy {
 
   private recuperarPassSubscription: Subscription;
-  
+
   recibeEmail: string;
 
   ngFormRecuperaPass: FormGroup;
-  
+
   constructor(
     private loginService: LoginService,
     private router: Router,
   ) {
     this.createngFormRecuperaPass();
-   }
+  }
 
   ngOnInit(): void {
   }
 
   restablecerContrasena() {
     this.recibeEmail = this.ngFormRecuperaPass.get('email').value;
-    console.log('email2: ',this.recibeEmail)
     this.recuperarPassSubscription = this.loginService.recuperarPassword(this.recibeEmail).subscribe(pass => {
-      console.log('pass: ',pass);
       if (pass == true) {
-      setTimeout(() =>
-      swal.fire('Solicitud exitosa!', '<span><b><div class="alert alert-success" role="alert">Contraseña restablecida correctamente. Revisar la casilla de correo, le llegará una notificación sobre el cambio de contraseña.' + '</div></b></span>', 'success'), 1000);
-      setTimeout(() => {
-        this.router.navigate(['login']);
-      }, 100);
+        setTimeout(() =>
+          swal.fire('Solicitud exitosa!', '<span><b><div class="alert alert-success" role="alert">Contraseña restablecida correctamente. Revisar la casilla de correo, le llegará una notificación sobre el cambio de contraseña.' + '</div></b></span>', 'success'), 1000);
+        setTimeout(() => {
+          this.router.navigate(['login']);
+        }, 100);
       } else {
         swal.fire(
           'Error',
@@ -49,17 +47,16 @@ export class RestrablecerContrasenaComponent implements OnInit, OnDestroy {
         )
       }
     },
-    err => {
-      console.log('Error: ',err.error.mensaje);
-      swal.fire(
-        'Error',
-        '<span><b><div class="alert alert-danger" role="alert">' +
-        `${err.error.mensaje}` +
-        '</div></b></span>',
-        'error'
-      )
-    },
-  )
+      err => {
+        swal.fire(
+          'Error',
+          '<span><b><div class="alert alert-danger" role="alert">' +
+          `${err.error.mensaje}` +
+          '</div></b></span>',
+          'error'
+        )
+      },
+    )
   }
 
   volver() {

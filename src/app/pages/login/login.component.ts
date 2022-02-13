@@ -49,7 +49,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   iniciarSesion() {
     this.username = this.ngForm.get('user').value;
     this.password = this.ngForm.get('password').value;
-    console.log('Credenciales: ', this.username, this.password);
     this.loginService.login(this.username, this.password)
     this.loginSubscription = this.loginService.login(this.username, this.password).subscribe(data => {
       environment.token = data.token;
@@ -61,12 +60,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.router.navigate(['catalogo']);
       }, 2000);
       this.loginService.detalleUsuario(this.username).subscribe(detalleUser => {
-        console.log('detalleUser: ', detalleUser);
         this.obtLogin.mensaje = data.mensaje;
         this.obtLogin.token = environment.token;
         this.obtLogin.user = data.user;
         this.obtLogin.email = detalleUser.emailUsuario;
-        console.log('obtLogin: ', this.obtLogin);
         this.loginStoreService.guardarLogin(this.obtLogin);
       });
     },

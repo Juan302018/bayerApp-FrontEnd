@@ -198,14 +198,12 @@ export class CatalogoComponent implements OnInit, OnDestroy {
           }
           swal.close();
           this.arrayProductos = productList;
-          console.log('arrayProductosMap2: ',this.arrayProductos);
 
           this.configCatalogo.totalItems = this.arrayProductos.length;
           this.tabCatalagoProductos.offset = Math.floor((this.configCatalogo.totalItems) / this.configCatalogo.itemsPerPage);
 
         } else if (productList.length === undefined) {
           let msg = productList.error[0].mensaje
-          console.log('msg : ', msg);
           setTimeout(() =>
             swal.fire(
               'Error',
@@ -298,7 +296,6 @@ export class CatalogoComponent implements OnInit, OnDestroy {
           if (variedades === null || variedades === undefined) {
             //variedades = this.arrayVariedad;
             this.arrayVariedades = variedades;
-            console.log('arrayVariedades: ', this.arrayVariedades);
           }
         });
     } else {
@@ -388,7 +385,6 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   updateValue(event, rowIndex) {
     this.arrayProductos[rowIndex].cantidad = event.target.value;
     this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad;
-    //console.log("cantidad:" , this.arrayProductos[rowIndex].cantidad);
   }
 
   disminuirCantidad(rowIndex) {
@@ -411,15 +407,13 @@ export class CatalogoComponent implements OnInit, OnDestroy {
   }
 
   aumentarCantidad(rowIndex) {
-    console.log(this.configCatalogo)
-    if(this.configCatalogo.currentPage == 1){
+    if (this.configCatalogo.currentPage == 1) {
       this.arrayProductos[rowIndex].cantidad = this.arrayProductos[rowIndex].cantidad + 1;
     this.validaCantidad(this.arrayProductos[rowIndex].cantidad);
     }
 
     if (this.configCatalogo.currentPage > 1) {
-      let indexPaginacion = rowIndex +((this.configCatalogo.currentPage - 1) * this.configCatalogo.itemsPerPage)
-      console.log(indexPaginacion)
+      let indexPaginacion = rowIndex +((this.configCatalogo.currentPage - 1) * this.configCatalogo.itemsPerPage);
       this.arrayProductos[indexPaginacion].cantidad = this.arrayProductos[indexPaginacion].cantidad + 1;
       this.validaCantidad(this.arrayProductos[indexPaginacion].cantidad);
     }
